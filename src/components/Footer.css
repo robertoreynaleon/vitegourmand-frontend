@@ -1,0 +1,95 @@
+/* Ce fichier CSS définit les styles du footer */
+
+/* Footer */
+.footer {
+    background: #1a1a1a;
+    color: #ffffff;
+    padding: 4rem 0 2rem;
+}
+
+/* Conteneur du footer */
+.footer-content {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 3rem;
+    margin-bottom: 3rem;
+}
+
+/* Titres des colonnes du footer */
+.footer-col h3 {
+    font-family: 'Hammersmith One', Arial, Helvetica, sans-serif;
+    font-size: 1.3rem;
+    margin-bottom: 1.5rem;
+    color: #c9a961;
+}
+
+/* Texte des colonnes du footer */
+.footer-col p,
+.footer-col a {
+    font-size: 0.95rem;
+    line-height: 1.8;
+    color: #ccc;
+}
+
+/* Effet au survol des liens */
+.footer-col a:hover {
+    color: #c9a961;
+}
+
+/* Conteneur des icônes des réseaux sociaux */
+.social-links {
+    display: flex;
+    gap: 1.5rem;
+}
+
+/* Liens vers les réseaux sociaux */
+.social-links a {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    transition: all 0.3s ease;
+}
+
+/* Effet au survol des liens */
+.social-links a:hover {
+    background: #2d5016;
+    transform: translateY(-3px);
+}
+
+/* Icônes des réseaux sociaux */
+.social-links svg {
+    width: 20px;
+    height: 20px;
+}
+
+/* Bas de page du footer */
+.footer-bottom {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding-top: 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+/* Conteneur des liens du bas de page du footer */
+.footer-links {
+    display: flex;
+    gap: 2rem;
+}
+
+/* Liens du bas de page du footer */
+.footer-links a {
+    font-size: 0.9rem;
+    color: #ccc;
+}
+
+/* Effet au survol des liens du bas de page du footer */
+.footer-links a:hover {
+    color: #c9a961;
+}

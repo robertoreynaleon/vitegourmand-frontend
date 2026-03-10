@@ -1,0 +1,251 @@
+/* Ce fichier CSS définit les styles du corp de la page d'accueil */
+
+/* Section : À propos */
+.about-section {
+    padding: 6rem 0;
+    background: #ffffff;
+}
+
+/* Le Header des trois sections */
+.section-header {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+/* Les titres des trois sections */
+.section-header h2 {
+    font-family: 'Hammersmith One', Arial, Helvetica, sans-serif;
+    font-size: 2.5rem;
+    color: #2d5016;
+    margin-bottom: 1rem;
+    letter-spacing: 2px;
+}
+
+/* Le séparateur pour les trois sections */
+.divider {
+    width: 80px;
+    height: 3px;
+    background: #c9a961;
+    margin: 0 auto;
+}
+
+/* Contenu de la section */
+.about-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    align-items: center;
+}
+
+/* Texte de la section */
+.about-text h3 {
+    font-family: 'Hammersmith One', Arial, Helvetica, sans-serif;
+    font-size: 1.8rem;
+    color: #2d5016;
+    margin-bottom: 1.5rem;
+}
+
+/* Paragraphe de la section */
+.about-text p {
+    text-align: justify;
+    margin-bottom: 1.5rem;
+    font-size: 1.05rem;
+    line-height: 1.8;
+    color: #666666;
+}
+
+/* Image de la section */
+.about-image {
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+/* Taille de l'image */
+.about-image img {
+    width: 100%;
+    transition: all 0.3s ease;
+}
+
+/* Effet au survol de l'image */
+.about-image:hover img {
+    transform: scale(1.20);
+}
+
+/* Section : Charte */
+.charte-section {
+    padding: 6rem 0;
+    background: #f8f8f8;
+}
+
+/* Texte d'introduction à cette section - Il se trouve dessous le header */
+.section-intro {
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto 3rem;
+    font-size: 1.1rem;
+    color: #666666;
+}
+
+/* Grid des cartes de la charte */
+.charte-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 3rem;
+    margin-top: 3rem;
+}
+
+/* Carte individuelle de la charte */
+.charte-card {
+    text-align: center;
+    padding: 2.5rem;
+    background: #ffffff;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+}
+
+/* Effet au survol de la carte */
+.charte-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+}
+
+/* Icône circulaire de la charte */
+.icon-wrapper {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #2d5016;
+    color: #ffffff;
+    border-radius: 50%;
+}
+
+/* Icône SVG dans l'icône circulaire de la charte */
+.icon-wrapper svg {
+    width: 40px;
+    height: 40px;
+}
+
+/* Titre de la charte */
+.charte-card h3 {
+    font-family: 'Hammersmith One', Arial, Helvetica, sans-serif;
+    font-size: 1.3rem;
+    color: #2d5016;
+    margin-bottom: 1rem;
+}
+
+/* Texte de la charte */
+.charte-card p {
+    padding-left: 1.4rem;
+    padding-right: 1.4rem;
+    font-size: 0.95rem;
+    line-height: 1.7;
+    color: #666666;
+}
+
+/* Section : Locavore */
+.locavore-section {
+    padding: 6rem 0;
+    background: #ffffff;
+}
+
+/* Sous-titre de la section Locavore */
+.locavore-subtitle {
+    font-family: 'Hammersmith One', Arial, Helvetica, sans-serif;
+    font-size: 2rem;
+    text-align: center;
+    color: #c9a961;
+    margin-bottom: 2rem;
+}
+
+/* Conteneur de la section Locavore */
+.locavore-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+}
+
+/* Texte principal de la section Locavore */
+.locavore-main p {
+    margin-bottom: 1.5rem;
+    padding-right: 1.4rem;
+    font-size: 1.05rem;
+    line-height: 1.8;
+    color: #666666;
+}
+
+/* Liste dans le texte principal  */
+.locavore-main ul {
+    list-style: none;
+    margin: 1.5rem 0;
+}
+
+.locavore-main ul li {
+    position: relative;
+    padding-left: 1.8rem;
+    margin-bottom: 0.8rem;
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: #666666;
+}
+
+.locavore-main ul li::before {
+    content: '✔';
+    position: absolute;
+    left: 0;
+    color: #2d5016;
+    font-size: 1.5rem;
+    font-weight: bold;
+    line-height: 1;
+    top: 0;
+}
+
+
+/* Conteneur des items */
+.locavore-features {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+/* Item individuelle */
+.feature-item {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 1.5rem;
+    background: #f8f8f8;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+}
+
+.icon {
+    color: #2d5016;
+}
+
+/* Effet au survol des items */
+.feature-item:hover {
+    background: #2d5016;
+    color: #ffffff;
+    .icon {
+        color: #ffffff;
+    }
+}
+
+/* Icône du item */
+.feature-icon {
+    font-size: 2.5rem;
+}
+
+/* Texte du iitem */
+.feature-item h4 {
+    font-size: 1rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
