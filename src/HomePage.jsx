@@ -4,6 +4,8 @@ import axios from 'axios';
 function HomePage() {
     const [users, setUsers] = useState([]);
     const [menus, setMenus] = useState([]);
+    const [dishes, setDishes] = useState([]);
+    const [orders, setOrders] = useState([]);
 
     useEffect(() => {
         axios.get('http://vitegourmand.local/api/users')
@@ -12,6 +14,14 @@ function HomePage() {
 
         axios.get('http://vitegourmand.local/api/menus')
             .then(res => setMenus(res.data['member'] || res.data['hydra:member'] || []))
+            .catch(err => console.error(err));
+
+        axios.get('http://vitegourmand.local/api/dishes')
+            .then(res => setDishes(res.data['member'] || res.data['hydra:member'] || []))
+            .catch(err => console.error(err));
+
+        axios.get('http://vitegourmand.local/api/orders')
+            .then(res => setOrders(res.data['member'] || res.data['hydra:member'] || []))
             .catch(err => console.error(err));
     }, []);
 
@@ -47,6 +57,31 @@ function HomePage() {
                         <strong>Nombre minimum de personnes:</strong> {menu.minPeople}<br/>
                         <strong>Quantité restante:</strong> {menu.remainingQuantity}<br/>
                         <strong>Délai de commande (jours):</strong> {menu.advanceOrderDays}
+                    </li>
+                ))}
+            </ul>
+            <h2>Plats (test MySQL)</h2>
+            <ul>
+                {dishes.map(dish => (
+                    <li key={dish.id} style={{marginBottom: '1em'}}>
+                        <strong>ID:</strong> {dish.id}<br/>
+                        <strong>Nom:</strong> {dish.name || dish.title}<br/>
+                    </li>
+                ))}
+            </ul>
+            <h2>Commandes (test MySQL)</h2>
+            <ul>
+                {orders.map(order => (
+                    <li key={order.id} style={{marginBottom: '1em'}}>
+                        <strong>ID:</strong> {order.id}<br/>
+                        <strong>Utilisateur:</strong> {order.user}<br/>
+                        <strong>Date de commande:</strong> {order.orderDate}<br/>
+                        <strong>Heure de livraison:</strong> {order.deliveryTime}<br/>
+                        <strong>Adresse de livraison:</strong> {order.deliveryAddress}<br/>
+                        <strong>Subtotal :</strong> {order.subtotal} €<br/>
+                        <strong>Prix de livraison:</strong> {order.deliveryFee} €<br/>
+                        <strong>Total:</strong> {order.totalAmount} €<br/>
+                        <strong>Equipement :</strong> {order.equipmentLoan ? 'Oui' : 'Non'}<br/>
                     </li>
                 ))}
             </ul>
