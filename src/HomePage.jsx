@@ -6,6 +6,9 @@ function HomePage() {
     const [menus, setMenus] = useState([]);
     const [dishes, setDishes] = useState([]);
     const [orders, setOrders] = useState([]);
+    const [reviews, setReviews] = useState([]);
+    const [orderStatusHistory, setOrderStatusHistory] = useState([]);
+    const [menuStats, setMenuStats] = useState([]);
 
     useEffect(() => {
         axios.get('http://vitegourmand.local/api/users')
@@ -23,65 +26,64 @@ function HomePage() {
         axios.get('http://vitegourmand.local/api/orders')
             .then(res => setOrders(res.data['member'] || res.data['hydra:member'] || []))
             .catch(err => console.error(err));
+
+        axios.get('http://vitegourmand.local/api/mongo/reviews')
+            .then(res => setReviews(res.data))
+            .catch(err => console.error(err));
+
+        axios.get('http://vitegourmand.local/api/mongo/order_status_history')
+            .then(res => setOrderStatusHistory(res.data))
+            .catch(err => console.error(err));
+
+        axios.get('http://vitegourmand.local/api/mongo/menu_stats')
+            .then(res => setMenuStats(res.data))
+            .catch(err => console.error(err));
     }, []);
 
     return (
         <div>
             <h1>Bienvenue sur Vite & Gourmand</h1>
             <h2>Utilisateurs (test MySQL)</h2>
+
+            <h2>Reviews (MongoDB)</h2>
             <ul>
-                {users.map(user => (
-                    <li key={user.id} style={{marginBottom: '1em'}}>
-                        <strong>ID:</strong> {user.id}<br/>
-                        <strong>Nom:</strong> {user.name} {user.lastname}<br/>
-                        <strong>Email:</strong> {user.email}<br/>
-                        <strong>Téléphone:</strong> {user.phone}<br/>
-                        <strong>Adresse:</strong> {user.address}, {user.city} {user.postalCode}<br/>
-                        <strong>Role:</strong> {user.role}<br/>
-                        <strong>Orders:</strong> {user.orders && user.orders.length > 0 ? (
-                          <ul>{user.orders.map(order => <li key={order}>{order}</li>)}</ul>
-                        ) : 'Aucune'}<br/>
-                        <strong>User Identifier:</strong> {user.userIdentifier}<br/>
-                        <strong>Roles:</strong> {user.roles && user.roles.length > 0 ? user.roles.join(', ') : ''}
+                {reviews.map(review => (
+                    <li key={review._id} style={{ marginBottom: '1em' }}>
+                        <strong>ID:</strong> {review._id}<br/>
+                        <strong>Order ID:</strong> {review.order_id}<br/>
+                        <strong>User ID:</strong> {review.user_id}<br/>
+                        <strong>Note:</strong> {review.rating}<br/>
+                        <strong>Commentaire:</strong> {review.comment}<br/>
+                        <strong>Créé le:</strong> {review.created_at}<br/>
+                        <strong>Modifié le:</strong> {review.updated_at}
                     </li>
                 ))}
             </ul>
-            <h2>Menus (test MySQL)</h2>
+
+            <h2>Order Status History (MongoDB)</h2>
             <ul>
-                {menus.map(menu => (
-                    <li key={menu.id} style={{marginBottom: '1em'}}>
-                        <strong>ID:</strong> {menu.id}<br/>
-                        <strong>Titre:</strong> {menu.title}<br/>
-                        <strong>Description:</strong> {menu.description}<br/>
-                        <strong>Prix par personne:</strong> {menu.pricePerPerson} €<br/>
-                        <strong>Nombre minimum de personnes:</strong> {menu.minPeople}<br/>
-                        <strong>Quantité restante:</strong> {menu.remainingQuantity}<br/>
-                        <strong>Délai de commande (jours):</strong> {menu.advanceOrderDays}
+                {orderStatusHistory.map(status => (
+                    <li key={status._id} style={{ marginBottom: '1em' }}>
+                        <strong>ID:</strong> {status._id}<br/>
+                        <strong>Order ID:</strong> {status.order_id}<br/>
+                        <strong>Status:</strong> {status.status}<br/>
+                        <strong>Modifié par (user id):</strong> {status.changed_by}<br/>
+                        <strong>Date de modification:</strong> {status.changed_at}
                     </li>
                 ))}
             </ul>
-            <h2>Plats (test MySQL)</h2>
+
+            <h2>Menu Stats (MongoDB)</h2>
             <ul>
-                {dishes.map(dish => (
-                    <li key={dish.id} style={{marginBottom: '1em'}}>
-                        <strong>ID:</strong> {dish.id}<br/>
-                        <strong>Nom:</strong> {dish.name || dish.title}<br/>
-                    </li>
-                ))}
-            </ul>
-            <h2>Commandes (test MySQL)</h2>
-            <ul>
-                {orders.map(order => (
-                    <li key={order.id} style={{marginBottom: '1em'}}>
-                        <strong>ID:</strong> {order.id}<br/>
-                        <strong>Utilisateur:</strong> {order.user}<br/>
-                        <strong>Date de commande:</strong> {order.orderDate}<br/>
-                        <strong>Heure de livraison:</strong> {order.deliveryTime}<br/>
-                        <strong>Adresse de livraison:</strong> {order.deliveryAddress}<br/>
-                        <strong>Subtotal :</strong> {order.subtotal} €<br/>
-                        <strong>Prix de livraison:</strong> {order.deliveryFee} €<br/>
-                        <strong>Total:</strong> {order.totalAmount} €<br/>
-                        <strong>Equipement :</strong> {order.equipmentLoan ? 'Oui' : 'Non'}<br/>
+                {menuStats.map(stat => (
+                    <li key={stat.order_id + '-' + stat.menu_id} style={{ marginBottom: '1em' }}>
+                        <strong>Order ID:</strong> {stat.order_id}<br/>
+                        <strong>User ID:</strong> {stat.user_id}<br/>
+                        <strong>Menu ID:</strong> {stat.menu_id}<br/>
+                        <strong>Menu:</strong> {stat.menu_name}<br/>
+                        <strong>Quantité:</strong> {stat.quantity}<br/>
+                        <strong>Total:</strong> {stat.total_price} €<br/>
+                        <strong>Date de commande:</strong> {stat.order_date}
                     </li>
                 ))}
             </ul>
