@@ -1,12 +1,16 @@
 import React from 'react';
-import Header from '../components/Header';
-import Footer from '../components/Footer';
 import './HomePage.css';
+import Header from '../components/Header';
+import Hero from '../components/Hero';
+import Footer from '../components/Footer';
+import chefsImg from '../assets/img/cooks/chefs.webp';
 
 function HomePage() {
     return (
         <>
             <Header />
+            <Hero />
+
             {/* Les différentes sections de la page principale */}
 
             {/* Section : À propos */}
@@ -25,7 +29,7 @@ function HomePage() {
                             <p>Qu'il s'agisse d'un simple repas en famille ou d'un événement d'exception, notre cuisine se veut jolie et créative, fine et conviviale, authentique et généreuse. Mais toujours sur mesure et selon vos envies !</p>
                         </div>
                         <div className="about-image">
-                            {/* <img src="/assets/img/cuisinieurs/chefs-00.webp" alt="Julie et José, les cuisiniers de Vite & Gourmand" /> */}
+                            <img src={chefsImg} alt="Julie et José, les cuisiniers de Vite & Gourmand" />
                         </div>
                     </div>
                 </div>
