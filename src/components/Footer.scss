@@ -1,0 +1,131 @@
+// =============================================================================
+// FOOTER — Vite & Gourmand
+// =============================================================================
+@use '../styles/variables' as *;
+@use '../styles/mixins' as *;
+
+// -----------------------------------------------------------------------------
+// Footer principal
+// -----------------------------------------------------------------------------
+.footer {
+    background: $color-bg-dark;
+    color: $color-white;
+    padding: 4rem 0 2rem;
+}
+
+// -----------------------------------------------------------------------------
+// Grille des colonnes
+// -----------------------------------------------------------------------------
+.footer-content {
+    @include grid-cols(3, 3rem);
+    margin-bottom: 3rem;
+}
+
+// -----------------------------------------------------------------------------
+// Colonne individuelle
+// -----------------------------------------------------------------------------
+.footer-col {
+    h3 {
+        font-family: $font-heading;
+        font-size: 1.3rem;
+        margin-bottom: 1.5rem;
+        color: $color-gold;
+    }
+
+    p,
+    a {
+        font-size: 0.95rem;
+        line-height: 1.8;
+        color: $color-text-muted;
+    }
+
+    a {
+        @include interactive($color-gold);
+
+        &:hover {
+            color: $color-gold;
+        }
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Réseaux sociaux
+// -----------------------------------------------------------------------------
+.social-links {
+    display: flex;
+    gap: 1.5rem;
+
+    a {
+        width: 40px;
+        height: 40px;
+        @include flex-center;
+        background: rgba($color-white, 0.1);
+        border-radius: $radius-circle;
+        @include interactive($color-gold);
+
+        &:hover {
+            background: $color-green;
+            transform: translateY(-3px);
+        }
+    }
+
+    svg {
+        width: 20px;
+        height: 20px;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Bas de page
+// -----------------------------------------------------------------------------
+.footer-bottom {
+    border-top: 1px solid rgba($color-white, 0.1);
+    padding-top: 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.footer-links {
+    display: flex;
+    gap: 2rem;
+
+    a {
+        font-size: 0.9rem;
+        color: $color-text-muted;
+        @include interactive($color-gold);
+
+        &:hover {
+            color: $color-gold;
+        }
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Responsive
+// -----------------------------------------------------------------------------
+@include tablet {
+    .footer-content {
+        @include grid-cols(2, 2rem);
+    }
+}
+
+@include mobile {
+    .footer-content {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+
+    .footer-bottom {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .footer-links {
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 1rem;
+    }
+}

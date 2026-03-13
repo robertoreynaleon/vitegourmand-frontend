@@ -1,17 +1,17 @@
 import React from "react";
-import './Hero.css';
+import './Hero.scss';
 
 function Hero() {
     return (
-        <section id="welcome" class="hero">
-            <div class="hero-overlay"></div>
-            <div class="hero-content">
-                <h1 class="hero-title">VITE & GOURMAND</h1>
-                <h1 class="hero-subtitle">
+        <section id="welcome" className="hero">
+            <div className="hero-overlay"></div>
+            <div className="hero-content">
+                <h1 className="hero-title">VITE & GOURMAND</h1>
+                <p className="hero-subtitle">
                     TRAITEUR ET TABLE D'HÔTES
-                    <hr />LOCAVORE SUR BORDEAUX
-                </h1>
-                <a href="/menu/list/" class="btn-primary">Découvrez nos menus</a>
+                    <br />LOCAVORE SUR BORDEAUX
+                </p>
+                <a href="/menu/list/" className="btn-primary">Découvrez nos menus</a>
             </div>
         </section>
     );

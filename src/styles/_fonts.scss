@@ -1,0 +1,162 @@
+// =============================================================================
+// POLICES LOCALES — Vite & Gourmand
+// Les fichiers .woff2 / .woff sont dans src/fonts/
+// Correspondent exactement aux polices Google Fonts :
+//   Hammersmith One, Host Grotesk (300..800 + italic), Solway (300..800)
+// =============================================================================
+
+// -----------------------------------------------------------------------------
+// Hammersmith One (titres)
+// -----------------------------------------------------------------------------
+@font-face {
+    font-family: 'Hammersmith One';
+    src: url('../fonts/HammersmithOne-Regular.woff2') format('woff2'),
+         url('../fonts/HammersmithOne-Regular.woff') format('woff');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+// -----------------------------------------------------------------------------
+// Host Grotesk (corps de texte — 300 à 800, normal + italic)
+// -----------------------------------------------------------------------------
+@font-face {
+    font-family: 'Host Grotesk';
+    src: url('../fonts/HostGrotesk-Light.woff2') format('woff2'),
+         url('../fonts/HostGrotesk-Light.woff') format('woff');
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'Host Grotesk';
+    src: url('../fonts/HostGrotesk-LightItalic.woff2') format('woff2'),
+         url('../fonts/HostGrotesk-LightItalic.woff') format('woff');
+    font-weight: 300;
+    font-style: italic;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'Host Grotesk';
+    src: url('../fonts/HostGrotesk-Regular.woff2') format('woff2'),
+         url('../fonts/HostGrotesk-Regular.woff') format('woff');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'Host Grotesk';
+    src: url('../fonts/HostGrotesk-Italic.woff2') format('woff2'),
+         url('../fonts/HostGrotesk-Italic.woff') format('woff');
+    font-weight: 400;
+    font-style: italic;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'Host Grotesk';
+    src: url('../fonts/HostGrotesk-Medium.woff2') format('woff2'),
+         url('../fonts/HostGrotesk-Medium.woff') format('woff');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'Host Grotesk';
+    src: url('../fonts/HostGrotesk-MediumItalic.woff2') format('woff2'),
+         url('../fonts/HostGrotesk-MediumItalic.woff') format('woff');
+    font-weight: 500;
+    font-style: italic;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'Host Grotesk';
+    src: url('../fonts/HostGrotesk-SemiBold.woff2') format('woff2'),
+         url('../fonts/HostGrotesk-SemiBold.woff') format('woff');
+    font-weight: 600;
+    font-style: normal;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'Host Grotesk';
+    src: url('../fonts/HostGrotesk-SemiBoldItalic.woff2') format('woff2'),
+         url('../fonts/HostGrotesk-SemiBoldItalic.woff') format('woff');
+    font-weight: 600;
+    font-style: italic;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'Host Grotesk';
+    src: url('../fonts/HostGrotesk-Bold.woff2') format('woff2'),
+         url('../fonts/HostGrotesk-Bold.woff') format('woff');
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'Host Grotesk';
+    src: url('../fonts/HostGrotesk-BoldItalic.woff2') format('woff2'),
+         url('../fonts/HostGrotesk-BoldItalic.woff') format('woff');
+    font-weight: 700;
+    font-style: italic;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'Host Grotesk';
+    src: url('../fonts/HostGrotesk-ExtraBold.woff2') format('woff2'),
+         url('../fonts/HostGrotesk-ExtraBold.woff') format('woff');
+    font-weight: 800;
+    font-style: normal;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'Host Grotesk';
+    src: url('../fonts/HostGrotesk-ExtraBoldItalic.woff2') format('woff2'),
+         url('../fonts/HostGrotesk-ExtraBoldItalic.woff') format('woff');
+    font-weight: 800;
+    font-style: italic;
+    font-display: swap;
+}
+
+// -----------------------------------------------------------------------------
+// Solway (sous-titres hero — 300 à 800)
+// -----------------------------------------------------------------------------
+@font-face {
+    font-family: 'Solway';
+    src: url('../fonts/Solway-Light.woff2') format('woff2'),
+         url('../fonts/Solway-Light.woff') format('woff');
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'Solway';
+    src: url('../fonts/Solway-Regular.woff2') format('woff2'),
+         url('../fonts/Solway-Regular.woff') format('woff');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'Solway';
+    src: url('../fonts/Solway-Medium.woff2') format('woff2'),
+         url('../fonts/Solway-Medium.woff') format('woff');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'Solway';
+    src: url('../fonts/Solway-Bold.woff2') format('woff2'),
+         url('../fonts/Solway-Bold.woff') format('woff');
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'Solway';
+    src: url('../fonts/Solway-ExtraBold.woff2') format('woff2'),
+         url('../fonts/Solway-ExtraBold.woff') format('woff');
+    font-weight: 800;
+    font-style: normal;
+    font-display: swap;
+}

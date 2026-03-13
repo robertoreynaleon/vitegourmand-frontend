@@ -1,0 +1,32 @@
+// =============================================================================
+// TYPOGRAPHY COMMUNE — Vite & Gourmand
+// Styles partagés entre toutes les pages (section-header, divider, etc.)
+// =============================================================================
+@use 'variables' as *;
+
+// -----------------------------------------------------------------------------
+// Header de section — utilisé dans HomePage, et futures pages
+// Contient le h2 + le divider décoratif
+// -----------------------------------------------------------------------------
+.section-header {
+    text-align: center;
+    margin-bottom: 3rem;
+
+    h2 {
+        font-family: $font-heading;
+        font-size: 2.5rem;
+        color: $color-green;
+        margin-bottom: 1rem;
+        letter-spacing: 2px;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Divider — barre décorative dorée sous les titres de section
+// -----------------------------------------------------------------------------
+.divider {
+    width: 80px;
+    height: 3px;
+    background: $color-gold;
+    margin: 0 auto;
+}

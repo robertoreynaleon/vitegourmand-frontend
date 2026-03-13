@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import { useScrollHeader, scrollToAnchor } from '../hooks/useScrollHeader';
-import './Header.css';
+import './Header.scss';
 
 function Header({ user }) {
     const headerRef = useRef(null);
@@ -20,9 +20,9 @@ function Header({ user }) {
             className={`main-header${scrolled ? ' scrolled' : ''}`}
         >
             <div className="container">
-                <nav className="navbar">
+                <nav className="navbar" aria-label="Navigation principale">
                     <div className="logo">
-                        <h1>VITE & GOURMAND</h1>
+                        <h1 aria-hidden="true">VITE & GOURMAND</h1>
                     </div>
 
                     <div className="user-greeting">

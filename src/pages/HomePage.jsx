@@ -1,6 +1,6 @@
 ﻿import React from 'react';
 import { motion } from 'framer-motion';
-import './HomePage.css';
+import './HomePage.scss';
 import Header from '../components/Header';
 import Hero from '../components/Hero';
 import Footer from '../components/Footer';
@@ -16,8 +16,9 @@ function HomePage() {
             <Header />
             <Hero />
 
+            <main>
             {/* Section : À propos */}
-            <section id="about" className="about-section">
+            <section id="about" className="about-section" aria-labelledby="about-title">
                 <div className="container">
                     <motion.div
                         className="section-header"
@@ -26,7 +27,7 @@ function HomePage() {
                         whileInView="visible"
                         viewport={vp}
                     >
-                        <h2>À PROPOS DE NOUS</h2>
+                        <h2 id="about-title">À PROPOS DE NOUS</h2>
                         <div className="divider"></div>
                     </motion.div>
                     <motion.div
@@ -63,7 +64,7 @@ function HomePage() {
             </section>
 
             {/* Section : Charte */}
-            <section id="charte" className="charte-section">
+            <section id="charte" className="charte-section" aria-labelledby="charte-title">
                 <div className="container">
                     <motion.div
                         className="section-header"
@@ -72,7 +73,7 @@ function HomePage() {
                         whileInView="visible"
                         viewport={vp}
                     >
-                        <h2>NOTRE CHARTE ÉCO-RESPONSABLE</h2>
+                        <h2 id="charte-title">NOTRE CHARTE ÉCO-RESPONSABLE</h2>
                         <div className="divider"></div>
                     </motion.div>
                     <motion.p
@@ -94,7 +95,7 @@ function HomePage() {
                     >
                         <motion.div className="charte-card" variants={fadeUpVariants}>
                             <div className="icon-wrapper">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true" focusable="false">
                                     <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
                                     <circle cx="9" cy="7" r="4"></circle>
                                     <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
@@ -107,7 +108,7 @@ function HomePage() {
 
                         <motion.div className="charte-card" variants={fadeUpVariants}>
                             <div className="icon-wrapper">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true" focusable="false">
                                     <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
                                     <path d="M2 17l10 5 10-5"></path>
                                     <path d="M2 12l10 5 10-5"></path>
@@ -119,7 +120,7 @@ function HomePage() {
 
                         <motion.div className="charte-card" variants={fadeUpVariants}>
                             <div className="icon-wrapper">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true" focusable="false">
                                     <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
                                     <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
                                 </svg>
@@ -132,7 +133,7 @@ function HomePage() {
             </section>
 
             {/* Section : Locavore */}
-            <section id="values" className="locavore-section">
+            <section id="values" className="locavore-section" aria-labelledby="values-title">
                 <div className="container">
                     <motion.div
                         className="section-header"
@@ -141,7 +142,7 @@ function HomePage() {
                         whileInView="visible"
                         viewport={vp}
                     >
-                        <h2>ÊTRE LOCAVORE C'EST QUOI ?</h2>
+                        <h2 id="values-title">ÊTRE LOCAVORE C'EST QUOI ?</h2>
                         <div className="divider"></div>
                     </motion.div>
                     <motion.h3
@@ -173,21 +174,21 @@ function HomePage() {
 
                         <div className="locavore-features">
                             <div className="feature-item">
-                                <svg className="icon" xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                                <svg className="icon" xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
                                     <circle cx="12" cy="12" r="10" />
                                     <path d="M2 12h20M12 2a15.3 15.3 0 0 1 0 20M12 2a15.3 15.3 0 0 0 0 20" />
                                 </svg>
                                 <h4>RÉDUIRE SON EMPREINTE CARBONE</h4>
                             </div>
                             <div className="feature-item">
-                                <svg className="icon" xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                                <svg className="icon" xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
                                     <path d="M2 22s16-4 20-16c-8 4-16 16-16 16z" />
                                     <path d="M14 6c0 4.418-3.582 8-8 8" />
                                 </svg>
                                 <h4>RESPECTER LES SAISONS</h4>
                             </div>
                             <div className="feature-item">
-                                <svg className="icon" xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                                <svg className="icon" xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
                                     <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4a2 2 0 0 0 1-1.73z" />
                                     <polyline points="3.27 6.96 12 12.01 20.73 6.96" />
                                     <line x1="12" y1="22.08" x2="12" y2="12" />
@@ -198,6 +199,8 @@ function HomePage() {
                     </motion.div>
                 </div>
             </section>
+
+            </main>
 
             <Footer />
         </>

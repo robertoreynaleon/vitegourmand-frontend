@@ -1,0 +1,135 @@
+// =============================================================================
+// HERO — Vite & Gourmand
+// =============================================================================
+@use '../styles/variables' as *;
+@use '../styles/mixins' as *;
+
+// -----------------------------------------------------------------------------
+// Section hero — plein écran avec image de fond
+// -----------------------------------------------------------------------------
+.hero {
+    position: relative;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background:
+        linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
+        url('../assets/img/hero/hero.webp') center / cover no-repeat;
+    background-attachment: fixed;
+    color: $color-white;
+    text-align: center;
+}
+
+// -----------------------------------------------------------------------------
+// Contenu du hero
+// -----------------------------------------------------------------------------
+.hero-content {
+    position: relative;
+    z-index: 2;
+    animation: fadeInUp 1s ease;
+}
+
+// -----------------------------------------------------------------------------
+// Titre principal
+// -----------------------------------------------------------------------------
+.hero-title {
+    font-family: $font-heading;
+    font-size: 3.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    letter-spacing: 3px;
+}
+
+// -----------------------------------------------------------------------------
+// Sous-titre
+// -----------------------------------------------------------------------------
+.hero-subtitle {
+    font-family: $font-serif;
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 2rem;
+    letter-spacing: 2px;
+}
+
+// -----------------------------------------------------------------------------
+// Animation d'apparition du contenu
+// -----------------------------------------------------------------------------
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Bouton principal
+// -----------------------------------------------------------------------------
+.btn-primary {
+    display: inline-block;
+    padding: 1rem 2.5rem;
+    font-family: $font-body;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: $transition;
+    border: none;
+    border-radius: $radius-pill;
+    cursor: pointer;
+    font-size: 0.9rem;
+    background: $color-green;
+    color: $color-white;
+    @include focus-ring($color-gold);
+
+    &:hover {
+        background: $color-green-dark;
+        transform: translateY(-2px);
+        box-shadow: $shadow-btn;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Responsive
+// -----------------------------------------------------------------------------
+@include tablet {
+    .hero {
+        background-attachment: scroll;
+        background-size: cover;
+        background-position: center center;
+    }
+
+    .hero-title {
+        font-size: 2.5rem;
+    }
+
+    .hero-subtitle {
+        font-size: 1.6rem;
+    }
+}
+
+@include mobile {
+    .hero {
+        // background-attachment: fixed est cassé sur mobile (iOS/Android)
+        // On désactive l'effet parallaxe et on force cover pour remplir tout l'écran
+        background-attachment: scroll;
+        background-size: cover;
+        background-position: center center;
+    }
+
+    .hero-title {
+        font-size: 2rem;
+        letter-spacing: 1px;
+    }
+
+    .hero-subtitle {
+        font-size: 1.3rem;
+        letter-spacing: 1px;
+    }
+
+    .btn-primary {
+        padding: 0.8rem 2rem;
+    }
+}

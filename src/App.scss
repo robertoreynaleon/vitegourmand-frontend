@@ -1,0 +1,7 @@
+// =============================================================================
+// APP — Point d'entrée SASS global
+// Importe le reset et la typographie commune à toutes les pages
+// =============================================================================
+@use './styles/fonts';
+@use './styles/reset';
+@use './styles/typography';

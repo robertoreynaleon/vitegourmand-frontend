@@ -1,0 +1,82 @@
+// =============================================================================
+// MIXINS GLOBAUX — Vite & Gourmand
+// =============================================================================
+@use 'variables' as *;
+
+// -----------------------------------------------------------------------------
+// Responsive Design — Breakpoints
+// -----------------------------------------------------------------------------
+
+/// Mobile — écrans jusqu'à 768px (smartphones)
+@mixin mobile {
+    @media (max-width: 768px) {
+        @content;
+    }
+}
+
+/// Tablette — écrans jusqu'à 1024px (tablettes, petits laptops)
+@mixin tablet {
+    @media (max-width: 1024px) {
+        @content;
+    }
+}
+
+/// Desktop uniquement — au-dessus de 1024px
+@mixin desktop {
+    @media (min-width: 1025px) {
+        @content;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// RGAA — Accessibilité
+// -----------------------------------------------------------------------------
+
+/// RGAA 10.7 — Tout élément interactif doit avoir un focus clavier visible.
+/// À utiliser sur tous les liens, boutons, cards cliquables.
+@mixin focus-ring($color: $color-gold) {
+    &:focus-visible {
+        outline: 3px solid $color;
+        outline-offset: 3px;
+        border-radius: 2px;
+    }
+}
+
+/// RGAA — Hover + Focus identiques.
+/// Tout effet visuel au hover doit avoir un équivalent au focus clavier.
+/// Ce mixin groupe $transition + focus-ring pour les éléments interactifs.
+@mixin interactive($focus-color: $color-gold) {
+    transition: $transition;
+    @include focus-ring($focus-color);
+}
+
+/// RGAA 10.11 — Contenu visible uniquement pour les lecteurs d'écran (skip links, labels cachés).
+@mixin sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+// -----------------------------------------------------------------------------
+// Utilitaires
+// -----------------------------------------------------------------------------
+
+/// Flexbox centré horizontalement et verticalement
+@mixin flex-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/// Grid à N colonnes égales avec gap
+@mixin grid-cols($cols, $gap: 3rem) {
+    display: grid;
+    grid-template-columns: repeat($cols, 1fr);
+    gap: $gap;
+}

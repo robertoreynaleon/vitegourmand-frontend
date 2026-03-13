@@ -1,0 +1,147 @@
+// =============================================================================
+// HEADER — Vite & Gourmand
+// =============================================================================
+@use '../styles/variables' as *;
+@use '../styles/mixins' as *;
+
+// -----------------------------------------------------------------------------
+// Header principal
+// -----------------------------------------------------------------------------
+.main-header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: transparent;
+    box-shadow: none;
+    z-index: 1000;
+    transition: $transition;
+
+    // Après défilement : devient fixe avec fond blanc
+    &.scrolled {
+        position: fixed;
+        background: $color-white;
+        box-shadow: $shadow-md;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Navbar — Logo + Menu
+// -----------------------------------------------------------------------------
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 0;
+}
+
+// -----------------------------------------------------------------------------
+// Logo
+// Au début transparent pour s'adapter au héro, vert après défilement
+// -----------------------------------------------------------------------------
+.logo h1 {
+    font-family: $font-heading;
+    font-size: 1.8rem;
+    color: transparent;
+    font-weight: 700;
+    letter-spacing: 2px;
+    transition: $transition;
+}
+
+.main-header.scrolled .logo h1 {
+    color: $color-green;
+}
+
+// -----------------------------------------------------------------------------
+// Menu de navigation
+// -----------------------------------------------------------------------------
+.nav-menu {
+    display: flex;
+    gap: 2rem;
+
+    a {
+        font-size: 0.95rem;
+        font-weight: 500;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        color: $color-white;
+        position: relative;
+        transition: $transition;
+        @include focus-ring($color-gold);
+
+        // Soulignement animé
+        &::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: $color-white;
+            transition: $transition;
+        }
+
+        // Hover — soulignement visible
+        &:hover::after {
+            width: 100%;
+        }
+
+        // RGAA — focus clavier identique au hover
+        &:focus-visible::after {
+            width: 100%;
+        }
+    }
+}
+
+// Après défilement — liens en foncé
+.main-header.scrolled .nav-menu a {
+    color: $color-text;
+
+    &::after {
+        background: $color-green;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Message de bienvenue utilisateur
+// -----------------------------------------------------------------------------
+.user-greeting {
+    color: $color-white;
+
+    li {
+        font-size: 0.95rem;
+        font-weight: 500;
+        letter-spacing: 1px;
+        position: relative;
+    }
+}
+
+.main-header.scrolled .user-greeting {
+    color: $color-text;
+}
+
+// -----------------------------------------------------------------------------
+// Responsive — Tablette / Mobile
+// -----------------------------------------------------------------------------
+@include tablet {
+    .nav-menu {
+        gap: 1.2rem;
+
+        a {
+            font-size: 0.85rem;
+        }
+    }
+}
+
+@include mobile {
+    .navbar {
+        flex-wrap: wrap;
+        gap: 0.8rem;
+    }
+
+    .nav-menu {
+        gap: 0.8rem;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+}

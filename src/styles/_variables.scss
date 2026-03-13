@@ -1,0 +1,53 @@
+// =============================================================================
+// VARIABLES GLOBALES — Vite & Gourmand
+// =============================================================================
+
+// -----------------------------------------------------------------------------
+// Couleurs principales
+// -----------------------------------------------------------------------------
+$color-green:        #2d5016;   // Vert principal (logo, titres, icônes, CTA)
+$color-green-dark:   #1e3510;   // Vert foncé (hover btn-primary)
+$color-gold:         #c9a961;   // Or (dividers, accents, footer titres, hover liens)
+$color-white:        #ffffff;   // Blanc
+$color-bg-light:     #f8f8f8;   // Fond gris clair (section charte, feature items)
+$color-bg-dark:      #1a1a1a;   // Fond sombre (footer)
+
+// -----------------------------------------------------------------------------
+// Couleurs texte
+// -----------------------------------------------------------------------------
+$color-text:         #333333;   // Texte courant (body)
+$color-text-light:   #666666;   // Texte secondaire (paragraphes sections)
+$color-text-muted:   #cccccc;   // Texte atténué (footer liens, footer texte)
+
+// -----------------------------------------------------------------------------
+// Typographie
+// -----------------------------------------------------------------------------
+$font-heading:  'Hammersmith One', Arial, Helvetica, sans-serif;   // Titres
+$font-body:     'Host Grotesk', Arial, Helvetica, sans-serif;      // Corps de texte
+$font-serif:    'Solway', Georgia, 'Times New Roman', serif;        // Sous-titre hero
+
+// -----------------------------------------------------------------------------
+// Espacements
+// -----------------------------------------------------------------------------
+$section-padding:    6rem 0;     // Padding commun des sections HomePage
+$container-max:      1200px;     // Largeur max du conteneur
+
+// -----------------------------------------------------------------------------
+// Bordures
+// -----------------------------------------------------------------------------
+$radius-sm:      10px;    // Cards, images
+$radius-pill:    30px;    // Bouton hero
+$radius-circle:  50%;     // Icon-wrapper, social links
+
+// -----------------------------------------------------------------------------
+// Ombres
+// -----------------------------------------------------------------------------
+$shadow-sm:   0 5px 15px rgba(0, 0, 0, 0.05);    // Cards au repos
+$shadow-md:   0 10px 30px rgba(0, 0, 0, 0.1);    // Image about, header scrolled
+$shadow-lg:   0 15px 30px rgba(0, 0, 0, 0.1);    // Cards au hover
+$shadow-btn:  0 5px 15px rgba(45, 80, 22, 0.3);  // Bouton hero au hover
+
+// -----------------------------------------------------------------------------
+// Transitions
+// -----------------------------------------------------------------------------
+$transition: all 0.3s ease;

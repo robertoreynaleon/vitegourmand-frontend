@@ -1,0 +1,270 @@
+// =============================================================================
+// HOME PAGE — Vite & Gourmand
+// =============================================================================
+@use '../styles/variables' as *;
+@use '../styles/mixins' as *;
+
+// =============================================================================
+// SECTION : À PROPOS
+// =============================================================================
+.about-section {
+    padding: $section-padding;
+    background: $color-white;
+}
+
+// Grille texte + image
+.about-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    align-items: center;
+}
+
+// Texte
+.about-text {
+    h3 {
+        font-family: $font-heading;
+        font-size: 1.8rem;
+        color: $color-green;
+        margin-bottom: 1.5rem;
+    }
+
+    p {
+        text-align: justify;
+        margin-bottom: 1.5rem;
+        font-size: 1.05rem;
+        line-height: 1.8;
+        color: $color-text-light;
+    }
+}
+
+// Image
+.about-image {
+    border-radius: $radius-sm;
+    overflow: hidden;
+    box-shadow: $shadow-md;
+
+    img {
+        width: 100%;
+        transition: $transition;
+    }
+
+    &:hover img {
+        transform: scale(1.2);
+    }
+}
+
+// =============================================================================
+// SECTION : CHARTE ÉCO-RESPONSABLE
+// =============================================================================
+.charte-section {
+    padding: $section-padding;
+    background: $color-bg-light;
+}
+
+// Texte d'introduction sous le header de section
+.section-intro {
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto 3rem;
+    font-size: 1.1rem;
+    color: $color-text-light;
+}
+
+// Grille des 3 cartes
+.charte-grid {
+    @include grid-cols(3, 3rem);
+    margin-top: 3rem;
+}
+
+// Carte individuelle
+.charte-card {
+    text-align: center;
+    padding: 2.5rem;
+    background: $color-white;
+    border-radius: $radius-sm;
+    box-shadow: $shadow-sm;
+    transition: $transition;
+    @include focus-ring($color-gold);
+
+    &:hover {
+        transform: translateY(-10px);
+        box-shadow: $shadow-lg;
+    }
+
+    h3 {
+        font-family: $font-heading;
+        font-size: 1.3rem;
+        color: $color-green;
+        margin-bottom: 1rem;
+    }
+
+    p {
+        padding: 0 1.4rem;
+        font-size: 0.95rem;
+        line-height: 1.7;
+        color: $color-text-light;
+    }
+}
+
+// Icône circulaire dans la carte
+.icon-wrapper {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 1.5rem;
+    @include flex-center;
+    background: $color-green;
+    color: $color-white;
+    border-radius: $radius-circle;
+
+    svg {
+        width: 40px;
+        height: 40px;
+    }
+}
+
+// =============================================================================
+// SECTION : LOCAVORE
+// =============================================================================
+.locavore-section {
+    padding: $section-padding;
+    background: $color-white;
+}
+
+// Sous-titre doré
+.locavore-subtitle {
+    font-family: $font-heading;
+    font-size: 2rem;
+    text-align: center;
+    color: $color-gold;
+    margin-bottom: 2rem;
+}
+
+// Grille texte + features
+.locavore-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+}
+
+// Bloc texte principal
+.locavore-main {
+    p {
+        margin-bottom: 1.5rem;
+        padding-right: 1.4rem;
+        font-size: 1.05rem;
+        line-height: 1.8;
+        color: $color-text-light;
+    }
+
+    ul {
+        list-style: none;
+        margin: 1.5rem 0;
+
+        li {
+            position: relative;
+            padding-left: 1.8rem;
+            margin-bottom: 0.8rem;
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: $color-text-light;
+
+            &::before {
+                content: '✔';
+                position: absolute;
+                left: 0;
+                color: $color-green;
+                font-size: 1.5rem;
+                font-weight: bold;
+                line-height: 1;
+                top: 0;
+            }
+        }
+    }
+}
+
+// Colonne des 3 features
+.locavore-features {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+// Item feature individuel
+.feature-item {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 1.5rem;
+    background: $color-bg-light;
+    border-radius: $radius-sm;
+    transition: $transition;
+    @include focus-ring($color-gold);
+
+    &:hover {
+        background: $color-green;
+        color: $color-white;
+
+        .icon {
+            color: $color-white;
+        }
+    }
+
+    h4 {
+        font-size: 1rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+}
+
+.icon {
+    color: $color-green;
+}
+
+// =============================================================================
+// RESPONSIVE
+// =============================================================================
+@include tablet {
+    .about-content {
+        gap: 3rem;
+    }
+
+    .charte-grid {
+        @include grid-cols(2, 2rem);
+    }
+
+    .locavore-content {
+        gap: 2.5rem;
+    }
+}
+
+@include mobile {
+    .about-content {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+
+    .charte-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+
+    .locavore-content {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+
+    .locavore-main p {
+        padding-right: 0;
+    }
+
+    .about-text h3 {
+        font-size: 1.4rem;
+    }
+
+    .locavore-subtitle {
+        font-size: 1.5rem;
+    }
+}
