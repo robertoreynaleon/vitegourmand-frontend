@@ -5,12 +5,11 @@ function SearchBar({ regimes = [], filters = {}, onSubmit, onChange }) {
     return (
         <section className="filter-section" aria-label="Filtres de recherche">
             <div className="container">
-
+                
                 <div className="section-header">
                     <h2>Nos menus</h2>
                     <div className="divider"></div>
                 </div>
-                
                 <div className="filter-bar">
                     <form
                         method="get"
