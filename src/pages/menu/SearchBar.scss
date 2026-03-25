@@ -1,0 +1,107 @@
+// =============================================================================
+// SEARCH BAR — Vite & Gourmand
+// =============================================================================
+@use '../../styles/variables' as *;
+@use '../../styles/mixins' as *;
+
+.filter-section {
+    background: $color-white;
+    padding: 2.5rem 0 1.5rem;
+}
+
+.filter-bar {
+    background: $color-bg-light;
+    border-radius: $radius-sm;
+    padding: 1.8rem;
+    box-shadow: $shadow-sm;
+}
+
+.filter-form {
+    display: grid;
+    grid-template-columns: minmax(200px, 1.2fr) 130px 130px 150px minmax(140px, 0.8fr);
+    gap: 1.2rem;
+    align-items: end;
+}
+
+.filter-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+
+    label {
+        font-size: 0.95rem;
+        font-weight: 600;
+        color: $color-text;
+    }
+
+    input,
+    select {
+        height: 44px;
+        padding: 0.5rem 0.75rem;
+        border: 1px solid rgba($color-text, 0.2);
+        border-radius: $radius-sm;
+        background: $color-white;
+        color: $color-text;
+        font-size: 0.95rem;
+        transition: $transition;
+        @include focus-ring($color-gold);
+
+        &:hover {
+            border-color: rgba($color-green, 0.6);
+        }
+    }
+}
+
+.filter-action {
+    justify-content: flex-end;
+}
+
+.filter-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+    padding: 0.65rem 1.4rem;
+    border: none;
+    border-radius: $radius-pill;
+    background: $color-green;
+    color: $color-white;
+    font-weight: 600;
+    letter-spacing: 0.4px;
+    cursor: pointer;
+    box-shadow: $shadow-btn;
+    @include interactive($color-gold);
+
+    &:hover {
+        background: $color-green-dark;
+        transform: translateY(-2px);
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Responsive
+// -----------------------------------------------------------------------------
+@include tablet {
+    .filter-form {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@include mobile {
+    .filter-bar {
+        padding: 1.4rem;
+    }
+
+    .filter-form {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .filter-action {
+        justify-content: stretch;
+    }
+
+    .filter-btn {
+        width: 100%;
+    }
+}

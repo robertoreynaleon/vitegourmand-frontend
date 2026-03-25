@@ -1,0 +1,71 @@
+[33mcommit c9a55d84ac17a673f8728297f9999018504a10a9[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mfeature/menus-list[m[33m, [m[1;31morigin/feature/menus-list[m[33m)[m
+Author: rreynaleon <ro.reyna83@gmail.com>
+Date:   Wed Mar 25 15:04:53 2026 +0100
+
+    Fichier SASS pour MenuList
+
+[33mcommit 90cd0b13ec8fe4517a9bb7f696a1373f7df1596a[m
+Author: rreynaleon <ro.reyna83@gmail.com>
+Date:   Wed Mar 25 12:14:23 2026 +0100
+
+    Structure HTML des cartes menus
+
+[33mcommit 885998697088652247811b78e4c527f31c1614ca[m
+Author: rreynaleon <ro.reyna83@gmail.com>
+Date:   Wed Mar 25 11:36:59 2026 +0100
+
+    Création de la route et page MenuList
+
+[33mcommit 2deae57e47dcdf2c9e099fae3fca3c29e5ae1f29[m[33m ([m[1;31morigin/feature/homepage[m[33m, [m[1;31morigin/dev[m[33m, [m[1;32mfeature/homepage[m[33m, [m[1;32mdev[m[33m)[m
+Author: rreynaleon <ro.reyna83@gmail.com>
+Date:   Fri Mar 13 18:57:21 2026 +0100
+
+    Fichiers SASS, Responsive Design, RGAA et installation des polices en local
+
+[33mcommit 0853fa6fbabc0f4ffcf7beeb34464d6ca077a164[m
+Author: rreynaleon <ro.reyna83@gmail.com>
+Date:   Wed Mar 11 19:01:45 2026 +0100
+
+    Scroll Header et HomePage avec framer-motion
+
+[33mcommit 6aceff6a46ab35903f1418cb8b12adad77f7c47f[m
+Author: rreynaleon <ro.reyna83@gmail.com>
+Date:   Wed Mar 11 14:50:53 2026 +0100
+
+    Développement Hero HomePage
+
+[33mcommit 49de246b94c82a4a7b24d57d5210c2c95bfd6418[m
+Author: rreynaleon <ro.reyna83@gmail.com>
+Date:   Tue Mar 10 23:53:10 2026 +0100
+
+    Développement structure et style HomePage
+
+[33mcommit 5311421b5a2e3ac8818f7a33817f8e0887735338[m
+Author: rreynaleon <ro.reyna83@gmail.com>
+Date:   Tue Mar 10 21:11:21 2026 +0100
+
+    Testing BDD MongoDB Ok
+
+[33mcommit 234d823e5e0e6850dd27b99b51bc2dbada755a89[m
+Author: rreynaleon <ro.reyna83@gmail.com>
+Date:   Tue Mar 10 17:19:53 2026 +0100
+
+    Testing BDD MySQL Ok
+
+[33mcommit b147efbdd5f40ee917ae8f75b0878447413559b4[m
+Author: rreynaleon <ro.reyna83@gmail.com>
+Date:   Tue Mar 10 00:29:37 2026 +0100
+
+    Création HomePage
+
+[33mcommit 4139dfe3a6431b008b38e32eb38fc0a027ef9563[m[33m ([m[1;31morigin/main[m[33m, [m[1;32mmain[m[33m)[m
+Author: rreynaleon <ro.reyna83@gmail.com>
+Date:   Fri Mar 6 13:39:49 2026 +0100
+
+    Initial commit
+
+[33mcommit dfc2b3aa9d9bfe6701581cd01d730fa3d80c0856[m
+Author: rreynaleon <ro.reyna83@gmail.com>
+Date:   Fri Mar 6 12:24:16 2026 +0100
+
+    Initialize project using Create React App

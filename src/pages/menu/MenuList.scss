@@ -9,7 +9,10 @@
 // -----------------------------------------------------------------------------
 .menu-page-wrapper {
     .main-header {
-        position: static;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
         background: $color-white;
         box-shadow: $shadow-md;
     }
@@ -29,6 +32,10 @@
     .user-greeting {
         color: $color-text;
     }
+
+    main {
+        padding-top: 90px;
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -36,7 +43,7 @@
 // -----------------------------------------------------------------------------
 .menu-page {
     padding: $section-padding;
-    background: $color-bg-light;
+    background: $color-gold-light;
 }
 
 // Messages d'etat
@@ -62,7 +69,8 @@
 
 .menu-card {
     background: $color-white;
-    border-radius: $radius-sm;
+    border-radius: $radius-pill;
+    border: 1px solid $color-green-dark;
     box-shadow: $shadow-sm;
     overflow: hidden;
     display: flex;
