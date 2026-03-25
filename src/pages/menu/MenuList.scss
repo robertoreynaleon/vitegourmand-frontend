@@ -1,0 +1,217 @@
+// =============================================================================
+// MENU LIST — Vite & Gourmand
+// =============================================================================
+@use '../../styles/variables' as *;
+@use '../../styles/mixins' as *;
+
+// -----------------------------------------------------------------------------
+// Header visible sur pages internes (non transparent)
+// -----------------------------------------------------------------------------
+.menu-page-wrapper {
+    .main-header {
+        position: static;
+        background: $color-white;
+        box-shadow: $shadow-md;
+    }
+
+    .logo h1 {
+        color: $color-green;
+    }
+
+    .nav-menu a {
+        color: $color-text;
+
+        &::after {
+            background: $color-green;
+        }
+    }
+
+    .user-greeting {
+        color: $color-text;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Section principale
+// -----------------------------------------------------------------------------
+.menu-page {
+    padding: $section-padding;
+    background: $color-bg-light;
+}
+
+// Messages d'etat
+// -----------------------------------------------------------------------------
+.loading-message,
+.error-message,
+.no-menu-message {
+    text-align: center;
+    font-size: 1.05rem;
+    color: $color-text-light;
+}
+
+.error-message {
+    color: $color-green-dark;
+}
+
+// -----------------------------------------------------------------------------
+// Grille des cartes menus
+// -----------------------------------------------------------------------------
+.menu-grid {
+    @include grid-cols(3, 2.5rem);
+}
+
+.menu-card {
+    background: $color-white;
+    border-radius: $radius-sm;
+    box-shadow: $shadow-sm;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: $transition;
+
+    &:hover {
+        transform: translateY(-6px);
+        box-shadow: $shadow-lg;
+    }
+}
+
+.menu-card-header {
+    padding: 1.5rem 1.8rem 0.5rem;
+}
+
+.menu-card-title {
+    font-family: $font-heading;
+    font-size: 1.5rem;
+    color: $color-green;
+    letter-spacing: 1px;
+}
+
+.menu-card-body {
+    padding: 0 1.8rem 1.5rem;
+    color: $color-text;
+    flex: 1;
+}
+
+.menu-info {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem 0.6rem;
+    margin-bottom: 0.8rem;
+    font-size: 0.98rem;
+}
+
+.menu-info-label {
+    font-weight: 600;
+    color: $color-text;
+}
+
+.regime-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.2rem 0.6rem;
+    border-radius: $radius-pill;
+    background: $color-bg-light;
+    border: 1px solid rgba($color-gold, 0.4);
+    color: $color-text;
+    font-size: 0.9rem;
+}
+
+.menu-description {
+    margin: 1rem 0 1.2rem;
+}
+
+.menu-description-title {
+    font-weight: 600;
+    color: $color-text;
+    margin-bottom: 0.4rem;
+}
+
+.menu-description-text {
+    color: $color-text-light;
+    line-height: 1.7;
+}
+
+.menu-price {
+    font-family: $font-heading;
+    font-size: 1.2rem;
+    color: $color-green;
+    margin: 0.8rem 0 1rem;
+}
+
+.menu-stock {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-size: 0.95rem;
+}
+
+.stock-available,
+.stock-low {
+    padding: 0.2rem 0.6rem;
+    border-radius: $radius-pill;
+    font-weight: 600;
+    font-size: 0.85rem;
+    letter-spacing: 0.3px;
+}
+
+.stock-available {
+    background: $color-green;
+    color: $color-white;
+}
+
+.stock-low {
+    background: $color-gold;
+    color: $color-bg-dark;
+}
+
+.menu-card-footer {
+    padding: 0 1.8rem 1.8rem;
+}
+
+.menu-detail-btn {
+    display: inline-block;
+    padding: 0.7rem 1.4rem;
+    border-radius: $radius-pill;
+    background: $color-green;
+    color: $color-white;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    box-shadow: $shadow-btn;
+    @include interactive($color-gold);
+
+    &:hover {
+        background: $color-green-dark;
+        transform: translateY(-2px);
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Responsive
+// -----------------------------------------------------------------------------
+@include tablet {
+    .menu-grid {
+        @include grid-cols(2, 2rem);
+    }
+}
+
+@include mobile {
+    .menu-page {
+        padding: 4rem 0;
+    }
+
+    .menu-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+
+    .menu-card-header,
+    .menu-card-body,
+    .menu-card-footer {
+        padding-left: 1.2rem;
+        padding-right: 1.2rem;
+    }
+
+    .menu-card-title {
+        font-size: 1.3rem;
+    }
+}

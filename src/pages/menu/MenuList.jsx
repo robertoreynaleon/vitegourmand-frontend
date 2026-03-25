@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
+import './MenuList.scss';
 
 const API_MENUS = 'http://vitegourmand.local/api/menus';
 
@@ -31,12 +32,17 @@ function MenuList() {
     }, []);
 
     return (
-        <div>
+        <div className="menu-page-wrapper">
             <Header />
 
-            {/* Section d'affichage des menus */}
-            <section className="menu-page">
-                <div className="container">
+            <main>
+                {/* Section d'affichage des menus */}
+                <section className="menu-page">
+                    <div className="container">
+                        <div className="section-header">
+                            <h2>Nos menus</h2>
+                            <div className="divider"></div>
+                        </div>
                     {loading && <p className="loading-message">Chargement des menus...</p>}
                     {error && <p className="error-message">Erreur : {error}</p>}
 
@@ -44,10 +50,10 @@ function MenuList() {
                         <p className="no-menu-message">Aucun menu disponible pour le moment.</p>
                     )}
 
-                    {!loading && !error && menus.length > 0 && (
-                        <div className="menu-grid">
-                            {menus.map((menu) => (
-                                <div key={menu.id} className="menu-card">
+                        {!loading && !error && menus.length > 0 && (
+                            <div className="menu-grid">
+                                {menus.map((menu) => (
+                                    <div key={menu.id} className="menu-card">
                                     {/* En-tête de la carte */}
                                     <div className="menu-card-header">
                                         <h2 className="menu-card-title">{menu.title}</h2>
@@ -57,13 +63,13 @@ function MenuList() {
                                     <div className="menu-card-body">
                                         {/* Régime */}
                                         <div className="menu-info">
-                                            <span className="menu-info-label">Régime :</span>
+                                            <span className="menu-info-label">Régime : </span>
                                             <span className="regime-badge">{menu.regime?.label || '—'}</span>
                                         </div>
 
                                         {/* Nombre minimum */}
                                         <div className="menu-info">
-                                            <span className="menu-info-label">Nombre minimum :</span>
+                                            <span className="menu-info-label">Nombre minimum : </span>
                                             <span>{menu.minPeople} personnes</span>
                                         </div>
 
@@ -82,7 +88,7 @@ function MenuList() {
 
                                         {/* Stock */}
                                         <div className="menu-stock">
-                                            <span className="menu-info-label">Stock restant :</span>
+                                            <span className="menu-info-label">Stock restant : </span>
                                             <span className={(menu.remainingQuantity ?? 0) > 10 ? 'stock-available' : 'stock-low'}>
                                                 {menu.remainingQuantity ?? 'Non défini'}
                                             </span>
@@ -91,16 +97,17 @@ function MenuList() {
 
                                     {/* Pied de carte */}
                                     <div className="menu-card-footer">
-                                        <a href={`/menu/show/${menu.id}`} className="menu-detail-btn">
-                                            Voir les détails
-                                        </a>
+                                            <a href={`/menu/show/${menu.id}`} className="menu-detail-btn">
+                                                Voir les détails
+                                            </a>
+                                        </div>
                                     </div>
-                                </div>
-                            ))}
-                        </div>
-                    )}
-                </div>
-            </section>
+                                ))}
+                            </div>
+                        )}
+                    </div>
+                </section>
+            </main>
 
             <Footer />
         </div>
