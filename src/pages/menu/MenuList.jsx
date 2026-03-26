@@ -73,13 +73,13 @@ function MenuList() {
                                             {/* Régime */}
                                             <div className="menu-info">
                                                 <span className="menu-info-label">Régime : </span>
-                                                <span className="regime-badge">{menu.regime?.label || '—'}</span>
+                                                <span className="regime-badge">{menu.regime && menu.regime.label ? menu.regime.label : '—'}</span>
                                             </div>
 
                                             {/* Nombre minimum */}
                                             <div className="menu-info">
                                                 <span className="menu-info-label">Nombre minimum : </span>
-                                                <span>{menu.minPeople} personnes</span>
+                                                <span>{typeof menu.minPeople !== 'undefined' ? menu.minPeople : '—'} personnes</span>
                                             </div>
 
                                             {/* Description */}
@@ -92,14 +92,14 @@ function MenuList() {
 
                                             {/* Prix */}
                                             <div className="menu-price">
-                                                {Number(menu.pricePerPerson).toFixed(2)} € / pers.
+                                                {menu.pricePerPerson !== undefined && menu.pricePerPerson !== null ? Number(menu.pricePerPerson).toFixed(2) : '--'} € / pers.
                                             </div>
 
                                             {/* Stock */}
                                             <div className="menu-stock">
                                                 <span className="menu-info-label">Stock restant : </span>
                                                 <span className={(menu.remainingQuantity ?? 0) > 10 ? 'stock-available' : 'stock-low'}>
-                                                    {menu.remainingQuantity ?? 'Non défini'}
+                                                    {typeof menu.remainingQuantity !== 'undefined' && menu.remainingQuantity !== null ? menu.remainingQuantity : 'Non défini'}
                                                 </span>
                                             </div>
                                         </div>
