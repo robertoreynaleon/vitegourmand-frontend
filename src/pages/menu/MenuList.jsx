@@ -12,9 +12,12 @@ function MenuList() {
     const [menus, setMenus] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [fetchUrl, setFetchUrl] = useState(`${API_MENUS}${window.location.search || ''}`);
 
     useEffect(() => {
-        fetch(API_MENUS, {
+        setLoading(true);
+        setError(null);
+        fetch(fetchUrl, {
             headers: { Accept: 'application/ld+json' }
         })
             .then((res) => {
@@ -32,14 +35,19 @@ function MenuList() {
                 setError(err.message);
                 setLoading(false);
             });
-    }, []);
+    }, [fetchUrl]);
+
+    const handleSearch = (queryString) => {
+        const nextUrl = queryString ? `${API_MENUS}?${queryString}` : API_MENUS;
+        setFetchUrl(nextUrl);
+    };
 
     return (
         <div className="menu-page-wrapper">
             <Header />
 
             <main>
-                <SearchBar />
+                <SearchBar onSearch={handleSearch} />
                 {/* Section d'affichage des menus */}
                 <section className="menu-page">
                     <div className="container">
