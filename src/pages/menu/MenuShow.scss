@@ -1,0 +1,504 @@
+// =============================================================================
+// MENU SHOW — Vite & Gourmand
+// =============================================================================
+@use '../../styles/variables' as *;
+@use '../../styles/mixins' as *;
+
+// -----------------------------------------------------------------------------
+// Header visible sur pages internes (non transparent)
+// -----------------------------------------------------------------------------
+.menu-page-wrapper {
+    .main-header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        background: $color-white;
+        box-shadow: $shadow-md;
+    }
+
+    .logo h1 {
+        color: $color-green;
+    }
+
+    .nav-menu a {
+        color: $color-text;
+
+        &::after {
+            background: $color-green;
+        }
+    }
+
+    .user-greeting {
+        color: $color-text;
+    }
+
+    main {
+        padding-top: 90px;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Page structure
+// -----------------------------------------------------------------------------
+.menu-show-page {
+    background: $color-bg-light;
+}
+
+.menu-show-content {
+    padding: $section-padding;
+}
+
+.menu-show-hero {
+    margin-bottom: 2rem;
+}
+
+.menu-show-kicker {
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: $color-text-light;
+    font-size: 0.9rem;
+}
+
+.menu-show-title {
+    font-family: $font-heading;
+    font-size: 2.4rem;
+    color: $color-green;
+    margin: 0.4rem 0 0.8rem;
+}
+
+.menu-show-regime {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem 0.6rem;
+    font-size: 1rem;
+}
+
+// -----------------------------------------------------------------------------
+// Gallery carousel
+// -----------------------------------------------------------------------------
+.menu-show-gallery {
+    margin: 2rem 0 3rem;
+}
+
+.menu-show-carousel {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 1.5rem;
+    align-items: start;
+}
+
+.menu-show-media {
+    position: relative;
+    background: $color-white;
+    border-radius: $radius-sm;
+    box-shadow: $shadow-md;
+    overflow: hidden;
+    aspect-ratio: 1 / 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.menu-show-media-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    border: none;
+    background: transparent;
+    padding: 0;
+    cursor: zoom-in;
+    @include interactive($color-gold);
+}
+
+.menu-show-media img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center;
+    display: block;
+}
+
+.menu-show-media-placeholder {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    background: linear-gradient(135deg, rgba(45, 80, 22, 0.08), rgba(201, 169, 97, 0.15));
+}
+
+.menu-show-nav {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 0.6rem;
+    pointer-events: none;
+}
+
+.menu-show-nav button {
+    pointer-events: auto;
+    width: 42px;
+    height: 42px;
+    border-radius: $radius-circle;
+    border: none;
+    background: rgba(255, 255, 255, 0.9);
+    color: $color-green;
+    font-size: 1.2rem;
+    box-shadow: $shadow-sm;
+    cursor: pointer;
+    @include interactive($color-gold);
+}
+
+.menu-show-nav button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.menu-show-thumbs {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+}
+
+.menu-show-thumb {
+    display: block;
+    width: 90px;
+    height: 70px;
+    border-radius: $radius-sm;
+    border: 2px solid transparent;
+    background: $color-white;
+    box-shadow: $shadow-sm;
+    overflow: hidden;
+    cursor: pointer;
+    @include interactive($color-gold);
+}
+
+.menu-show-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.menu-show-thumb.is-active {
+    border-color: $color-green;
+}
+
+.menu-show-lightbox {
+    position: fixed;
+    inset: 0;
+    background: rgba(26, 26, 26, 0.85);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    z-index: 9999;
+}
+
+.menu-show-lightbox img {
+    max-width: min(860px, 90vw);
+    max-height: 80vh;
+    object-fit: contain;
+    border-radius: $radius-sm;
+    box-shadow: $shadow-lg;
+    background: $color-white;
+}
+
+.menu-show-lightbox-close {
+    position: absolute;
+    top: 24px;
+    right: 24px;
+    width: 44px;
+    height: 44px;
+    border-radius: $radius-circle;
+    border: none;
+    background: $color-white;
+    color: $color-green;
+    font-size: 1.6rem;
+    cursor: pointer;
+    box-shadow: $shadow-sm;
+    @include interactive($color-gold);
+}
+
+// -----------------------------------------------------------------------------
+// Summary & composition
+// -----------------------------------------------------------------------------
+.menu-show-summary {
+    background: $color-white;
+    border-radius: $radius-sm;
+    box-shadow: $shadow-sm;
+    padding: 2rem;
+    margin-bottom: 2.5rem;
+}
+
+.menu-section-title {
+    font-family: $font-heading;
+    font-size: 2rem;
+    font-weight: lighter;
+    color: $color-gold;
+    margin-bottom: 1.5rem;
+}
+
+.menu-composition-grid {
+    @include grid-cols(3, 1.5rem);
+}
+
+.menu-composition-card {
+    // background: rgba(201, 169, 97, 0.12);
+    background: $color-white;
+    border-left: 4px solid $color-gold;
+    border-radius: $radius-sm;
+    box-shadow: $shadow-sm;
+    padding: 1.5rem;
+}
+
+.menu-composition-title {
+    font-family: $font-heading;
+    color: $color-green;
+    font-size: 1.1rem;
+    margin-bottom: 0.6rem;
+}
+
+.menu-composition-name {
+    font-weight: 600;
+    color: $color-text;
+    margin-bottom: 0.6rem;
+}
+
+.menu-composition-allergens {
+    font-size: 0.95rem;
+    color: $color-text-light;
+}
+
+// -----------------------------------------------------------------------------
+// Shared blocks from MenuList
+// -----------------------------------------------------------------------------
+.menu-info {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem 0.6rem;
+    margin-bottom: 0.8rem;
+    font-size: 0.98rem;
+}
+
+.menu-info-label {
+    font-weight: 600;
+    color: $color-text;
+}
+
+.regime-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.2rem 0.6rem;
+    border-radius: $radius-pill;
+    background: $color-bg-light;
+    border: 1px solid rgba($color-gold, 0.4);
+    color: $color-text;
+    font-size: 0.9rem;
+}
+
+.menu-description {
+    margin: 1rem 0 0;
+}
+
+.menu-description-title {
+    font-weight: 600;
+    color: $color-text;
+    margin-bottom: 0.4rem;
+}
+
+.menu-description-text {
+    color: $color-text-light;
+    line-height: 1.7;
+}
+
+.menu-price-show {
+    font-family: $font-heading;
+    font-size: 2rem;
+    color: $color-white;
+}
+
+.menu-stock {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-size: 0.95rem;
+}
+
+.menu-show-stock {
+    margin-top: 1.2rem;
+}
+
+.stock-available,
+.stock-low {
+    padding: 0.2rem 0.6rem;
+    border-radius: $radius-pill;
+    font-weight: 600;
+    font-size: 0.85rem;
+    letter-spacing: 0.3px;
+}
+
+.stock-available {
+    background: $color-green;
+    color: $color-white;
+}
+
+.stock-low {
+    background: $color-gold;
+    color: $color-bg-dark;
+}
+
+// -----------------------------------------------------------------------------
+// Pricing & actions
+// -----------------------------------------------------------------------------
+.menu-show-pricing {
+    margin-top: 2.5rem;
+    background: $color-green;
+    border-radius: $radius-sm;
+    box-shadow: $shadow-sm;
+    padding: 2rem;
+    color: $color-white;
+}
+
+.menu-pricing-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    align-items: center;
+}
+
+.menu-pricing-info {
+    display: grid;
+    gap: 0.6rem;
+}
+
+.menu-show-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+.menu-action-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.9rem 1.6rem;
+    border-radius: $radius-pill;
+    background: $color-gold;
+    color: $color-white;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    box-shadow: $shadow-btn;
+    @include interactive($color-gold);
+
+    &:hover {
+        background: $color-gold-light;
+        color: $color-text;
+        transform: translateY(-2px);
+    }
+}
+
+.menu-action-secondary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.9rem 1.6rem;
+    border-radius: $radius-pill;
+    background: $color-green-dark;
+    color: $color-white;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    @include interactive($color-gold);
+}
+
+.menu-show-pricing .menu-info-label {
+    color: $color-gold;
+    font-size: 1rem;
+}
+
+// -----------------------------------------------------------------------------
+// Messages d'etat
+// -----------------------------------------------------------------------------
+.loading-message,
+.error-message,
+.no-menu-message {
+    text-align: center;
+    font-size: 1.05rem;
+    color: $color-text-light;
+}
+
+.error-message {
+    color: $color-green-dark;
+}
+
+// -----------------------------------------------------------------------------
+// Responsive
+// -----------------------------------------------------------------------------
+@include tablet {
+    .menu-show-content {
+        padding: 4.5rem 0;
+    }
+
+    .menu-show-carousel {
+        grid-template-columns: 1fr;
+    }
+
+    .menu-show-media,
+    .menu-show-media-placeholder {
+        max-width: 520px;
+        margin: 0 auto;
+    }
+
+    .menu-show-thumbs {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .menu-composition-grid {
+        @include grid-cols(2, 1.5rem);
+    }
+
+    .menu-pricing-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@include mobile {
+    .menu-show-title {
+        font-size: 1.9rem;
+    }
+
+    .menu-show-content {
+        padding: 4rem 0;
+    }
+
+    .menu-show-summary,
+    .menu-show-pricing {
+        padding: 1.5rem;
+    }
+
+    .menu-composition-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .menu-show-actions {
+        flex-direction: column;
+    }
+
+    .menu-show-media,
+    .menu-show-media-placeholder {
+        max-width: 360px;
+        margin: 0 auto;
+    }
+
+    .menu-show-thumb {
+        width: 72px;
+        height: 56px;
+    }
+}

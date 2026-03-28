@@ -2,6 +2,8 @@ import React, { useEffect, useMemo, useState } from "react";
 import { useParams } from 'react-router-dom';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
+import PageLoader from '../../components/PageLoader';
+import './MenuShow.scss';
 
 const API_MENUS = 'http://vitegourmand.local/api/menus';
 const API_DISHES = 'http://vitegourmand.local/api/dishes';
@@ -10,18 +12,26 @@ function MenuShow() {
     const { id } = useParams();
     const [menu, setMenu] = useState(null);
     const [dishesById, setDishesById] = useState({});
-    const [loading, setLoading] = useState(true);
+    const [menuLoaded, setMenuLoaded] = useState(false);
+    const [imagesLoaded, setImagesLoaded] = useState(false);
+    const [dishesLoaded, setDishesLoaded] = useState(false);
     const [error, setError] = useState(null);
+    const [activeImageIndex, setActiveImageIndex] = useState(0);
+    const [isLightboxOpen, setIsLightboxOpen] = useState(false);
 
     useEffect(() => {
         if (!id) {
             setError('Menu introuvable.');
-            setLoading(false);
+            setMenuLoaded(true);
+            setImagesLoaded(true);
+            setDishesLoaded(true);
             return;
         }
 
         const controller = new AbortController();
-        setLoading(true);
+        setMenuLoaded(false);
+        setImagesLoaded(false);
+        setDishesLoaded(false);
         setError(null);
 
         fetch(`${API_MENUS}/${id}`, {
@@ -36,12 +46,14 @@ function MenuShow() {
             })
             .then((data) => {
                 setMenu(data);
-                setLoading(false);
+                setMenuLoaded(true);
             })
             .catch((err) => {
                 if (err.name === 'AbortError') return;
                 setError(err.message);
-                setLoading(false);
+                setMenuLoaded(true);
+                setImagesLoaded(true);
+                setDishesLoaded(true);
             });
 
         return () => controller.abort();
@@ -49,6 +61,7 @@ function MenuShow() {
 
     useEffect(() => {
         if (!menu || !Array.isArray(menu.menuDishes)) {
+            setDishesLoaded(true);
             return;
         }
 
@@ -58,6 +71,7 @@ function MenuShow() {
 
         const uniqueDishIds = Array.from(new Set(dishIds));
         if (uniqueDishIds.length === 0) {
+            setDishesLoaded(true);
             return;
         }
 
@@ -84,12 +98,53 @@ function MenuShow() {
                     return acc;
                 }, {});
                 setDishesById((prev) => ({ ...prev, ...nextMap }));
+                setDishesLoaded(true);
             })
             .catch(() => {
                 setDishesById((prev) => ({ ...prev }));
+                setDishesLoaded(true);
             });
 
         return () => controller.abort();
+    }, [menu]);
+
+    useEffect(() => {
+        setActiveImageIndex(0);
+    }, [menu]);
+
+    useEffect(() => {
+        if (!menu) {
+            return;
+        }
+
+        const imageList = Array.isArray(menu.images)
+            ? menu.images.filter((image) => image?.imagePath)
+            : [];
+
+        if (imageList.length === 0) {
+            setImagesLoaded(true);
+            return;
+        }
+
+        let isActive = true;
+        const preloaders = imageList.map((image) => {
+            return new Promise((resolve) => {
+                const img = new Image();
+                img.onload = resolve;
+                img.onerror = resolve;
+                img.src = image.imagePath;
+            });
+        });
+
+        Promise.all(preloaders).then(() => {
+            if (isActive) {
+                setImagesLoaded(true);
+            }
+        });
+
+        return () => {
+            isActive = false;
+        };
     }, [menu]);
 
     const dishTypeLabels = useMemo(() => ({
@@ -131,20 +186,42 @@ function MenuShow() {
     const pricePerPerson = menu?.pricePerPerson ? Number(menu.pricePerPerson) : null;
     const minPeople = typeof menu?.minPeople === 'number' ? menu.minPeople : null;
     const minOrderPrice = pricePerPerson && minPeople ? pricePerPerson * minPeople : null;
+    const images = Array.isArray(menu?.images) ? menu.images.filter((image) => image?.imagePath) : [];
+    const canNavigateImages = images.length > 1;
+    const isPageLoading = !error && (!menuLoaded || !imagesLoaded || !dishesLoaded);
+
+    const handlePrevImage = () => {
+        if (!canNavigateImages) return;
+        setActiveImageIndex((prev) => (prev - 1 + images.length) % images.length);
+    };
+
+    const handleNextImage = () => {
+        if (!canNavigateImages) return;
+        setActiveImageIndex((prev) => (prev + 1) % images.length);
+    };
+
+    const handleOpenLightbox = () => {
+        if (images.length === 0) return;
+        setIsLightboxOpen(true);
+    };
+
+    const handleCloseLightbox = () => {
+        setIsLightboxOpen(false);
+    };
 
     return (
-        <div className="menu-show-page">
+        <div className="menu-page-wrapper menu-show-page">
             <Header />
             <main className="menu-show-content">
                 <div className="container">
-                    {loading && <p className="loading-message">Chargement du menu...</p>}
+                    {isPageLoading && <PageLoader message="Chargement du menu..." />}
                     {error && <p className="error-message">Erreur : {error}</p>}
 
-                    {!loading && !error && !menu && (
+                    {!isPageLoading && !error && !menu && (
                         <p className="no-menu-message">Menu introuvable.</p>
                     )}
 
-                    {!loading && !error && menu && (
+                    {!isPageLoading && !error && menu && (
                         <>
                     <section className="menu-show-hero">
                         <div className="menu-show-heading">
@@ -158,25 +235,78 @@ function MenuShow() {
                     </section>
 
                     <section className="menu-show-gallery" aria-label="Photos du menu">
-                        <div className="menu-show-gallery-grid">
-                            {Array.isArray(menu.images) && menu.images.length > 0 ? (
-                                menu.images.map((image) => (
-                                    <figure key={image.id} className="menu-show-photo">
+                        <div className="menu-show-carousel">
+                            <div className="menu-show-media">
+                                {images.length > 0 ? (
+                                    <button
+                                        type="button"
+                                        className="menu-show-media-btn"
+                                        onClick={handleOpenLightbox}
+                                        aria-label="Agrandir la photo"
+                                    >
                                         <img
-                                            src={image.imagePath}
-                                            alt={image.altText || menu.title || 'Photo du menu'}
+                                            src={images[activeImageIndex].imagePath}
+                                            alt={images[activeImageIndex].altText || menu.title || 'Photo du menu'}
                                         />
-                                    </figure>
-                                ))
-                            ) : (
-                                <>
-                                    <div className="menu-show-photo" aria-hidden="true"></div>
-                                    <div className="menu-show-photo" aria-hidden="true"></div>
-                                    <div className="menu-show-photo" aria-hidden="true"></div>
-                                </>
+                                    </button>
+                                ) : (
+                                    <div className="menu-show-media-placeholder" aria-hidden="true"></div>
+                                )}
+                                <div className="menu-show-nav">
+                                    <button
+                                        type="button"
+                                        onClick={handlePrevImage}
+                                        aria-label="Photo precedente"
+                                        disabled={!canNavigateImages}
+                                    >
+                                        ‹
+                                    </button>
+                                    <button
+                                        type="button"
+                                        onClick={handleNextImage}
+                                        aria-label="Photo suivante"
+                                        disabled={!canNavigateImages}
+                                    >
+                                        ›
+                                    </button>
+                                </div>
+                            </div>
+                            {images.length > 1 && (
+                                <div className="menu-show-thumbs" aria-label="Miniatures du menu">
+                                    {images.map((image, index) => (
+                                        <button
+                                            key={image.id || image.imagePath}
+                                            type="button"
+                                            className={`menu-show-thumb${index === activeImageIndex ? ' is-active' : ''}`}
+                                            onClick={() => setActiveImageIndex(index)}
+                                            aria-label={`Afficher la photo ${index + 1}`}
+                                        >
+                                            <img
+                                                src={image.imagePath}
+                                                alt={image.altText || menu.title || 'Miniature du menu'}
+                                            />
+                                        </button>
+                                    ))}
+                                </div>
                             )}
                         </div>
                     </section>
+                    {isLightboxOpen && images.length > 0 && (
+                        <div className="menu-show-lightbox" role="dialog" aria-modal="true">
+                            <button
+                                type="button"
+                                className="menu-show-lightbox-close"
+                                onClick={handleCloseLightbox}
+                                aria-label="Fermer la photo"
+                            >
+                                ×
+                            </button>
+                            <img
+                                src={images[activeImageIndex].imagePath}
+                                alt={images[activeImageIndex].altText || menu.title || 'Photo du menu'}
+                            />
+                        </div>
+                    )}
 
                     <section className="menu-show-summary">
                         <div className="menu-info">
@@ -221,7 +351,7 @@ function MenuShow() {
                     <section className="menu-show-pricing" aria-label="Informations de commande">
                         <h2 className="menu-section-title">Commande</h2>
                         <div className="menu-pricing-grid">
-                            <div className="menu-price">
+                            <div className="menu-price-show">
                                 {pricePerPerson !== null ? `${pricePerPerson.toFixed(2)} € / pers.` : '-- € / pers.'}
                             </div>
                             <div className="menu-pricing-info">
