@@ -1,0 +1,82 @@
+@use '../styles/variables' as *;
+@use '../styles/mixins' as *;
+
+.page-loader {
+    position: fixed;
+    inset: 0;
+    min-height: 100vh;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    text-align: center;
+    background: $color-bg-light;
+    color: $color-text;
+    z-index: 9999;
+}
+
+.page-loader-inner {
+    display: grid;
+    gap: 1rem;
+    align-items: center;
+    justify-items: center;
+    padding: 2.5rem 3rem;
+    background: $color-white;
+    border-radius: $radius-sm;
+    box-shadow: $shadow-md;
+}
+
+.page-loader-icon {
+    width: 64px;
+    height: 84px;
+    position: relative;
+    margin: 0 auto;
+    animation: hourglass-spin 2s linear infinite;
+
+    &::before,
+    &::after {
+        content: '';
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 0;
+        height: 0;
+        border-left: 22px solid transparent;
+        border-right: 22px solid transparent;
+    }
+
+    &::before {
+        top: 6px;
+        border-bottom: 30px solid $color-gold;
+    }
+
+    &::after {
+        bottom: 6px;
+        border-top: 30px solid $color-green;
+    }
+}
+
+.page-loader-text {
+    font-family: $font-heading;
+    font-size: 0.9rem;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: $color-green;
+}
+
+@keyframes hourglass-spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .page-loader-icon,
+    .page-loader-icon::after {
+        animation: none;
+    }
+}

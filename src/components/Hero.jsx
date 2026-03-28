@@ -3,7 +3,11 @@ import './Hero.scss';
 
 function Hero() {
     return (
-        <section id="welcome" className="hero">
+        <section
+            id="welcome"
+            className="hero"
+            style={{ '--hero-image': "url('/assets/img/hero/hero.webp')" }}
+        >
             <div className="hero-overlay"></div>
             <div className="hero-content">
                 <h1 className="hero-title">VITE & GOURMAND</h1>

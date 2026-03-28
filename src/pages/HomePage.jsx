@@ -1,16 +1,60 @@
-﻿import React from 'react';
+﻿import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import './HomePage.scss';
 import Header from '../components/Header';
 import Hero from '../components/Hero';
 import Footer from '../components/Footer';
-import chefsImg from '../assets/img/cooks/chefs.webp';
+import PageLoader from '../components/PageLoader';
 import { fadeUpVariants, staggerContainerVariants } from '../hooks/useScrollReveal';
 
 // Options viewport communes — calquées sur home.js (threshold 0.1, rootMargin -100px bas)
 const vp = { once: true, amount: 0.1, margin: '0px 0px -100px 0px' };
 
 function HomePage() {
+    const [isLoading, setIsLoading] = useState(true);
+    const heroImageUrl = '/assets/img/hero/hero.webp';
+
+    useEffect(() => {
+        let isActive = true;
+        let settled = false;
+        const image = new Image();
+        const maxWait = 5000;
+        let timeoutId;
+
+        const handleDone = () => {
+            if (!isActive || settled) {
+                return;
+            }
+            settled = true;
+            requestAnimationFrame(() => {
+                if (isActive) {
+                    setIsLoading(false);
+                }
+            });
+        };
+
+        image.onload = handleDone;
+        image.onerror = handleDone;
+        image.src = heroImageUrl;
+        if (typeof image.decode === 'function') {
+            image.decode().then(handleDone).catch(() => {});
+        }
+        timeoutId = setTimeout(handleDone, maxWait);
+
+        return () => {
+            isActive = false;
+            if (timeoutId) {
+                clearTimeout(timeoutId);
+            }
+        };
+    }, []);
+
+    if (isLoading) {
+        return (
+            <PageLoader />
+        );
+    }
+
     return (
         <>
             <Header />
@@ -57,7 +101,7 @@ function HomePage() {
                             whileInView="visible"
                             viewport={vp}
                         >
-                            <img src={chefsImg} alt="Julie et José, les cuisiniers de Vite & Gourmand" />
+                            <img src="/assets/img/cooks/chefs.webp" alt="Julie et José, les cuisiniers de Vite & Gourmand" />
                         </motion.div>
                     </motion.div>
                 </div>
