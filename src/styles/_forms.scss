@@ -1,0 +1,126 @@
+// =============================================================================
+// FORMS — Vite & Gourmand (shared styles)
+// =============================================================================
+@use './variables' as *;
+@use './mixins' as *;
+
+.form-page-section {
+    padding: $section-padding;
+    background: $color-bg-light;
+}
+
+.form-content {
+    max-width: 520px;
+    margin: 0 auto;
+    padding: 2.5rem;
+    background: $color-white;
+    border-radius: $radius-sm;
+    box-shadow: $shadow-md;
+    text-align: center;
+}
+
+.form-page-title {
+    font-family: $font-heading;
+    font-size: 2.2rem;
+    color: $color-green;
+    letter-spacing: 1.5px;
+    margin-bottom: 0.4rem;
+}
+
+.form-subtitle {
+    color: $color-text-light;
+    margin-bottom: 2rem;
+}
+
+.form-main {
+    display: grid;
+    gap: 1.2rem;
+    text-align: left;
+}
+
+.form-group {
+    display: grid;
+    gap: 0.5rem;
+}
+
+.form-label {
+    font-weight: 600;
+    color: $color-text;
+}
+
+.form-input-field {
+    width: 100%;
+    padding: 0.85rem 1rem;
+    border-radius: $radius-sm;
+    border: 1px solid rgba(45, 80, 22, 0.2);
+    background: $color-white;
+    color: $color-text;
+    font-family: $font-body;
+    font-size: 1rem;
+    @include interactive($color-gold);
+
+    &:focus-visible {
+        border-color: $color-green;
+    }
+}
+
+.form-btn-submit {
+    margin-top: 0.6rem;
+    padding: 0.9rem 1.6rem;
+    border-radius: $radius-pill;
+    border: none;
+    background: $color-green;
+    color: $color-white;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    box-shadow: $shadow-btn;
+    @include interactive($color-gold);
+
+    &:hover {
+        background: $color-green-dark;
+        transform: translateY(-2px);
+    }
+}
+
+.form-alt-section {
+    margin-top: 2rem;
+    display: grid;
+    gap: 0.6rem;
+    justify-items: center;
+}
+
+.form-alt-text {
+    color: $color-text-light;
+}
+
+.form-alt-link {
+    color: $color-green;
+    font-weight: 600;
+    letter-spacing: 0.4px;
+    @include interactive($color-gold);
+
+    &:hover {
+        color: $color-green-dark;
+    }
+}
+
+@include tablet {
+    .form-page-section {
+        padding: 5rem 0;
+    }
+}
+
+@include mobile {
+    .form-page-section {
+        padding: 4rem 0;
+    }
+
+    .form-content {
+        padding: 2rem 1.5rem;
+    }
+
+    .form-page-title {
+        font-size: 1.9rem;
+    }
+}
