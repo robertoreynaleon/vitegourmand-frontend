@@ -1,0 +1,54 @@
+// =============================================================================
+// AUTH PAGES — Vite & Gourmand
+// =============================================================================
+@use '../../styles/variables' as *;
+@use '../../styles/mixins' as *;
+@use '../../styles/forms';
+
+// -----------------------------------------------------------------------------
+// Header visible sur pages internes (non transparent)
+// -----------------------------------------------------------------------------
+.auth-page-wrapper {
+    .main-header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        background: $color-white;
+        box-shadow: $shadow-md;
+    }
+
+    .logo h1 {
+        color: $color-green;
+    }
+
+    .nav-menu a {
+        color: $color-text;
+
+        &::after {
+            background: $color-green;
+        }
+    }
+
+    .user-greeting {
+        color: $color-text;
+    }
+
+    main {
+        padding-top: 90px;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Desktop-only spacing for auth forms
+// -----------------------------------------------------------------------------
+@include desktop {
+    .auth-page-wrapper main {
+        background: $color-bg-light;
+    }
+
+    .auth-page-wrapper .form-page-section {
+        padding-top: calc(8.3rem - 90px);
+        padding-bottom: 5rem;
+    }
+}
