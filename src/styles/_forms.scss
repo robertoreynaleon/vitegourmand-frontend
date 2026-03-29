@@ -34,13 +34,19 @@
 
 .form-main {
     display: grid;
-    gap: 1.2rem;
+    gap: 1.6rem;
     text-align: left;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.6rem;
 }
 
 .form-group {
     display: grid;
-    gap: 0.5rem;
+    gap: 0.6rem;
 }
 
 .form-label {
@@ -62,6 +68,43 @@
     &:focus-visible {
         border-color: $color-green;
     }
+}
+
+.form-input-field[aria-invalid="true"] {
+    border-color: $color-green;
+}
+
+.form-input-field--with-toggle {
+    padding-right: 3.2rem;
+}
+
+.form-password-row {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.form-password-toggle {
+    position: absolute;
+    right: 0.6rem;
+    width: 40px;
+    height: 40px;
+    border: none;
+    background: transparent;
+    color: $color-green;
+    cursor: pointer;
+    padding: 0;
+    @include interactive($color-gold);
+
+    svg {
+        width: 22px;
+        height: 22px;
+    }
+}
+
+.form-error {
+    color: $color-green-dark;
+    font-size: 0.9rem;
 }
 
 .form-btn-submit {
@@ -109,6 +152,11 @@
     .form-page-section {
         padding: 5rem 0;
     }
+
+    .form-row {
+        grid-template-columns: 1fr;
+        gap: 1.6rem;
+    }
 }
 
 @include mobile {
@@ -122,5 +170,10 @@
 
     .form-page-title {
         font-size: 1.9rem;
+    }
+
+    .form-row {
+        grid-template-columns: 1fr;
+        gap: 1.6rem;
     }
 }
