@@ -17,7 +17,6 @@
     z-index: 1000;
     transition: $transition;
 
-    // Après défilement : devient fixe avec fond blanc
     &.scrolled {
         position: fixed;
         background: $color-white;
@@ -37,7 +36,6 @@
 
 // -----------------------------------------------------------------------------
 // Logo
-// Au début transparent pour s'adapter au héro, vert après défilement
 // -----------------------------------------------------------------------------
 .logo h1 {
     font-family: $font-heading;
@@ -53,7 +51,7 @@
 }
 
 // -----------------------------------------------------------------------------
-// Menu de navigation
+// Menu de navigation — Desktop
 // -----------------------------------------------------------------------------
 .nav-menu {
     display: flex;
@@ -69,7 +67,6 @@
         transition: $transition;
         @include focus-ring($color-gold);
 
-        // Soulignement animé
         &::after {
             content: '';
             position: absolute;
@@ -81,19 +78,13 @@
             transition: $transition;
         }
 
-        // Hover — soulignement visible
-        &:hover::after {
-            width: 100%;
-        }
-
-        // RGAA — focus clavier identique au hover
+        &:hover::after,
         &:focus-visible::after {
             width: 100%;
         }
     }
 }
 
-// Après défilement — liens en foncé
 .main-header.scrolled .nav-menu a {
     color: $color-text;
 
@@ -103,7 +94,7 @@
 }
 
 // -----------------------------------------------------------------------------
-// Message de bienvenue utilisateur
+// Greeting desktop (entre logo et nav)
 // -----------------------------------------------------------------------------
 .user-greeting {
     color: $color-white;
@@ -112,7 +103,6 @@
         font-size: 0.95rem;
         font-weight: 500;
         letter-spacing: 1px;
-        position: relative;
     }
 }
 
@@ -121,27 +111,128 @@
 }
 
 // -----------------------------------------------------------------------------
-// Responsive — Tablette / Mobile
+// Greeting mobile (premier item du menu ouvert)
 // -----------------------------------------------------------------------------
-@include tablet {
-    .nav-menu {
-        gap: 1.2rem;
+.nav-greeting {
+    display: none;
+}
 
-        a {
-            font-size: 0.85rem;
-        }
+// -----------------------------------------------------------------------------
+// Hamburger (caché sur desktop)
+// -----------------------------------------------------------------------------
+.hamburger {
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 28px;
+    height: 20px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    flex-shrink: 0;
+    @include focus-ring($color-gold);
+
+    span {
+        display: block;
+        height: 2px;
+        background: $color-white;
+        border-radius: 2px;
+        transition: transform 0.3s ease, opacity 0.3s ease;
+        transform-origin: center;
+    }
+
+    &--open {
+        span:nth-child(1) { transform: translateY(9px) rotate(45deg); }
+        span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+        span:nth-child(3) { transform: translateY(-9px) rotate(-45deg); }
     }
 }
 
-@include mobile {
-    .navbar {
-        flex-wrap: wrap;
-        gap: 0.8rem;
+.main-header.scrolled .hamburger span {
+    background: $color-green;
+}
+
+// -----------------------------------------------------------------------------
+// Responsive — Tablette (max 1024px) et Mobile (max 768px)
+// -----------------------------------------------------------------------------
+@include tablet {
+    // Hamburger visible
+    .hamburger {
+        display: flex;
     }
 
-    .nav-menu {
-        gap: 0.8rem;
+    // Le greeting desktop est masqué (inclus dans le menu mobile)
+    .user-greeting {
+        display: none;
+    }
+
+    // Logo prend l'espace disponible entre logo et hamburger
+    .navbar {
         flex-wrap: wrap;
-        justify-content: center;
+        align-items: center;
+
+        .logo {
+            flex: 1;
+        }
+    }
+
+    // Menu replié par défaut, déployé avec --open
+    .nav-menu {
+        display: none;
+        order: 3;
+        width: calc(100% + 40px); // casse le padding du container (2 × 20px)
+        margin: 0.5rem -20px 0;
+        flex-direction: column;
+        gap: 0;
+        background: $color-white;
+        border-top: 3px solid $color-green;
+        box-shadow: $shadow-md;
+        padding: 0.5rem 0;
+
+        &--open {
+            display: flex;
+        }
+
+        // Greeting tout en haut du menu
+        .nav-greeting {
+            display: block;
+            padding: 0.75rem 1.5rem;
+            font-size: 0.8rem;
+            font-weight: 500;
+            letter-spacing: 1px;
+            color: $color-text-light;
+            background: $color-bg-light;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+            text-transform: uppercase;
+        }
+
+        li {
+            width: 100%;
+        }
+
+        a {
+            display: block;
+            padding: 0.9rem 1.5rem;
+            color: $color-text !important;
+            font-size: 0.9rem;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+            transition: background 0.2s ease, color 0.2s ease;
+
+            &::after {
+                display: none;
+            }
+
+            &:hover {
+                background: $color-bg-light;
+                color: $color-green !important;
+                padding-left: 2rem; // léger indent au hover
+                transition: padding 0.2s ease, background 0.2s ease;
+            }
+        }
+
+        li:last-child a {
+            border-bottom: none;
+        }
     }
 }

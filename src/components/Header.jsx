@@ -1,8 +1,20 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useScrollHeader, scrollToAnchor } from '../hooks/useScrollHeader';
+import { useAuth } from '../context/AuthContext';
 import './Header.scss';
 
-function Header({ user }) {
+function Header() {
+    const { user, logout } = useAuth();
+    const navigate = useNavigate();
+    const [menuOpen, setMenuOpen] = useState(false);
+
+    const handleLogout = (e) => {
+        e.preventDefault();
+        logout();
+        setMenuOpen(false);
+        navigate('/');
+    };
     const headerRef = useRef(null);
     const { scrolled } = useScrollHeader();
 
@@ -12,7 +24,10 @@ function Header({ user }) {
             const height = headerRef.current ? headerRef.current.offsetHeight : 0;
             scrollToAnchor(href, height);
         }
+        setMenuOpen(false);
     };
+
+    const closeMenu = () => setMenuOpen(false);
 
     return (
         <header
@@ -33,25 +48,37 @@ function Header({ user }) {
                         )}
                     </div>
 
-                    <ul className="nav-menu">
+                    <button
+                        className={`hamburger${menuOpen ? ' hamburger--open' : ''}`}
+                        aria-label={menuOpen ? 'Fermer le menu' : 'Ouvrir le menu'}
+                        aria-expanded={menuOpen}
+                        aria-controls="nav-menu"
+                        onClick={() => setMenuOpen((prev) => !prev)}
+                    >
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </button>
+
+                    <ul id="nav-menu" className={`nav-menu${menuOpen ? ' nav-menu--open' : ''}`}>
                         {user && (
-                            <li><a href="/auth/logout/">DÉCONNEXION</a></li>
+                            <li className="nav-greeting">BONJOUR, <strong>{user.name}</strong></li>
                         )}
                         <li><a href="/" onClick={(e) => handleAnchorClick(e, '/')}>HOME</a></li>
-                        <li><a href="/menu/list/">MENUS</a></li>
-                        <li><a href="/auth/login/">CONNEXION</a></li>
-                        <li><a href="/contact/">CONTACT</a></li>
-                        {user && user.role_id === 3 && (
-                            <>
-                                <li><a href="/user/dashboard/">MON COMPTE</a></li>
-                                <li><a href="/cart/show/">🛒 PANIER</a></li>
-                            </>
+                        <li><a href="/menu/list/" onClick={closeMenu}>MENUS</a></li>
+                        {!user && (
+                            <li><a href="/auth/login/" onClick={closeMenu}>CONNEXION</a></li>
                         )}
-                        {user && (user.role_id === 2 || user.role_id === 1) && (
-                            <>
-                                <li><a href="/staff/dashboard/">ESPACE STAFF</a></li>
-                            </>
+                        {user && user.roles?.includes('ROLE_CLIENT') && (
+                            <li><a href="/user/dashboard/" onClick={closeMenu}>MON COMPTE</a></li>
                         )}
+                        {user && (user.roles?.includes('ROLE_STAFF_MEMBER') || user.roles?.includes('ROLE_ADMIN')) && (
+                            <li><a href="/staff/dashboard/" onClick={closeMenu}>STAFF</a></li>
+                        )}
+                        {user && (
+                            <li><a href="#" onClick={handleLogout}>DÉCONNEXION</a></li>
+                        )}
+                        <li><a href="/contact/" onClick={closeMenu}>CONTACT</a></li>
                     </ul>
                 </nav>
             </div>
