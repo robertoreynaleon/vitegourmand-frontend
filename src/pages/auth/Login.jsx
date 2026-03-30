@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import { useAuth } from '../../context/AuthContext';
@@ -9,6 +9,8 @@ import './Auth.scss';
 function Login() {
 	const { login } = useAuth();
 	const navigate = useNavigate();
+	const location = useLocation();
+	const justRegistered = location.state?.registered === true;
 
 	const [formValues, setFormValues] = useState({ email: '', password: '' });
 	const [errors, setErrors] = useState({});
@@ -74,6 +76,12 @@ function Login() {
 						<div className="form-content">
 							<h1 id="login-title" className="form-page-title">Connexion</h1>
 							<p className="form-subtitle">Accedez a votre espace ViteGourmand</p>
+
+							{justRegistered && (
+								<p className="form-success" role="status" aria-live="polite">
+									Votre compte a bien été créé. Connectez-vous !
+								</p>
+							)}
 
 							{serverError && (
 								<p className="form-error form-error--server" role="alert" aria-live="assertive">

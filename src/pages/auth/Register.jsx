@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import './Auth.scss';
 import { validateRegister } from './registerValidation';
 
 function Register() {
+	const navigate = useNavigate();
+
 	const [formValues, setFormValues] = useState({
 		name: '',
 		lastname: '',
@@ -17,28 +20,54 @@ function Register() {
 		password_confirm: ''
 	});
 	const [errors, setErrors] = useState({});
+	const [serverError, setServerError] = useState('');
+	const [isSubmitting, setIsSubmitting] = useState(false);
 	const [showPassword, setShowPassword] = useState(false);
 	const [showPasswordConfirm, setShowPasswordConfirm] = useState(false);
 
 	const handleChange = (event) => {
 		const { name, value } = event.target;
 		setFormValues((prev) => ({ ...prev, [name]: value }));
+		setErrors((prev) => ({ ...prev, [name]: '' }));
+		setServerError('');
 	};
 
-	const handleSubmit = (event) => {
+	const handleSubmit = async (event) => {
 		event.preventDefault();
 		const validationErrors = validateRegister(formValues);
 		if (Object.keys(validationErrors).length > 0) {
 			setErrors(validationErrors);
 			const firstInvalid = Object.keys(validationErrors)[0];
 			const target = event.currentTarget.querySelector(`[name="${firstInvalid}"]`);
-			if (target) {
-				target.focus();
-			}
+			if (target) target.focus();
 			return;
 		}
 		setErrors({});
-		event.currentTarget.submit();
+		setServerError('');
+		setIsSubmitting(true);
+
+		try {
+			const body = new URLSearchParams();
+			Object.entries(formValues).forEach(([key, val]) => body.append(key, val));
+
+			const response = await fetch('http://vitegourmand.local/auth/register/', {
+				method: 'POST',
+				headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+				body: body.toString(),
+			});
+
+			const data = await response.json();
+
+			if (response.ok && data.success) {
+				navigate('/auth/login', { state: { registered: true } });
+			} else {
+				setServerError(data.message || 'Une erreur est survenue. Veuillez réessayer.');
+			}
+		} catch {
+			setServerError('Impossible de contacter le serveur. Veuillez réessayer.');
+		} finally {
+			setIsSubmitting(false);
+		}
 	};
 
 	return (
@@ -51,7 +80,13 @@ function Register() {
 							<h1 id="register-title" className="form-page-title">Creer un compte</h1>
 							<p className="form-subtitle">Rejoignez ViteGourmand et profitez de nos menus</p>
 
-							<form className="form-main" method="post" action="http://vitegourmand.local/auth/register/" onSubmit={handleSubmit} noValidate>
+							{serverError && (
+								<p className="form-error form-error--server" role="alert" aria-live="assertive">
+									{serverError}
+								</p>
+							)}
+
+							<form className="form-main" onSubmit={handleSubmit} noValidate>
 								<div className="form-row">
 									<div className="form-group">
 										<label htmlFor="name" className="form-label">Prenom</label>
@@ -253,7 +288,9 @@ function Register() {
 									{errors.password_confirm && <p id="password-confirm-error" className="form-error" aria-live="polite">{errors.password_confirm}</p>}
 								</div>
 
-								<button type="submit" className="form-btn-submit">S'inscrire</button>
+								<button type="submit" className="form-btn-submit" disabled={isSubmitting}>
+								{isSubmitting ? 'Enregistrement...' : "S'inscrire"}
+							</button>
 							</form>
 
 							<div className="form-alt-section">
