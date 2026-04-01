@@ -19,3 +19,21 @@ export async function updateMe(token, formData) {
 
     return data;
 }
+
+export async function deleteAccount(token) {
+    const response = await fetch(`${API_BASE}/me`, {
+        method: 'DELETE',
+        headers: {
+            Accept: 'application/json',
+            Authorization: `Bearer ${token}`,
+        },
+    });
+
+    const data = await response.json().catch(() => ({}));
+
+    if (!response.ok) {
+        throw new Error(data.message || `HTTP ${response.status}`);
+    }
+
+    return data;
+}

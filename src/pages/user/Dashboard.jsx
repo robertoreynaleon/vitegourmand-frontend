@@ -1,15 +1,32 @@
 import React, { useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import { useAuth } from '../../context/AuthContext';
+import { deleteAccount } from '../../services/userService';
 import './Dashboard.scss';
 
 function Dashboard() {
-    const { user } = useAuth();
+    const { user, token, logout } = useAuth();
     const location = useLocation();
+    const navigate = useNavigate();
     const justUpdated = location.state?.updated === true;
     const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+    const [isDeleting, setIsDeleting] = useState(false);
+    const [deleteError, setDeleteError] = useState('');
+
+    const handleDelete = async () => {
+        setIsDeleting(true);
+        setDeleteError('');
+        try {
+            await deleteAccount(token);
+            logout();
+            window.location.href = '/';
+        } catch (err) {
+            setDeleteError(err.message || 'Une erreur est survenue.');
+            setIsDeleting(false);
+        }
+    };
 
     return (
         <div className="dashboard-page">
@@ -107,16 +124,31 @@ function Dashboard() {
                                         aria-labelledby="delete-confirm-title"
                                     >
                                         <p id="delete-confirm-title" className="dashboard-confirm__text">
-                                            La suppression de compte sera disponible prochainement.
+                                            Êtes-vous sûr de vouloir supprimer votre compte ? Cette action est irréversible.
                                         </p>
-                                        <button
-                                            type="button"
-                                            className="dashboard-confirm__cancel"
-                                            onClick={() => setShowDeleteConfirm(false)}
-                                            autoFocus
-                                        >
-                                            Fermer
-                                        </button>
+                                        {deleteError && (
+                                            <p className="dashboard-confirm__error" role="alert">{deleteError}</p>
+                                        )}
+                                        <div className="dashboard-confirm__actions">
+                                            <button
+                                                type="button"
+                                                className="dashboard-confirm__btn-confirm"
+                                                onClick={handleDelete}
+                                                disabled={isDeleting}
+                                                aria-busy={isDeleting}
+                                            >
+                                                {isDeleting ? 'Suppression...' : 'Oui, supprimer'}
+                                            </button>
+                                            <button
+                                                type="button"
+                                                className="dashboard-confirm__cancel"
+                                                onClick={() => setShowDeleteConfirm(false)}
+                                                disabled={isDeleting}
+                                                autoFocus
+                                            >
+                                                Annuler
+                                            </button>
+                                        </div>
                                     </div>
                                 )}
                             </>
