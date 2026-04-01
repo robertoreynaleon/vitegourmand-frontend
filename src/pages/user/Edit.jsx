@@ -71,6 +71,7 @@ function Edit() {
             const data = await updateMe(token, payload);
 
             if (formValues.email !== user.email || formValues.new_password) {
+                sessionStorage.setItem('credentials_updated', '1');
                 logout();
                 navigate('/auth/login/');
             } else {

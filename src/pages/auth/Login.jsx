@@ -1,39 +1,44 @@
-﻿import React, { useState } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
-import Header from '../../components/Header';
-import Footer from '../../components/Footer';
-import { useAuth } from '../../context/AuthContext';
-import { loginUser } from '../../services/authService';
-import './Auth.scss';
+﻿import React, { useState } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
+import Header from "../../components/Header";
+import Footer from "../../components/Footer";
+import { useAuth } from "../../context/AuthContext";
+import { loginUser } from "../../services/authService";
+import "./Auth.scss";
 
 function Login() {
 	const { login } = useAuth();
 	const navigate = useNavigate();
 	const location = useLocation();
 	const justRegistered = location.state?.registered === true;
+	const [credentialsUpdated] = useState(() => {
+		const flag = sessionStorage.getItem("credentials_updated") === "1";
+		if (flag) sessionStorage.removeItem("credentials_updated");
+		return flag;
+	});
 
-	const [formValues, setFormValues] = useState({ email: '', password: '' });
+	const [formValues, setFormValues] = useState({ email: "", password: "" });
 	const [errors, setErrors] = useState({});
-	const [serverError, setServerError] = useState('');
+	const [serverError, setServerError] = useState("");
 	const [isSubmitting, setIsSubmitting] = useState(false);
 	const [showPassword, setShowPassword] = useState(false);
 
 	const handleChange = (event) => {
 		const { name, value } = event.target;
 		setFormValues((prev) => ({ ...prev, [name]: value }));
-		setErrors((prev) => ({ ...prev, [name]: '' }));
-		setServerError('');
+		setErrors((prev) => ({ ...prev, [name]: "" }));
+		setServerError("");
 	};
 
 	const validate = () => {
 		const newErrors = {};
 		if (!formValues.email.trim()) {
-			newErrors.email = "L'adresse email est obligatoire.";
+			newErrors.email = "L adresse email est obligatoire.";
 		} else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formValues.email)) {
-			newErrors.email = "L'adresse email n'est pas valide.";
+			newErrors.email = "L adresse email n est pas valide.";
 		}
 		if (!formValues.password) {
-			newErrors.password = 'Le mot de passe est obligatoire.';
+			newErrors.password = "Le mot de passe est obligatoire.";
 		}
 		return newErrors;
 	};
@@ -50,17 +55,17 @@ function Login() {
 		}
 
 		setIsSubmitting(true);
-		setServerError('');
+		setServerError("");
 
 		try {
 			const { token, user } = await loginUser(formValues.email, formValues.password);
 			login(user, token);
-			navigate('/');
+			navigate("/");
 		} catch (err) {
 			if (err.response?.status === 401) {
-				setServerError('Email ou mot de passe incorrect.');
+				setServerError("Email ou mot de passe incorrect.");
 			} else {
-				setServerError('Une erreur est survenue. Veuillez reessayer.');
+				setServerError("Une erreur est survenue. Veuillez reessayer.");
 			}
 		} finally {
 			setIsSubmitting(false);
@@ -83,6 +88,11 @@ function Login() {
 								</p>
 							)}
 
+							{credentialsUpdated && (
+								<p className="form-success" role="status" aria-live="polite">
+									Vos informations ont bien ete mises a jour. Reconnectez-vous avec vos nouveaux identifiants.
+								</p>
+							)}
 
 							{serverError && (
 								<p className="form-error form-error--server" role="alert" aria-live="assertive">
@@ -102,7 +112,7 @@ function Login() {
 										value={formValues.email}
 										onChange={handleChange}
 										aria-invalid={Boolean(errors.email)}
-										aria-describedby={errors.email ? 'email-error' : undefined}
+										aria-describedby={errors.email ? "email-error" : undefined}
 										required
 									/>
 									{errors.email && (
@@ -114,7 +124,7 @@ function Login() {
 									<label htmlFor="password" className="form-label">Mot de passe</label>
 									<div className="form-password-row">
 										<input
-											type={showPassword ? 'text' : 'password'}
+											type={showPassword ? "text" : "password"}
 											id="password"
 											name="password"
 											className="form-input-field form-input-field--with-toggle"
@@ -122,14 +132,14 @@ function Login() {
 											value={formValues.password}
 											onChange={handleChange}
 											aria-invalid={Boolean(errors.password)}
-											aria-describedby={errors.password ? 'password-error' : undefined}
+											aria-describedby={errors.password ? "password-error" : undefined}
 											required
 										/>
 										<button
 											type="button"
 											className="form-password-toggle"
 											onClick={() => setShowPassword((prev) => !prev)}
-											aria-label={showPassword ? 'Masquer le mot de passe' : 'Afficher le mot de passe'}
+											aria-label={showPassword ? "Masquer le mot de passe" : "Afficher le mot de passe"}
 										>
 											{showPassword ? (
 												<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
@@ -152,12 +162,12 @@ function Login() {
 								</div>
 
 								<button type="submit" className="form-btn-submit" disabled={isSubmitting}>
-									{isSubmitting ? 'Connexion...' : 'Se connecter'}
+									{isSubmitting ? "Connexion..." : "Se connecter"}
 								</button>
 							</form>
 
 							<div className="form-alt-section">
-								<p className="form-alt-text">Vous n'avez pas encore de compte ?</p>
+								<p className="form-alt-text">Vous n avez pas encore de compte ?</p>
 								<a href="/auth/register/" className="form-alt-link">Creer un compte</a>
 							</div>
 						</div>
