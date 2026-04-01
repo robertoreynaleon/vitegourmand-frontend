@@ -1,11 +1,13 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import { useAuth } from '../../context/AuthContext';
 
 function Dashboard() {
     const { user } = useAuth();
+    const location = useLocation();
+    const justUpdated = location.state?.updated === true;
 
     return (
         <div className="dashboard-page">
@@ -16,6 +18,12 @@ function Dashboard() {
                     <div className="container">
 
                         <h1 className="dashboard-title">Mon espace</h1>
+
+                        {justUpdated && (
+                            <p className="form-success" role="status" aria-live="polite">
+                                Vos informations ont bien été mises à jour.
+                            </p>
+                        )}
 
                         {user && (
                             <>
