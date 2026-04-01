@@ -8,7 +8,7 @@ import { validateEdit } from './editValidation';
 import '../auth/Auth.scss';
 
 function Edit() {
-    const { user, token, updateUser } = useAuth();
+    const { user, token, updateUser, logout } = useAuth();
     const navigate = useNavigate();
 
     const [formValues, setFormValues] = useState({
@@ -70,10 +70,13 @@ function Edit() {
 
             const data = await updateMe(token, payload);
 
-            // Mettre à jour le contexte + localStorage avec les nouvelles données
-            updateUser(data.user);
-
-            navigate('/user/dashboard/', { state: { updated: true } });
+            if (formValues.email !== user.email || formValues.new_password) {
+                logout();
+                navigate('/auth/login/');
+            } else {
+                updateUser(data.user);
+                navigate('/user/dashboard/', { state: { updated: true } });
+            }
         } catch (err) {
             setServerError(err.message || 'Une erreur est survenue. Veuillez réessayer.');
         } finally {
