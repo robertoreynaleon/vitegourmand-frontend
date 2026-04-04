@@ -317,6 +317,69 @@
     }
 }
 
+// -----------------------------------------------------------------------------
+// Autocomplete adresse de livraison
+// -----------------------------------------------------------------------------
+.order-address-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.order-address-input {
+    width: 100%;
+    padding: 0.85rem 1rem;
+    border-radius: $radius-sm;
+    border: 1px solid rgba(45, 80, 22, 0.2);
+    background: $color-white;
+    color: $color-text;
+    font-family: $font-body;
+    font-size: 1rem;
+    @include interactive($color-gold);
+
+    &:focus-visible {
+        border-color: $color-green;
+    }
+}
+
+.order-address-suggestions {
+    position: absolute;
+    top: calc(100% + 4px);
+    left: 0;
+    right: 0;
+    z-index: 200;
+    background: $color-white;
+    border-radius: $radius-sm;
+    box-shadow: $shadow-lg;
+    border: 1px solid rgba(45, 80, 22, 0.12);
+    list-style: none;
+    padding: 0.4rem 0;
+    margin: 0;
+
+    li {
+        padding: 0;
+    }
+}
+
+.order-address-suggestion-btn {
+    display: block;
+    width: 100%;
+    padding: 0.65rem 1.1rem;
+    border: none;
+    background: transparent;
+    color: $color-text;
+    font-family: $font-body;
+    font-size: 0.92rem;
+    text-align: left;
+    cursor: pointer;
+    transition: background 0.15s ease, color 0.15s ease;
+    @include focus-ring($color-gold);
+
+    &:hover {
+        background: $color-gold-light;
+        color: $color-green;
+    }
+}
+
 // Frais de livraison calculés
 .order-delivery-fee {
     background: $color-bg-light;

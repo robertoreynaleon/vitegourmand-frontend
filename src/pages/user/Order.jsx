@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
@@ -34,25 +34,33 @@ function Order() {
     const [deliveryInfo, setDeliveryInfo] = useState(null);
     const [deliveryLoading, setDeliveryLoading] = useState(false);
     const [deliveryError, setDeliveryError] = useState('');
+    const [suggestions, setSuggestions] = useState([]);
+    const [showSuggestions, setShowSuggestions] = useState(false);
+    const addressWrapperRef = useRef(null);
+    // Ref pour annuler le debounce en cours
+    const debounceRef = useRef(null);
+    // Ref pour annuler la requête suggestions en cours
+    const suggestAbortRef = useRef(null);
 
     // Chargement initial depuis localStorage
     useEffect(() => {
         setCart(loadCart());
     }, []);
 
-    const handleRemove = (menuId) => {
-        setCart(removeFromCart(menuId));
-    };
+    // Fermeture de la liste de suggestions au clic extérieur
+    useEffect(() => {
+        const handler = (e) => {
+            if (addressWrapperRef.current && !addressWrapperRef.current.contains(e.target)) {
+                setShowSuggestions(false);
+            }
+        };
+        document.addEventListener('mousedown', handler);
+        return () => document.removeEventListener('mousedown', handler);
+    }, []);
 
-    const handleQuantityChange = (menuId, minPeople, rawValue) => {
-        let qty = parseInt(rawValue, 10);
-        if (isNaN(qty) || qty < minPeople) qty = minPeople;
-        setCart(updateCartQuantity(menuId, qty));
-    };
-
-    // Calcul des frais de livraison au blur de l'adresse
-    const handleAddressBlur = useCallback(async () => {
-        const trimmed = deliveryAddress.trim();
+    // Calcul automatique des frais après sélection ou debounce
+    const triggerDeliveryCalc = useCallback(async (address) => {
+        const trimmed = address.trim();
         if (!trimmed) return;
         setDeliveryLoading(true);
         setDeliveryError('');
@@ -66,7 +74,65 @@ function Order() {
             setDeliveryInfo(null);
         }
         setDeliveryLoading(false);
-    }, [deliveryAddress]);
+    }, []);
+
+    const handleAddressChange = (e) => {
+        const value = e.target.value;
+        setDeliveryAddress(value);
+        setDeliveryInfo(null);
+        setDeliveryFee(0);
+        setDeliveryError('');
+
+        // Annuler le debounce précédent
+        if (debounceRef.current) clearTimeout(debounceRef.current);
+        // Annuler la requête de suggestions précédente
+        if (suggestAbortRef.current) suggestAbortRef.current.abort();
+
+        if (value.trim().length < 5) {
+            setSuggestions([]);
+            setShowSuggestions(false);
+            return;
+        }
+
+        // Suggestions en temps réel (debounce 300 ms)
+        const controller = new AbortController();
+        suggestAbortRef.current = controller;
+        debounceRef.current = setTimeout(async () => {
+            try {
+                const res = await fetch(
+                    `https://api-adresse.data.gouv.fr/search/?q=${encodeURIComponent(value)}&limit=5`,
+                    { signal: controller.signal }
+                );
+                const data = await res.json();
+                const items = (data.features || []).map((f) => ({
+                    label: f.properties.label,
+                    city: f.properties.city || f.properties.name,
+                }));
+                setSuggestions(items);
+                setShowSuggestions(items.length > 0);
+            } catch {
+                // AbortError ignorée silencieusement
+            }
+        }, 300);
+    };
+
+    const handleSuggestionSelect = (label) => {
+        setDeliveryAddress(label);
+        setSuggestions([]);
+        setShowSuggestions(false);
+        // Calcul immédiat des frais
+        triggerDeliveryCalc(label);
+    };
+
+    const handleRemove = (menuId) => {
+        setCart(removeFromCart(menuId));
+    };
+
+    const handleQuantityChange = (menuId, minPeople, rawValue) => {
+        let qty = parseInt(rawValue, 10);
+        if (isNaN(qty) || qty < minPeople) qty = minPeople;
+        setCart(updateCartQuantity(menuId, qty));
+    };
 
     const menusSubtotal = cartSubtotal(cart);
     const total = cartTotal(cart, deliveryFee);
@@ -241,16 +307,42 @@ function Order() {
                             <label htmlFor="delivery_address">
                                 Adresse de livraison :
                             </label>
-                            <input
-                                id="delivery_address"
-                                type="text"
-                                placeholder="Saisissez l'adresse complète de livraison"
-                                value={deliveryAddress}
-                                onChange={(e) => setDeliveryAddress(e.target.value)}
-                                onBlur={handleAddressBlur}
-                            />
+                            <div className="order-address-wrapper" ref={addressWrapperRef}>
+                                <input
+                                    id="delivery_address"
+                                    type="text"
+                                    className="order-address-input"
+                                    placeholder="Saisissez l'adresse complète de livraison"
+                                    value={deliveryAddress}
+                                    onChange={handleAddressChange}
+                                    autoComplete="off"
+                                    aria-autocomplete="list"
+                                    aria-controls="address-suggestions"
+                                    aria-expanded={showSuggestions}
+                                />
+                                {showSuggestions && (
+                                    <ul
+                                        id="address-suggestions"
+                                        className="order-address-suggestions"
+                                        role="listbox"
+                                        aria-label="Suggestions d'adresse"
+                                    >
+                                        {suggestions.map((s, i) => (
+                                            <li key={i} role="option">
+                                                <button
+                                                    type="button"
+                                                    className="order-address-suggestion-btn"
+                                                    onMouseDown={() => handleSuggestionSelect(s.label)}
+                                                >
+                                                    {s.label}
+                                                </button>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                )}
+                            </div>
                             <small>
-                                Les frais se calculent automatiquement après modification
+                                Les frais se calculent automatiquement après sélection d'une adresse
                             </small>
                         </div>
 
