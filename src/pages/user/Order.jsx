@@ -16,6 +16,9 @@ import {
     DISCOUNT_THRESHOLD,
 } from '../../services/cartCalc';
 import { calculateDeliveryFee } from '../../services/delivery';
+import DatePicker from '../../components/DatePicker';
+import TimePicker from '../../components/TimePicker';
+import './Order.scss';
 
 function Order() {
     const { user } = useAuth();
@@ -87,13 +90,17 @@ function Order() {
     // ─── Panier vide ────────────────────────────────────────────────────────────
     if (cart.length === 0) {
         return (
-            <div className="order-page-wrapper">
+            <div className="menu-page-wrapper order-page-wrapper">
                 <Header />
                 <main>
                     <div className="container">
-                        <h1>Mon panier</h1>
-                        <p>Votre panier est vide.</p>
-                        <Link to="/menu/list/">Découvrir nos menus</Link>
+                    <div className="order-content">
+                        <h1 className="order-page-title">Mon panier</h1>
+                        <div className="order-empty">
+                            <p className="order-empty-text">Votre panier est vide.</p>
+                            <Link to="/menu/list/" className="order-empty-link">Découvrir nos menus</Link>
+                        </div>
+                        </div>
                     </div>
                 </main>
                 <Footer />
@@ -103,15 +110,16 @@ function Order() {
 
     // ─── Panier avec items ───────────────────────────────────────────────────────
     return (
-        <div className="order-page-wrapper">
+        <div className="menu-page-wrapper order-page-wrapper">
             <Header />
             <main>
                 <div className="container">
-                    <h1>Mon panier</h1>
+                    <div className="order-content">
+                    <h1 className="order-page-title">Mon panier</h1>
 
                     {/* Date de la commande */}
                     <div className="order-date-section">
-                        <p>📅 Date de la commande : {orderDate}</p>
+                        <p>Date de la commande : {orderDate}</p>
                     </div>
 
                     {/* Menus du panier */}
@@ -163,7 +171,7 @@ function Order() {
 
                                 {disc && (
                                     <div className="order-discount-badge">
-                                        🎉 Réduction de 10 % appliquée ! (Plus de{' '}
+                                        Réduction de 10 % appliquée ! (Plus de{' '}
                                         {item.minPeople + DISCOUNT_THRESHOLD} personnes)
                                     </div>
                                 )}
@@ -179,7 +187,7 @@ function Order() {
 
                     {/* Informations du client */}
                     <div className="order-customer-section">
-                        <h2>📋 Informations de livraison</h2>
+                        <h2>Informations de livraison</h2>
                         <p>
                             <strong>Client :</strong> {user.name} {user.lastname}
                         </p>
@@ -200,18 +208,17 @@ function Order() {
 
                     {/* Détails de livraison souhaitée */}
                     <div className="order-delivery-section">
-                        <h2>🚚 Détails de livraison souhaités</h2>
+                        <h2>Détails de livraison souhaités</h2>
 
                         <div className="order-form-group">
                             <label htmlFor="delivery_date">
                                 Date de livraison souhaitée :
                             </label>
-                            <input
+                            <DatePicker
                                 id="delivery_date"
-                                type="date"
-                                min={minDateStr}
                                 value={deliveryDate}
-                                onChange={(e) => setDeliveryDate(e.target.value)}
+                                onChange={setDeliveryDate}
+                                minDate={minDateStr}
                             />
                             <small>
                                 Minimum {maxAdvanceDays} jour{maxAdvanceDays > 1 ? 's' : ''} à l'avance
@@ -222,13 +229,10 @@ function Order() {
                             <label htmlFor="delivery_time">
                                 Heure de livraison souhaitée :
                             </label>
-                            <input
+                            <TimePicker
                                 id="delivery_time"
-                                type="time"
-                                min="08:00"
-                                max="20:00"
                                 value={deliveryTime}
-                                onChange={(e) => setDeliveryTime(e.target.value)}
+                                onChange={setDeliveryTime}
                             />
                             <small>Entre 8h00 et 20h00</small>
                         </div>
@@ -257,7 +261,7 @@ function Order() {
                             )}
                             {!deliveryLoading && deliveryInfo && (
                                 <p>
-                                    🚚 <strong>Frais de livraison :</strong>{' '}
+                                    <strong>Frais de livraison :</strong>{' '}
                                     {formatPrice(deliveryFee)}
                                     {deliveryInfo.isBordeaux
                                         ? ' (Bordeaux)'
@@ -312,6 +316,7 @@ function Order() {
                         >
                             ✓ Valider ma commande
                         </button>
+                    </div>
                     </div>
                 </div>
             </main>
