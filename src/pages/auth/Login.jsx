@@ -17,6 +17,12 @@ function Login() {
 		return flag;
 	});
 
+	const [cartLoginRequired] = useState(() => {
+		const flag = sessionStorage.getItem('cart_login_required') === '1';
+		if (flag) sessionStorage.removeItem('cart_login_required');
+		return flag;
+	});
+
 	const [formValues, setFormValues] = useState({ email: "", password: "" });
 	const [errors, setErrors] = useState({});
 	const [serverError, setServerError] = useState("");
@@ -60,7 +66,8 @@ function Login() {
 		try {
 			const { token, user } = await loginUser(formValues.email, formValues.password);
 			login(user, token);
-			navigate("/");
+			const from = location.state?.from;
+			navigate(typeof from === 'string' ? from : from?.pathname || '/');
 		} catch (err) {
 			if (err.response?.status === 401) {
 				setServerError("Email ou mot de passe incorrect.");
@@ -94,9 +101,9 @@ function Login() {
 								</p>
 							)}
 
-							{serverError && (
-								<p className="form-error form-error--server" role="alert" aria-live="assertive">
-									{serverError}
+							{cartLoginRequired && (
+								<p className="form-info" role="status" aria-live="polite">
+									Il est nécessaire d'être connecté pour acheter un menu.
 								</p>
 							)}
 

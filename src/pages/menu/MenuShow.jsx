@@ -1,15 +1,21 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import PageLoader from '../../components/PageLoader';
+import { useAuth } from '../../context/AuthContext';
+import { addToCart } from '../../services/cartCalc';
 import './MenuShow.scss';
+
+const API_CART = 'http://vitegourmand.local/api/cart/add';
 
 const API_MENUS = 'http://vitegourmand.local/api/menus';
 const API_DISHES = 'http://vitegourmand.local/api/dishes';
 
 function MenuShow() {
     const { id } = useParams();
+    const navigate = useNavigate();
+    const { user, token } = useAuth();
     const [menu, setMenu] = useState(null);
     const [dishesById, setDishesById] = useState({});
     const [menuLoaded, setMenuLoaded] = useState(false);
@@ -209,6 +215,52 @@ function MenuShow() {
         setIsLightboxOpen(false);
     };
 
+    const handleOrder = async () => {
+        if (!menu) return;
+
+        const item = {
+            menuId: menu.id,
+            menuTitle: menu.title,
+            pricePerPerson: Number(menu.pricePerPerson),
+            minPeople: menu.minPeople,
+            advanceOrderDays: menu.advanceOrderDays,
+            quantity: menu.minPeople,
+        };
+
+        // Persistance immédiate dans localStorage (fonctionne même sans connexion)
+        addToCart(item);
+
+        if (!user) {
+            // Marquer que la connexion est requise pour le panier
+            sessionStorage.setItem('cart_login_required', '1');
+            navigate('/auth/login/', { state: { from: '/user/order/' } });
+            return;
+        }
+
+        // Utilisateur connecté : valider le menu auprès de l'API Symfony
+        try {
+            const res = await fetch(API_CART, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${token}`,
+                },
+                body: JSON.stringify({ menuId: menu.id, quantity: menu.minPeople }),
+            });
+            if (res.ok) {
+                const data = await res.json();
+                // Mettre à jour le panier avec les données validées par Symfony
+                if (data.success && data.item) {
+                    addToCart(data.item);
+                }
+            }
+        } catch {
+            // Non bloquant : le panier localStorage est déjà sauvegardé
+        }
+
+        navigate('/user/order/');
+    };
+
     return (
         <div className="menu-page-wrapper menu-show-page">
             <Header />
@@ -369,7 +421,13 @@ function MenuShow() {
                             </div>
                         </div>
                         <div className="menu-show-actions">
-                            <a href="/order" className="menu-action-btn">Commander</a>
+                            <button
+                                type="button"
+                                className="menu-action-btn"
+                                onClick={handleOrder}
+                            >
+                                Commander
+                            </button>
                             <a href="/menu/list/" className="menu-action-secondary">Retour aux menus</a>
                         </div>
                     </section>

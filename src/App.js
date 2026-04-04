@@ -8,6 +8,7 @@ import Login from './pages/auth/Login';
 import Register from './pages/auth/Register';
 import Dashboard from './pages/user/Dashboard';
 import Edit from './pages/user/Edit';
+import Order from './pages/user/Order';
 import './App.scss';
 
 function App() {
@@ -22,6 +23,7 @@ function App() {
           <Route path='/auth/register/' element={<Register />} />
           <Route path='/user/dashboard/' element={<PrivateRoute><Dashboard /></PrivateRoute>} />
           <Route path='/user/edit/' element={<PrivateRoute><Edit /></PrivateRoute>} />
+          <Route path='/user/order/' element={<PrivateRoute><Order /></PrivateRoute>} />
         </Routes>
       </BrowserRouter>
     </AuthProvider>
