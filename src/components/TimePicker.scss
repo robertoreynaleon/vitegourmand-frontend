@@ -1,0 +1,131 @@
+// =============================================================================
+// TIME PICKER — Vite & Gourmand
+// =============================================================================
+@use '../styles/variables' as *;
+@use '../styles/mixins' as *;
+
+// -----------------------------------------------------------------------------
+// Conteneur
+// -----------------------------------------------------------------------------
+.tp-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+// -----------------------------------------------------------------------------
+// Bouton déclencheur (remplace <input type="time">)
+// -----------------------------------------------------------------------------
+.tp-trigger {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    width: 100%;
+    padding: 0.85rem 1rem;
+    border-radius: $radius-sm;
+    border: 1px solid rgba(45, 80, 22, 0.2);
+    background: $color-white;
+    color: $color-text;
+    font-family: $font-body;
+    font-size: 1rem;
+    cursor: pointer;
+    text-align: left;
+    transition: $transition;
+    @include focus-ring($color-gold);
+
+    &:hover {
+        border-color: rgba(45, 80, 22, 0.45);
+    }
+
+    &--open {
+        border-color: $color-green;
+        box-shadow: 0 0 0 3px rgba(45, 80, 22, 0.1);
+    }
+}
+
+.tp-trigger-text {
+    flex: 1;
+
+    &--placeholder {
+        color: $color-text-muted;
+        font-size: 0.97rem;
+    }
+}
+
+.tp-trigger-icon {
+    width: 20px;
+    height: 20px;
+    color: $color-green;
+    flex-shrink: 0;
+    opacity: 0.75;
+}
+
+// -----------------------------------------------------------------------------
+// Liste déroulante
+// -----------------------------------------------------------------------------
+.tp-list {
+    position: absolute;
+    top: calc(100% + 6px);
+    left: 0;
+    z-index: 200;
+    width: 100%;
+    max-height: 240px;
+    overflow-y: auto;
+    background: $color-white;
+    border-radius: $radius-sm;
+    box-shadow: $shadow-lg;
+    border: 1px solid rgba(45, 80, 22, 0.12);
+    list-style: none;
+    padding: 0.4rem 0;
+    margin: 0;
+
+    // Scrollbar fine et stylisée (WebKit)
+    &::-webkit-scrollbar {
+        width: 4px;
+    }
+    &::-webkit-scrollbar-track {
+        background: $color-bg-light;
+    }
+    &::-webkit-scrollbar-thumb {
+        background: rgba(45, 80, 22, 0.25);
+        border-radius: 2px;
+    }
+
+    li {
+        padding: 0;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Option de créneau
+// -----------------------------------------------------------------------------
+.tp-option {
+    display: block;
+    width: 100%;
+    padding: 0.65rem 1.2rem;
+    border: none;
+    background: transparent;
+    color: $color-text;
+    font-family: $font-body;
+    font-size: 0.95rem;
+    text-align: left;
+    cursor: pointer;
+    transition: background 0.15s ease, color 0.15s ease;
+    @include focus-ring($color-gold);
+
+    &:hover:not(.tp-option--selected) {
+        background: $color-gold-light;
+        color: $color-green;
+    }
+
+    // Créneau sélectionné
+    &--selected {
+        background: $color-green;
+        color: $color-white;
+        font-weight: 600;
+
+        &:hover {
+            background: $color-green-dark;
+        }
+    }
+}

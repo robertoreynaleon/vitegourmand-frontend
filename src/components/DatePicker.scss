@@ -1,0 +1,209 @@
+// =============================================================================
+// DATE PICKER — Vite & Gourmand
+// =============================================================================
+@use '../styles/variables' as *;
+@use '../styles/mixins' as *;
+
+// -----------------------------------------------------------------------------
+// Conteneur
+// -----------------------------------------------------------------------------
+.dp-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+// -----------------------------------------------------------------------------
+// Bouton déclencheur (remplace <input type="date">)
+// -----------------------------------------------------------------------------
+.dp-trigger {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    width: 100%;
+    padding: 0.85rem 1rem;
+    border-radius: $radius-sm;
+    border: 1px solid rgba(45, 80, 22, 0.2);
+    background: $color-white;
+    color: $color-text;
+    font-family: $font-body;
+    font-size: 1rem;
+    cursor: pointer;
+    text-align: left;
+    transition: $transition;
+    @include focus-ring($color-gold);
+
+    &:hover {
+        border-color: rgba(45, 80, 22, 0.45);
+    }
+
+    &--open {
+        border-color: $color-green;
+        box-shadow: 0 0 0 3px rgba(45, 80, 22, 0.1);
+    }
+}
+
+.dp-trigger-text {
+    flex: 1;
+
+    &--placeholder {
+        color: $color-text-muted;
+        font-size: 0.97rem;
+    }
+}
+
+.dp-trigger-icon {
+    width: 20px;
+    height: 20px;
+    color: $color-green;
+    flex-shrink: 0;
+    opacity: 0.75;
+}
+
+// -----------------------------------------------------------------------------
+// Popover calendrier
+// -----------------------------------------------------------------------------
+.dp-calendar {
+    position: absolute;
+    top: calc(100% + 6px);
+    left: 0;
+    z-index: 200;
+    background: $color-white;
+    border-radius: $radius-sm;
+    box-shadow: $shadow-lg;
+    border: 1px solid rgba(45, 80, 22, 0.12);
+    padding: 1rem;
+    min-width: 300px;
+    width: 100%;
+}
+
+// -----------------------------------------------------------------------------
+// En-tête : navigation mois
+// -----------------------------------------------------------------------------
+.dp-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0.8rem;
+}
+
+.dp-month-label {
+    font-family: $font-heading;
+    font-size: 1rem;
+    color: $color-green;
+    letter-spacing: 0.5px;
+    text-align: center;
+    flex: 1;
+}
+
+.dp-nav-btn {
+    width: 34px;
+    height: 34px;
+    border: none;
+    border-radius: $radius-sm;
+    background: transparent;
+    color: $color-green;
+    font-size: 1.4rem;
+    line-height: 1;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: $transition;
+    @include focus-ring($color-gold);
+
+    &:hover:not(:disabled) {
+        background: $color-bg-light;
+    }
+
+    &:disabled {
+        color: $color-text-muted;
+        cursor: not-allowed;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Grille 7 colonnes
+// -----------------------------------------------------------------------------
+.dp-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 2px;
+}
+
+.dp-day-header {
+    text-align: center;
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: $color-text-light;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 0.3rem 0 0.5rem;
+}
+
+// -----------------------------------------------------------------------------
+// Cellule jour
+// -----------------------------------------------------------------------------
+.dp-day {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 36px;
+    border: none;
+    border-radius: 6px;
+    background: transparent;
+    font-family: $font-body;
+    font-size: 0.9rem;
+    color: $color-text;
+    cursor: pointer;
+    transition: background 0.15s ease, color 0.15s ease;
+    @include focus-ring($color-gold);
+
+    &:hover:not(:disabled):not(.dp-day--selected) {
+        background: $color-gold-light;
+        color: $color-green;
+    }
+
+    // Jour sélectionné
+    &--selected {
+        background: $color-green;
+        color: $color-white;
+        font-weight: 600;
+    }
+
+    // Aujourd'hui (non sélectionné)
+    &--today {
+        border: 2px solid $color-gold;
+        font-weight: 600;
+        color: $color-green;
+    }
+
+    // Jour désactivé (avant minDate)
+    &--disabled {
+        color: $color-text-muted;
+        cursor: not-allowed;
+        background: transparent;
+    }
+
+    // Cellule vide (avant le 1er du mois)
+    &--empty,
+    &:disabled:not(.dp-day--disabled) {
+        visibility: hidden;
+        pointer-events: none;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Responsive — Mobile
+// -----------------------------------------------------------------------------
+@include mobile {
+    .dp-calendar {
+        min-width: unset;
+        padding: 0.75rem;
+    }
+
+    .dp-day {
+        height: 32px;
+        font-size: 0.82rem;
+    }
+}
