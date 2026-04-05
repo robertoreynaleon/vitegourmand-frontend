@@ -213,6 +213,40 @@
     margin-bottom: 1.5rem;
 }
 
+.dashboard-btn-cart {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.8rem;
+    border-radius: $radius-pill;
+    background: $color-green;
+    color: $color-white;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-decoration: none;
+    @include interactive($color-green);
+
+    &:hover {
+        background: darken($color-green, 8%);
+        transform: translateY(-2px);
+    }
+
+    &__badge {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 1.4rem;
+        height: 1.4rem;
+        border-radius: 50%;
+        background: $color-gold;
+        color: $color-white;
+        font-size: 0.75rem;
+        font-weight: 700;
+        line-height: 1;
+    }
+}
+
 .dashboard-btn-shop {
     display: inline-block;
     padding: 0.75rem 1.8rem;
@@ -386,6 +420,7 @@
     }
 
     .dashboard-btn-edit,
+    .dashboard-btn-cart,
     .dashboard-btn-shop,
     .dashboard-btn-delete {
         text-align: center;

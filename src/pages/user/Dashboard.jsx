@@ -4,6 +4,7 @@ import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import { useAuth } from '../../context/AuthContext';
 import { deleteAccount } from '../../services/userService';
+import { loadCart } from '../../services/cartCalc';
 import './Dashboard.scss';
 
 function Dashboard() {
@@ -14,6 +15,7 @@ function Dashboard() {
     const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
     const [isDeleting, setIsDeleting] = useState(false);
     const [deleteError, setDeleteError] = useState('');
+    const cartCount = loadCart().length;
 
     const handleDelete = async () => {
         setIsDeleting(true);
@@ -103,6 +105,14 @@ function Dashboard() {
 
                                 {/* Actions globales */}
                                 <div className="dashboard-actions">
+                                    <Link to="/user/order/" className="dashboard-btn-cart">
+                                        Mon panier
+                                        {cartCount > 0 && (
+                                            <span className="dashboard-btn-cart__badge" aria-label={`${cartCount} menu${cartCount > 1 ? 's' : ''} dans le panier`}>
+                                                {cartCount}
+                                            </span>
+                                        )}
+                                    </Link>
                                     <Link to="/menu/list/" className="dashboard-btn-shop">
                                         Aller acheter
                                     </Link>
