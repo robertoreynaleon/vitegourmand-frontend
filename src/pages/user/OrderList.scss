@@ -1,0 +1,157 @@
+// Styles développés lors de la prochaine étape (SASS, Responsive, RGAA)
+.orders-list-wrapper {
+    main {
+        background: #f8f5f0;
+        min-height: calc(100vh - 90px);
+    }
+}
+
+.orders-list-content {
+    padding: 2rem 0;
+}
+
+.orders-list-title {
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+}
+
+.orders-list-back {
+    display: inline-block;
+    margin-bottom: 1.5rem;
+    color: #2d6a4f;
+    text-decoration: none;
+    font-weight: 500;
+
+    &:hover {
+        text-decoration: underline;
+    }
+}
+
+.orders-list-loading {
+    color: #555;
+}
+
+.orders-list-error {
+    color: #b91c1c;
+    background: #fee2e2;
+    border-left: 3px solid #b91c1c;
+    padding: 0.7rem 1rem;
+    border-radius: 4px;
+}
+
+.orders-list-empty {
+    text-align: center;
+    padding: 2rem;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+
+    &-text {
+        margin-bottom: 1rem;
+        color: #555;
+    }
+
+    &-link {
+        display: inline-block;
+        padding: 0.65rem 1.4rem;
+        background: #2d6a4f;
+        color: #fff;
+        border-radius: 4px;
+        text-decoration: none;
+        font-weight: 600;
+
+        &:hover {
+            background: #1b4332;
+        }
+    }
+}
+
+.orders-list-card {
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+    padding: 1.5rem;
+    margin-bottom: 1.25rem;
+
+    &-title {
+        font-size: 1.15rem;
+        font-weight: 700;
+        margin-bottom: 1rem;
+        color: #1b4332;
+    }
+}
+
+.orders-list-card-info {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+
+    li {
+        display: flex;
+        gap: 0.5rem;
+        flex-wrap: wrap;
+    }
+}
+
+.orders-list-label {
+    font-weight: 600;
+    color: #374151;
+    min-width: 180px;
+}
+
+.orders-list-value {
+    color: #4b5563;
+}
+
+.orders-list-total {
+    font-weight: 700;
+    color: #1b4332;
+}
+
+.orders-list-status {
+    display: inline-block;
+    padding: 0.15rem 0.6rem;
+    border-radius: 999px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    background: #d1fae5;
+    color: #065f46;
+
+    &--en-attente {
+        background: #fef3c7;
+        color: #92400e;
+    }
+
+    &--accept-e {
+        background: #d1fae5;
+        color: #065f46;
+    }
+
+    &--en-pr-paration {
+        background: #dbeafe;
+        color: #1e40af;
+    }
+
+    &--en-cours-de-livraison {
+        background: #ede9fe;
+        color: #5b21b6;
+    }
+
+    &--livr-e {
+        background: #d1fae5;
+        color: #065f46;
+    }
+
+    &--termin-e {
+        background: #e5e7eb;
+        color: #374151;
+    }
+
+    &--annul-e {
+        background: #fee2e2;
+        color: #991b1b;
+    }
+}
