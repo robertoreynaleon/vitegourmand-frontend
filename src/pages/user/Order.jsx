@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import { useAuth } from '../../context/AuthContext';
@@ -7,6 +7,7 @@ import {
     loadCart,
     removeFromCart,
     updateCartQuantity,
+    clearCart,
     hasDiscount,
     subtotalBeforeDiscount,
     subtotal,
@@ -20,8 +21,11 @@ import DatePicker from '../../components/DatePicker';
 import TimePicker from '../../components/TimePicker';
 import './Order.scss';
 
+const API_ORDERS = 'http://vitegourmand.local/api/orders/create';
+
 function Order() {
-    const { user } = useAuth();
+    const { user, token } = useAuth();
+    const navigate = useNavigate();
 
     const [cart, setCart] = useState([]);
     const [orderDate] = useState(() => new Date().toLocaleString('fr-FR'));
@@ -36,6 +40,8 @@ function Order() {
     const [deliveryError, setDeliveryError] = useState('');
     const [suggestions, setSuggestions] = useState([]);
     const [showSuggestions, setShowSuggestions] = useState(false);
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [submitError, setSubmitError] = useState('');
     const addressWrapperRef = useRef(null);
     // Ref pour annuler le debounce en cours
     const debounceRef = useRef(null);
@@ -122,6 +128,48 @@ function Order() {
         setShowSuggestions(false);
         // Calcul immédiat des frais
         triggerDeliveryCalc(label);
+    };
+
+    const handleValidateOrder = async () => {
+        if (!canValidate || isSubmitting) return;
+        setIsSubmitting(true);
+        setSubmitError('');
+        const payload = {
+            orderDate:       new Date().toISOString(),
+            deliveryDate:    deliveryDate,
+            deliveryTime:    deliveryTime,
+            deliveryAddress: deliveryAddress,
+            subtotal:        menusSubtotal,
+            deliveryFee:     deliveryFee,
+            totalAmount:     total,
+            equipmentLoan:   false,
+            items: cart.map((item) => ({
+                menuId:         item.menuId,
+                quantity:       item.quantity,
+                pricePerPerson: item.pricePerPerson,
+            })),
+        };
+        try {
+            const res = await fetch(API_ORDERS, {
+                method: 'POST',
+                headers: {
+                    'Content-Type':  'application/json',
+                    'Authorization': `Bearer ${token}`,
+                },
+                body: JSON.stringify(payload),
+            });
+            const data = await res.json();
+            if (!res.ok) {
+                setSubmitError(data.message || 'Erreur lors de la commande.');
+                return;
+            }
+            clearCart();
+            navigate('/user/orders/');
+        } catch {
+            setSubmitError('Une erreur est survenue. Veuillez réessayer.');
+        } finally {
+            setIsSubmitting(false);
+        }
     };
 
     const handleRemove = (menuId) => {
@@ -397,6 +445,9 @@ function Order() {
                     </div>
 
                     {/* Actions */}
+                    {submitError && (
+                        <p className="order-error order-error--submit" role="alert">{submitError}</p>
+                    )}
                     <div className="order-actions">
                         <Link to="/menu/list/" className="order-btn-continue">
                             ← Continuer mes achats
@@ -404,9 +455,11 @@ function Order() {
                         <button
                             type="button"
                             className="order-btn-validate"
-                            disabled={!canValidate}
+                            disabled={!canValidate || isSubmitting}
+                            onClick={handleValidateOrder}
+                            aria-busy={isSubmitting}
                         >
-                            ✓ Valider ma commande
+                            {isSubmitting ? 'Enregistrement...' : '✓ Valider ma commande'}
                         </button>
                     </div>
                     </div>

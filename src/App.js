@@ -9,6 +9,7 @@ import Register from './pages/auth/Register';
 import Dashboard from './pages/user/Dashboard';
 import Edit from './pages/user/Edit';
 import Order from './pages/user/Order';
+import OrderList from './pages/user/OrderList';
 import './App.scss';
 
 function App() {
@@ -24,6 +25,7 @@ function App() {
           <Route path='/user/dashboard/' element={<PrivateRoute><Dashboard /></PrivateRoute>} />
           <Route path='/user/edit/' element={<PrivateRoute><Edit /></PrivateRoute>} />
           <Route path='/user/order/' element={<PrivateRoute><Order /></PrivateRoute>} />
+          <Route path='/user/orders/' element={<PrivateRoute><OrderList /></PrivateRoute>} />
         </Routes>
       </BrowserRouter>
     </AuthProvider>
