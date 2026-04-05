@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import { useAuth } from '../../context/AuthContext';
@@ -10,7 +10,10 @@ const API_USER_ORDERS = 'http://vitegourmand.local/api/user/orders';
 function OrderList() {
     const { token } = useAuth();
     const location = useLocation();
-    const orderSuccess = location.state?.orderSuccess === true;
+    const navigate = useNavigate();
+    const orderSuccess  = location.state?.orderSuccess  === true;
+    const editSuccess   = location.state?.editSuccess   === true;
+    const cancelSuccess = location.state?.cancelSuccess === true;
     const [orders, setOrders] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
@@ -46,6 +49,18 @@ function OrderList() {
                         {orderSuccess && (
                             <p className="form-success orders-list-success" role="status" aria-live="polite">
                                 Votre commande a bien été enregistrée. Un email de confirmation vous a été envoyé.
+                            </p>
+                        )}
+
+                        {editSuccess && (
+                            <p className="form-success orders-list-success" role="status" aria-live="polite">
+                                Votre commande a bien été mise à jour. Un email de confirmation vous a été envoyé.
+                            </p>
+                        )}
+
+                        {cancelSuccess && (
+                            <p className="form-success orders-list-success" role="status" aria-live="polite">
+                                Votre commande a bien été annulée. Un email de confirmation vous a été envoyé.
                             </p>
                         )}
 
@@ -94,7 +109,7 @@ function OrderList() {
                                     </li>
                                     <li>
                                         <span className="orders-list-label">Statut :</span>
-                                        <span className={`orders-list-status orders-list-status--${order.status.replace(/[\s']+/g, '-')}`}>
+                                        <span className={`orders-list-status orders-list-status--${order.status.replace(/[\s'éèêà]+/g, '-')}`}>
                                             {order.status}
                                         </span>
                                     </li>
@@ -108,6 +123,16 @@ function OrderList() {
                                         </span>
                                     </li>
                                 </ul>
+                                {order.status === 'en attente' && (
+                                    <div className="orders-list-card-actions">
+                                        <Link
+                                            to={`/user/orders/${order.id}/edit/`}
+                                            className="orders-list-btn-edit"
+                                        >
+                                            Voir ma commande
+                                        </Link>
+                                    </div>
+                                )}
                             </article>
                         ))}
 

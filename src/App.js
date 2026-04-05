@@ -10,6 +10,7 @@ import Dashboard from './pages/user/Dashboard';
 import Edit from './pages/user/Edit';
 import Order from './pages/user/Order';
 import OrderList from './pages/user/OrderList';
+import OrderEdit from './pages/user/OrderEdit';
 import './App.scss';
 
 function App() {
@@ -26,6 +27,7 @@ function App() {
           <Route path='/user/edit/' element={<PrivateRoute><Edit /></PrivateRoute>} />
           <Route path='/user/order/' element={<PrivateRoute><Order /></PrivateRoute>} />
           <Route path='/user/orders/' element={<PrivateRoute><OrderList /></PrivateRoute>} />
+          <Route path='/user/orders/:id/edit/' element={<PrivateRoute><OrderEdit /></PrivateRoute>} />
         </Routes>
       </BrowserRouter>
     </AuthProvider>
