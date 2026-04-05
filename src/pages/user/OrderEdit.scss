@@ -1,0 +1,257 @@
+// =============================================================================
+// ORDER EDIT PAGE — Vite & Gourmand
+// Hérite des styles partagés de Order.scss via les classes .order-*
+// Ce fichier gère uniquement les éléments spécifiques à la page d'édition.
+// =============================================================================
+@use '../../styles/variables' as *;
+@use '../../styles/mixins' as *;
+
+// -----------------------------------------------------------------------------
+// Wrapper global
+// -----------------------------------------------------------------------------
+.order-edit-wrapper {
+    main {
+        background: $color-bg-light;
+        min-height: calc(100vh - 90px);
+    }
+}
+
+.order-edit-wrapper main > .container {
+    padding-top: 4rem;
+    padding-bottom: 6rem;
+}
+
+// Largeur max en desktop
+@include desktop {
+    .order-edit-content {
+        max-width: 860px;
+        margin: 0 auto;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Titre de page
+// -----------------------------------------------------------------------------
+.order-edit-title {
+    font-family: $font-heading;
+    font-size: 2.4rem;
+    color: $color-green;
+    letter-spacing: 1.5px;
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+// -----------------------------------------------------------------------------
+// Bandeau d'avertissement
+// -----------------------------------------------------------------------------
+.order-edit-notice {
+    background: #fff8e1;
+    border-left: 4px solid $color-gold;
+    border-radius: $radius-sm;
+    padding: 1.2rem 1.5rem;
+    margin-bottom: 2rem;
+
+    &-headline {
+        font-weight: 700;
+        color: #7c5a00;
+        font-size: 1rem;
+        margin: 0 0 0.4rem;
+    }
+
+    &-text {
+        color: #7c5a00;
+        font-size: 0.92rem;
+        margin: 0;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// États de chargement / erreur fetch
+// -----------------------------------------------------------------------------
+.order-edit-loading {
+    color: $color-text-light;
+    font-size: 1rem;
+    padding: 2rem 0;
+}
+
+.order-edit-fetch-error {
+    color: #b91c1c;
+    background: #fee2e2;
+    border-left: 3px solid #b91c1c;
+    padding: 0.7rem 1rem;
+    border-radius: 4px;
+    margin-bottom: 1rem;
+}
+
+.order-edit-back {
+    display: inline-block;
+    color: $color-green;
+    font-weight: 600;
+    text-decoration: none;
+
+    &:hover {
+        text-decoration: underline;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Actions (bas de page)
+// -----------------------------------------------------------------------------
+.order-edit-actions {
+    display: flex;
+    gap: 1.2rem;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 1rem;
+}
+
+.order-edit-btn-cancel {
+    padding: 0.75rem 1.8rem;
+    border-radius: $radius-pill;
+    border: 2px solid #c0392b;
+    background: transparent;
+    color: #c0392b;
+    font-family: $font-body;
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    transition: $transition;
+    @include focus-ring(#c0392b);
+
+    &:hover {
+        background: #fdecea;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Modale de confirmation d'annulation
+// -----------------------------------------------------------------------------
+.order-edit-confirm {
+    background: $color-white;
+    border-radius: $radius-sm;
+    box-shadow: $shadow-lg;
+    border: 1px solid rgba(192, 57, 43, 0.3);
+    padding: 2rem;
+    margin-top: 1.5rem;
+
+    &__text {
+        font-size: 1rem;
+        color: $color-text;
+        margin-bottom: 1.5rem;
+        line-height: 1.6;
+    }
+
+    &__actions {
+        display: flex;
+        gap: 1rem;
+        flex-wrap: wrap;
+    }
+
+    &__btn-confirm {
+        padding: 0.7rem 1.6rem;
+        border-radius: $radius-pill;
+        border: none;
+        background: #c0392b;
+        color: $color-white;
+        font-family: $font-body;
+        font-size: 0.95rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: $transition;
+        @include focus-ring(#c0392b);
+
+        &:hover:not(:disabled) {
+            background: darken(#c0392b, 8%);
+        }
+
+        &:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+    }
+
+    &__cancel {
+        padding: 0.7rem 1.6rem;
+        border-radius: $radius-pill;
+        border: 2px solid $color-green;
+        background: transparent;
+        color: $color-green;
+        font-family: $font-body;
+        font-size: 0.95rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: $transition;
+        @include focus-ring($color-green);
+
+        &:hover:not(:disabled) {
+            background: $color-gold-light;
+        }
+
+        &:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+    }
+}
+
+// =============================================================================
+// RESPONSIVE — Tablette (≤ 1024px)
+// =============================================================================
+@include tablet {
+    .order-edit-wrapper main > .container {
+        padding-top: 3rem;
+        padding-bottom: 4rem;
+    }
+
+    .order-edit-title {
+        font-size: 2rem;
+    }
+
+    .order-edit-actions {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 1rem;
+    }
+
+    .order-btn-continue,
+    .order-btn-validate,
+    .order-edit-btn-cancel {
+        text-align: center;
+        width: 100%;
+    }
+
+    .order-edit-confirm__actions {
+        flex-direction: column;
+
+        button {
+            width: 100%;
+            text-align: center;
+        }
+    }
+}
+
+// =============================================================================
+// RESPONSIVE — Mobile (≤ 768px)
+// =============================================================================
+@include mobile {
+    .order-edit-wrapper main > .container {
+        padding-top: 2rem;
+        padding-bottom: 3rem;
+    }
+
+    .order-edit-title {
+        font-size: 1.7rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .order-edit-notice {
+        padding: 1rem 1.2rem;
+    }
+
+    .order-edit-confirm {
+        padding: 1.5rem 1.2rem;
+        border-radius: 0;
+    }
+}
