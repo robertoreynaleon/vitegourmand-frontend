@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import { useAuth } from '../../context/AuthContext';
@@ -9,6 +9,8 @@ const API_USER_ORDERS = 'http://vitegourmand.local/api/user/orders';
 
 function OrderList() {
     const { token } = useAuth();
+    const location = useLocation();
+    const orderSuccess = location.state?.orderSuccess === true;
     const [orders, setOrders] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
@@ -40,6 +42,12 @@ function OrderList() {
                     <div className="orders-list-content">
 
                         <h1 className="orders-list-title">Mes commandes</h1>
+
+                        {orderSuccess && (
+                            <p className="form-success orders-list-success" role="status" aria-live="polite">
+                                Votre commande a bien été enregistrée. Un email de confirmation vous a été envoyé.
+                            </p>
+                        )}
 
                         <Link to="/user/dashboard/" className="orders-list-back">
                             ← Retour au tableau de bord

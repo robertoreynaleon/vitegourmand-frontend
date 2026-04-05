@@ -164,7 +164,7 @@ function Order() {
                 return;
             }
             clearCart();
-            navigate('/user/orders/');
+            navigate('/user/orders/', { state: { orderSuccess: true } });
         } catch {
             setSubmitError('Une erreur est survenue. Veuillez réessayer.');
         } finally {
