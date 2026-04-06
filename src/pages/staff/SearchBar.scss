@@ -1,0 +1,144 @@
+// =============================================================================
+// STAFF SEARCHBAR — Vite & Gourmand
+// =============================================================================
+@use '../../styles/variables' as *;
+@use '../../styles/mixins' as *;
+
+.staff-searchbar {
+    background: $color-white;
+    border-radius: $radius-sm;
+    box-shadow: $shadow-sm;
+    padding: 1.5rem 2rem 1.25rem;
+    margin-bottom: 1.5rem;
+    border-left: 4px solid $color-green;
+
+    // ── Titre (visible, aria-hidden pour éviter doublon) ──────────────────
+    &__title {
+        font-family: $font-heading;
+        font-size: 0.9rem;
+        color: $color-green;
+        letter-spacing: 0.8px;
+        text-transform: uppercase;
+        margin-bottom: 1.2rem;
+    }
+
+    // ── Grille de champs ─────────────────────────────────────────────────
+    &__fields {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        gap: 1rem 1.5rem;
+        align-items: end;
+
+        @include tablet {
+            grid-template-columns: repeat(3, 1fr);
+        }
+
+        @include mobile {
+            grid-template-columns: 1fr;
+            gap: 0.75rem;
+        }
+    }
+
+    // ── Groupe label + input ─────────────────────────────────────────────
+    &__group {
+        display: flex;
+        flex-direction: column;
+        gap: 0.35rem;
+    }
+
+    // ── Label ─────────────────────────────────────────────────────────────
+    &__label {
+        font-size: 0.8rem;
+        font-weight: 600;
+        color: $color-text;
+        letter-spacing: 0.2px;
+    }
+
+    // ── Input texte ──────────────────────────────────────────────────────
+    &__input {
+        width: 100%;
+        padding: 0.6rem 0.9rem;
+        font-family: $font-body;
+        font-size: 0.9rem;
+        color: $color-text;
+        background: $color-bg-light;
+        border: 1.5px solid #d1d5db;
+        border-radius: 6px;
+        transition: $transition;
+        @include interactive($color-gold);
+
+        &::placeholder {
+            color: $color-text-muted;
+            font-size: 0.85rem;
+        }
+
+        &:hover {
+            border-color: $color-gold;
+        }
+
+        &:focus {
+            border-color: $color-green;
+            background: $color-white;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(45, 80, 22, 0.12);
+        }
+    }
+
+    // ── Select statut ────────────────────────────────────────────────────
+    &__select {
+        width: 100%;
+        padding: 0.6rem 0.9rem;
+        font-family: $font-body;
+        font-size: 0.9rem;
+        color: $color-text;
+        background: $color-bg-light;
+        border: 1.5px solid #d1d5db;
+        border-radius: 6px;
+        cursor: pointer;
+        appearance: none;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%232d5016' stroke-width='1.8' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: right 0.8rem center;
+        padding-right: 2.2rem;
+        transition: $transition;
+        @include interactive($color-gold);
+
+        &:hover {
+            border-color: $color-gold;
+        }
+
+        &:focus {
+            border-color: $color-green;
+            background-color: $color-white;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(45, 80, 22, 0.12);
+        }
+    }
+
+    // ── Zone bouton reset ────────────────────────────────────────────────
+    &__footer {
+        margin-top: 1rem;
+        display: flex;
+        justify-content: flex-end;
+    }
+
+    // ── Bouton reset ─────────────────────────────────────────────────────
+    &__reset {
+        padding: 0.45rem 1.2rem;
+        border-radius: $radius-pill;
+        border: 1.5px solid $color-gold;
+        background: transparent;
+        color: $color-green;
+        font-family: $font-body;
+        font-size: 0.85rem;
+        font-weight: 600;
+        cursor: pointer;
+        letter-spacing: 0.2px;
+        @include interactive($color-gold);
+
+        &:hover {
+            background: $color-gold;
+            color: $color-white;
+        }
+    }
+}
