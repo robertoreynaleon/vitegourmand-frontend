@@ -1,0 +1,294 @@
+// =============================================================================
+// STAFF ORDER LIST — Vite & Gourmand
+// =============================================================================
+@use '../../styles/variables' as *;
+@use '../../styles/mixins' as *;
+
+// -----------------------------------------------------------------------------
+// Wrapper page (header fixe blanc)
+// -----------------------------------------------------------------------------
+.staff-orders-page {
+    .main-header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        background: $color-white;
+        box-shadow: $shadow-md;
+    }
+
+    .logo h1 {
+        color: $color-green;
+    }
+
+    .nav-menu a {
+        color: $color-text;
+
+        &::after {
+            background: $color-green;
+        }
+    }
+
+    .user-greeting {
+        color: $color-text;
+    }
+
+    main {
+        padding-top: 90px;
+        background: $color-bg-light;
+        min-height: calc(100vh - 90px);
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Section
+// -----------------------------------------------------------------------------
+.staff-orders-section {
+    padding: 4rem 0 6rem;
+}
+
+// -----------------------------------------------------------------------------
+// Titre
+// -----------------------------------------------------------------------------
+.staff-orders-title {
+    font-family: $font-heading;
+    font-size: 2.2rem;
+    color: $color-green;
+    letter-spacing: 1.5px;
+    margin-bottom: 1rem;
+}
+
+// -----------------------------------------------------------------------------
+// Lien retour
+// -----------------------------------------------------------------------------
+.staff-orders-back {
+    display: inline-block;
+    margin-bottom: 2rem;
+    color: $color-green;
+    font-weight: 600;
+    text-decoration: none;
+    font-size: 0.95rem;
+    @include interactive($color-gold);
+
+    &:hover {
+        text-decoration: underline;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// États de chargement / erreur / vide
+// -----------------------------------------------------------------------------
+.staff-orders-loading {
+    color: $color-text-light;
+    font-size: 0.95rem;
+    padding: 1rem 0;
+}
+
+.staff-orders-error {
+    color: #b91c1c;
+    background: #fee2e2;
+    border-left: 3px solid #b91c1c;
+    padding: 0.8rem 1.2rem;
+    border-radius: 6px;
+    font-size: 0.95rem;
+}
+
+.staff-orders-empty {
+    color: $color-text-light;
+    font-size: 1rem;
+    padding: 2rem 0;
+}
+
+// -----------------------------------------------------------------------------
+// Compteur de résultats
+// -----------------------------------------------------------------------------
+.staff-orders-count {
+    font-size: 0.88rem;
+    color: $color-text-light;
+    margin-bottom: 0.75rem;
+    font-style: italic;
+}
+
+// -----------------------------------------------------------------------------
+// Tableau — wrapper scrollable sur mobile
+// -----------------------------------------------------------------------------
+.staff-orders-table-wrapper {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    border-radius: $radius-sm;
+    box-shadow: $shadow-md;
+    background: $color-white;
+}
+
+.staff-orders-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.92rem;
+
+    thead {
+        background: $color-green;
+        color: $color-white;
+
+        th {
+            padding: 1rem 1.2rem;
+            text-align: left;
+            font-family: $font-heading;
+            font-size: 0.88rem;
+            letter-spacing: 0.5px;
+            white-space: nowrap;
+        }
+    }
+
+    tbody {
+        tr {
+            border-bottom: 1px solid rgba(45, 80, 22, 0.08);
+            transition: background $transition;
+
+            &:last-child {
+                border-bottom: none;
+            }
+
+            &:hover {
+                background: rgba(45, 80, 22, 0.04);
+            }
+        }
+
+        td {
+            padding: 0.9rem 1.2rem;
+            color: $color-text;
+            vertical-align: middle;
+        }
+    }
+}
+
+// -----------------------------------------------------------------------------
+// N° commande
+// -----------------------------------------------------------------------------
+.staff-orders-id {
+    font-family: $font-heading;
+    font-size: 0.95rem;
+    color: $color-green;
+    font-weight: 700;
+}
+
+// -----------------------------------------------------------------------------
+// Montant
+// -----------------------------------------------------------------------------
+.staff-orders-amount {
+    font-weight: 700;
+    color: $color-green;
+    white-space: nowrap;
+}
+
+// -----------------------------------------------------------------------------
+// Badge statut
+// -----------------------------------------------------------------------------
+.staff-orders-status {
+    display: inline-block;
+    padding: 0.3rem 0.8rem;
+    border-radius: $radius-pill;
+    font-size: 0.8rem;
+    font-weight: 600;
+    white-space: nowrap;
+
+    &--en-attente          { background: #fef3c7; color: #92400e; }
+    &--accept-e            { background: #d1fae5; color: #065f46; }
+    &--en-pr-paration      { background: #dbeafe; color: #1e3a8a; }
+    &--en-cours-de-livraison { background: #ede9fe; color: #4c1d95; }
+    &--livr-e              { background: #d1fae5; color: #065f46; }
+    &--en-attente-de-retour-de-mat-riel { background: #fef3c7; color: #92400e; }
+    &--termin-e            { background: #e5e7eb; color: #374151; }
+    &--annul-e             { background: #fee2e2; color: #b91c1c; }
+}
+
+// -----------------------------------------------------------------------------
+// Bouton détail commande
+// -----------------------------------------------------------------------------
+.staff-orders-btn-detail {
+    display: inline-block;
+    padding: 0.45rem 1.1rem;
+    border-radius: $radius-pill;
+    background: $color-green;
+    color: $color-white;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-decoration: none;
+    white-space: nowrap;
+    @include interactive($color-gold);
+
+    &:hover {
+        background: $color-green-dark;
+        transform: translateY(-1px);
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Responsive — tablette (colonnes réduites, pas de stack cards)
+// -----------------------------------------------------------------------------
+@include tablet {
+    .staff-orders-table {
+        thead th,
+        tbody td {
+            padding: 0.75rem 0.8rem;
+            font-size: 0.88rem;
+        }
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Responsive — mobile (table → card stack)
+// -----------------------------------------------------------------------------
+@include mobile {
+    .staff-orders-title {
+        font-size: 1.6rem;
+    }
+
+    .staff-orders-table-wrapper {
+        box-shadow: none;
+        background: transparent;
+    }
+
+    .staff-orders-table {
+        // Cache l'en-tête et empile les cellules en cards
+        thead {
+            @include sr-only;
+        }
+
+        tbody tr {
+            display: block;
+            background: $color-white;
+            border-radius: $radius-sm;
+            box-shadow: $shadow-sm;
+            margin-bottom: 1.2rem;
+            padding: 1rem;
+            border-bottom: none;
+        }
+
+        tbody td {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.4rem 0;
+            font-size: 0.9rem;
+            border-bottom: 1px solid rgba(45, 80, 22, 0.06);
+
+            &:last-child {
+                border-bottom: none;
+                padding-top: 0.8rem;
+                justify-content: flex-end;
+            }
+
+            // Label généré dynamiquement via data-label
+            &::before {
+                content: attr(data-label);
+                font-weight: 600;
+                color: $color-text;
+                flex-shrink: 0;
+                margin-right: 1rem;
+                font-size: 0.82rem;
+                text-transform: uppercase;
+                letter-spacing: 0.3px;
+            }
+        }
+    }
+}
