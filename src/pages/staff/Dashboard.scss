@@ -1,0 +1,178 @@
+// =============================================================================
+// STAFF DASHBOARD — Vite & Gourmand
+// =============================================================================
+@use '../../styles/variables' as *;
+@use '../../styles/mixins' as *;
+
+// -----------------------------------------------------------------------------
+// Wrapper page (header fixe blanc)
+// -----------------------------------------------------------------------------
+.staff-dashboard-page {
+    .main-header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        background: $color-white;
+        box-shadow: $shadow-md;
+    }
+
+    .logo h1 {
+        color: $color-green;
+    }
+
+    .nav-menu a {
+        color: $color-text;
+
+        &::after {
+            background: $color-green;
+        }
+    }
+
+    .user-greeting {
+        color: $color-text;
+    }
+
+    main {
+        padding-top: 90px;
+        background: $color-bg-light;
+        min-height: calc(100vh - 90px);
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Section
+// -----------------------------------------------------------------------------
+.staff-dashboard-section {
+    padding: 4rem 0 6rem;
+}
+
+// -----------------------------------------------------------------------------
+// Titre
+// -----------------------------------------------------------------------------
+.staff-dashboard-title {
+    font-family: $font-heading;
+    font-size: 2.4rem;
+    color: $color-green;
+    letter-spacing: 1.5px;
+    margin-bottom: 0.5rem;
+    text-align: center;
+}
+
+.staff-dashboard-welcome {
+    text-align: center;
+    font-size: 1rem;
+    color: $color-text-light;
+    margin-bottom: 3rem;
+}
+
+// -----------------------------------------------------------------------------
+// Grille de cartes (3 colonnes desktop → 1 colonne mobile)
+// -----------------------------------------------------------------------------
+.staff-dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+
+    @include tablet {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    @include mobile {
+        grid-template-columns: 1fr;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Carte
+// -----------------------------------------------------------------------------
+.staff-dashboard-card {
+    background: $color-white;
+    border-radius: $radius-sm;
+    box-shadow: $shadow-md;
+    padding: 2.5rem 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 1rem;
+    transition: $transition;
+
+    &:hover {
+        box-shadow: $shadow-lg;
+        transform: translateY(-4px);
+    }
+
+    // ── Icône ────────────────────────────────────────────────────────────────
+    &__icon {
+        width: 64px;
+        height: 64px;
+        background: rgba(45, 80, 22, 0.08);
+        border-radius: $radius-circle;
+        @include flex-center;
+        margin-bottom: 0.5rem;
+
+        svg {
+            width: 28px;
+            height: 28px;
+            stroke: $color-green;
+            fill: none;
+            stroke-width: 1.8;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+    }
+
+    // ── Titre ─────────────────────────────────────────────────────────────
+    &__title {
+        font-family: $font-heading;
+        font-size: 1.25rem;
+        color: $color-green;
+        letter-spacing: 0.5px;
+    }
+
+    // ── Description ──────────────────────────────────────────────────────
+    &__desc {
+        font-size: 0.95rem;
+        color: $color-text-light;
+        line-height: 1.6;
+        flex: 1;
+    }
+
+    // ── Bouton principal ─────────────────────────────────────────────────
+    &__btn {
+        display: inline-block;
+        padding: 0.75rem 1.8rem;
+        border-radius: $radius-pill;
+        background: $color-green;
+        color: $color-white;
+        font-family: $font-body;
+        font-size: 0.95rem;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+        text-decoration: none;
+        border: none;
+        cursor: pointer;
+        box-shadow: $shadow-btn;
+        @include interactive($color-gold);
+
+        &:hover {
+            background: $color-green-dark;
+            transform: translateY(-2px);
+        }
+
+        // ── État désactivé ───────────────────────────────────────────────
+        &--disabled,
+        &[disabled] {
+            background: #ccc;
+            color: #888;
+            cursor: not-allowed;
+            box-shadow: none;
+
+            &:hover {
+                background: #ccc;
+                transform: none;
+            }
+        }
+    }
+}

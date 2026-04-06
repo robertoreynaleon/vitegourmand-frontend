@@ -41,7 +41,7 @@ function Header() {
                     </div>
 
                     <div className="user-greeting">
-                        {user && (
+                        {user && user.roles?.includes('ROLE_CLIENT') && (
                             <ul>
                                 <li>BIENVENUE, <strong>{user.name}</strong></li>
                             </ul>
