@@ -84,6 +84,34 @@
     padding: 1rem 0;
 }
 
+.staff-orders-success {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    background: #f0fdf4;
+    border-left: 3px solid $color-green;
+    color: $color-green;
+    padding: 0.9rem 1.2rem;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    margin-bottom: 1.2rem;
+
+    p { margin: 0; }
+
+    &__close {
+        background: transparent;
+        border: none;
+        font-size: 1.3rem;
+        color: $color-green;
+        cursor: pointer;
+        line-height: 1;
+        padding: 0 0.3rem;
+        @include interactive($color-gold);
+    }
+}
+
 .staff-orders-error {
     color: #b91c1c;
     background: #fee2e2;

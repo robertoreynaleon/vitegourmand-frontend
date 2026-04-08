@@ -1,0 +1,656 @@
+// =============================================================================
+// STAFF ORDER TREATMENT — Vite & Gourmand
+// =============================================================================
+@use '../../styles/variables' as *;
+@use '../../styles/mixins' as *;
+
+// -----------------------------------------------------------------------------
+// Wrapper page (header fixe blanc)
+// -----------------------------------------------------------------------------
+.staff-treatment-page {
+    .main-header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        background: $color-white;
+        box-shadow: $shadow-md;
+    }
+
+    .logo h1        { color: $color-green; }
+    .nav-menu a     { color: $color-text; &::after { background: $color-green; } }
+    .user-greeting  { color: $color-text; }
+
+    main {
+        padding-top: 90px;
+        background: $color-bg-light;
+        min-height: calc(100vh - 90px);
+    }
+}
+
+// RGAA — sr-only
+.sr-only { @include sr-only; }
+
+// -----------------------------------------------------------------------------
+// Section
+// -----------------------------------------------------------------------------
+.staff-treatment-section {
+    padding: 4rem 0 6rem;
+}
+
+// -----------------------------------------------------------------------------
+// Titre
+// -----------------------------------------------------------------------------
+.staff-treatment-title {
+    font-family: $font-heading;
+    font-size: 2.2rem;
+    color: $color-green;
+    letter-spacing: 1.5px;
+    margin-bottom: 1rem;
+
+    span {
+        color: $color-gold;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Lien retour
+// -----------------------------------------------------------------------------
+.staff-treatment-back {
+    display: inline-block;
+    margin-bottom: 2rem;
+    color: $color-green;
+    font-weight: 600;
+    font-size: 0.95rem;
+    text-decoration: none;
+    @include interactive($color-gold);
+
+    &:hover { text-decoration: underline; }
+}
+
+// -----------------------------------------------------------------------------
+// États chargement / erreur
+// -----------------------------------------------------------------------------
+.staff-treatment-loading {
+    color: $color-text-light;
+    padding: 2rem 0;
+}
+
+.staff-treatment-error {
+    color: #b91c1c;
+    background: #fee2e2;
+    border-left: 3px solid #b91c1c;
+    padding: 0.8rem 1.2rem;
+    border-radius: 6px;
+    margin-bottom: 1rem;
+}
+
+// -----------------------------------------------------------------------------
+// Grille 2 colonnes (→ 1 sur mobile)
+// -----------------------------------------------------------------------------
+.staff-treatment-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+
+    @include tablet {
+        grid-template-columns: 1fr;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Carte générique
+// -----------------------------------------------------------------------------
+.staff-treatment-card {
+    background: $color-white;
+    border-radius: $radius-sm;
+    box-shadow: $shadow-sm;
+    padding: 1.8rem 2rem;
+
+    &--full {
+        grid-column: 1 / -1;
+        margin-bottom: 1.5rem;
+    }
+
+    &__title {
+        font-family: $font-heading;
+        font-size: 1.1rem;
+        color: $color-green;
+        letter-spacing: 0.5px;
+        margin-bottom: 1.2rem;
+        padding-bottom: 0.8rem;
+        border-bottom: 1px solid rgba(45, 80, 22, 0.1);
+    }
+
+    &__hint {
+        font-size: 0.88rem;
+        color: $color-text-light;
+        margin-bottom: 1rem;
+        line-height: 1.5;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Liste d'infos (client / livraison)
+// -----------------------------------------------------------------------------
+.staff-treatment-info-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+
+    li {
+        display: flex;
+        gap: 0.8rem;
+        font-size: 0.93rem;
+        align-items: baseline;
+
+        span:first-child {
+            font-weight: 600;
+            color: $color-text;
+            min-width: 110px;
+            flex-shrink: 0;
+        }
+
+        span:last-child {
+            color: $color-text-light;
+            word-break: break-word;
+        }
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Toggles matériel
+// -----------------------------------------------------------------------------
+.staff-treatment-toggle-group {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+}
+
+.staff-treatment-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+
+    &__label {
+        font-size: 0.93rem;
+        font-weight: 600;
+        color: $color-text;
+        cursor: default;
+    }
+
+    // Bouton switch : piste + texte côte à côte
+    &__btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.55rem;
+        background: transparent;
+        border: none;
+        padding: 0;
+        cursor: pointer;
+        font-family: $font-body;
+        font-size: 0.88rem;
+        font-weight: 600;
+        color: $color-text-light;
+        transition: $transition;
+        @include interactive($color-gold);
+
+        &--on {
+            color: $color-green;
+
+            .staff-treatment-toggle__track {
+                background: $color-green;
+            }
+
+            .staff-treatment-toggle__knob {
+                transform: translateX(20px);
+            }
+        }
+    }
+
+    // Piste (fond du switch)
+    &__track {
+        position: relative;
+        width: 44px;
+        height: 24px;
+        border-radius: 12px;
+        background: #d1d5db;
+        flex-shrink: 0;
+        transition: background 0.25s ease;
+    }
+
+    // Cercle mobile
+    &__knob {
+        position: absolute;
+        top: 4px;
+        left: 4px;
+        width: 16px;
+        height: 16px;
+        border-radius: $radius-circle;
+        background: $color-white;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+        transition: transform 0.25s ease;
+    }
+
+    // Label textuel (Oui / Non)
+    &__text {
+        min-width: 26px;
+        text-align: left;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Champs formulaire (select, textarea)
+// -----------------------------------------------------------------------------
+.staff-treatment-form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+}
+
+.staff-treatment-label {
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: $color-text;
+}
+
+.staff-treatment-select {
+    padding: 0.65rem 2.2rem 0.65rem 0.9rem;
+    font-family: $font-body;
+    font-size: 0.93rem;
+    color: $color-text;
+    background: $color-bg-light;
+    border: 1.5px solid #d1d5db;
+    border-radius: 6px;
+    cursor: pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%232d5016' stroke-width='1.8' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.8rem center;
+    transition: $transition;
+    max-width: 400px;
+    @include interactive($color-gold);
+
+    &:focus {
+        border-color: $color-green;
+        background-color: $color-white;
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(45, 80, 22, 0.12);
+    }
+}
+
+.staff-treatment-textarea {
+    width: 100%;
+    padding: 0.8rem 1rem;
+    font-family: $font-body;
+    font-size: 0.93rem;
+    color: $color-text;
+    background: $color-bg-light;
+    border: 1.5px solid #d1d5db;
+    border-radius: 6px;
+    resize: vertical;
+    line-height: 1.6;
+    transition: $transition;
+    @include interactive($color-gold);
+
+    &::placeholder { color: $color-text-muted; }
+
+    &:focus {
+        border-color: $color-green;
+        background: $color-white;
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(45, 80, 22, 0.12);
+    }
+}
+
+.staff-treatment-hint {
+    font-size: 0.8rem;
+    color: $color-text-muted;
+}
+
+// -----------------------------------------------------------------------------
+// Tableau des articles
+// -----------------------------------------------------------------------------
+.staff-treatment-table-wrapper {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    border-radius: 6px;
+    border: 1px solid rgba(45, 80, 22, 0.1);
+}
+
+.staff-treatment-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.92rem;
+
+    thead {
+        background: $color-green;
+        color: $color-white;
+
+        th {
+            padding: 0.85rem 1.1rem;
+            text-align: left;
+            font-family: $font-heading;
+            font-size: 0.85rem;
+            letter-spacing: 0.5px;
+            white-space: nowrap;
+        }
+    }
+
+    tbody {
+        td {
+            padding: 0.8rem 1.1rem;
+            color: $color-text;
+            border-bottom: 1px solid rgba(45, 80, 22, 0.07);
+        }
+
+        tr:last-child td { border-bottom: none; }
+
+        tr:hover td { background: rgba(45, 80, 22, 0.03); }
+    }
+
+    tfoot {
+        td {
+            padding: 0.75rem 1.1rem;
+            border-top: 1px solid rgba(45, 80, 22, 0.12);
+            font-size: 0.9rem;
+            color: $color-text;
+        }
+    }
+}
+
+.staff-treatment-tfoot-label {
+    color: $color-text-light;
+    font-style: italic;
+}
+
+.staff-treatment-tfoot-total td {
+    background: rgba(45, 80, 22, 0.04);
+    font-size: 1rem !important;
+    color: $color-green !important;
+}
+
+// Prix barré (réduction 10 %)
+.staff-treatment-price-crossed {
+    display: block;
+    font-size: 0.8rem;
+    color: #b91c1c;
+    text-decoration: line-through;
+    margin-bottom: 0.15rem;
+    opacity: 0.85;
+}
+
+// Badge de réduction
+.staff-treatment-discount-badge {
+    display: inline-block;
+    margin-left: 0.5rem;
+    padding: 0.1rem 0.45rem;
+    border-radius: $radius-pill;
+    background: #fef9c3;
+    color: #854d0e;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+    vertical-align: middle;
+    white-space: nowrap;
+}
+
+// -----------------------------------------------------------------------------
+// Erreur soumission
+// -----------------------------------------------------------------------------
+.staff-treatment-submit-error {
+    color: #b91c1c;
+    background: #fee2e2;
+    border-left: 3px solid #b91c1c;
+    padding: 0.8rem 1.2rem;
+    border-radius: 6px;
+    margin-bottom: 1rem;
+    font-size: 0.93rem;
+}
+
+// -----------------------------------------------------------------------------
+// Boutons d'action
+// -----------------------------------------------------------------------------
+.staff-treatment-actions {
+    display: flex;
+    gap: 1.2rem;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.staff-treatment-btn {
+    padding: 0.8rem 2rem;
+    border-radius: $radius-pill;
+    font-family: $font-body;
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: 0.4px;
+    border: none;
+    cursor: pointer;
+    transition: $transition;
+
+    &--save {
+        background: $color-green;
+        color: $color-white;
+        box-shadow: $shadow-btn;
+        @include interactive($color-gold);
+
+        &:hover:not(:disabled) {
+            background: $color-green-dark;
+            transform: translateY(-2px);
+        }
+
+        &:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+    }
+
+    &--refuse {
+        background: transparent;
+        color: #b91c1c;
+        border: 2px solid #b91c1c;
+        @include interactive(#b91c1c);
+
+        &:hover:not(:disabled) {
+            background: #fef2f2;
+        }
+
+        &:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+    }
+
+    @include mobile {
+        width: 100%;
+        text-align: center;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Modale de confirmation de refus
+// -----------------------------------------------------------------------------
+.staff-treatment-modal {
+    background: $color-white;
+    border: 1px solid rgba(185, 28, 28, 0.25);
+    border-radius: $radius-sm;
+    box-shadow: $shadow-lg;
+    padding: 2rem;
+    margin-bottom: 2rem;
+
+    &__text {
+        font-size: 1rem;
+        color: $color-text;
+        line-height: 1.6;
+        margin-bottom: 1.5rem;
+    }
+
+    &__actions {
+        display: flex;
+        gap: 1rem;
+        flex-wrap: wrap;
+    }
+
+    &__confirm {
+        padding: 0.7rem 1.6rem;
+        border-radius: $radius-pill;
+        border: none;
+        background: #b91c1c;
+        color: $color-white;
+        font-family: $font-body;
+        font-size: 0.95rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: $transition;
+        @include interactive(#b91c1c);
+
+        &:hover:not(:disabled) { background: darken(#b91c1c, 8%); }
+        &:disabled { opacity: 0.6; cursor: not-allowed; }
+    }
+
+    &__cancel {
+        padding: 0.7rem 1.6rem;
+        border-radius: $radius-pill;
+        border: 2px solid $color-green;
+        background: transparent;
+        color: $color-green;
+        font-family: $font-body;
+        font-size: 0.95rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: $transition;
+        @include interactive($color-green);
+
+        &:hover:not(:disabled) { background: $color-gold-light; }
+        &:disabled { opacity: 0.6; cursor: not-allowed; }
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Responsive — tablette (≤ 1024 px) — réduit les espacements + tableau en cartes
+// -----------------------------------------------------------------------------
+@include tablet {
+    .staff-treatment-section {
+        padding: 2.5rem 0 3rem;
+    }
+
+    .staff-treatment-title {
+        font-size: 1.75rem;
+        margin-bottom: 0.75rem;
+    }
+
+    .staff-treatment-back {
+        margin-bottom: 1.4rem;
+    }
+
+    // Tableau des articles → cartes empilées
+    .staff-treatment-table-wrapper {
+        border: none;
+        background: transparent;
+        box-shadow: none;
+    }
+
+    .staff-treatment-table {
+        // Masquer l'en-tête
+        thead {
+            @include sr-only;
+        }
+
+        // Chaque ligne devient une carte
+        tbody tr {
+            display: block;
+            background: $color-white;
+            border-radius: $radius-sm;
+            box-shadow: $shadow-sm;
+            margin-bottom: 0.9rem;
+            padding: 1rem 1.2rem;
+        }
+
+        tbody td {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(45, 80, 22, 0.07);
+            padding: 0.45rem 0;
+            font-size: 0.9rem;
+
+            &:last-child { border-bottom: none; }
+
+            &::before {
+                content: attr(data-label);
+                font-weight: 700;
+                font-size: 0.78rem;
+                text-transform: uppercase;
+                letter-spacing: 0.4px;
+                color: $color-text;
+                margin-right: 1rem;
+                flex-shrink: 0;
+            }
+        }
+
+        // Pied de tableau : lignes récap conservées (pas de cards)
+        tfoot tr {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.5rem 0;
+        }
+
+        tfoot td {
+            display: inline;
+            padding: 0;
+            border-top: none;
+
+            &:first-child {
+                flex: 1;
+                font-style: italic;
+                color: $color-text-light;
+                font-size: 0.88rem;
+            }
+        }
+
+        tfoot tr + tr td:first-child {
+            border-top: 1px solid rgba(45, 80, 22, 0.1);
+        }
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Responsive — mobile (≤ 768 px) — ajustements supplémentaires
+// -----------------------------------------------------------------------------
+@include mobile {
+    .staff-treatment-section {
+        padding: 2rem 0 2.5rem;
+    }
+
+    .staff-treatment-title { font-size: 1.4rem; }
+
+    .staff-treatment-card { padding: 1.2rem 1rem; }
+
+    .staff-treatment-actions {
+        flex-direction: column;
+        gap: 0.8rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .staff-treatment-btn {
+        width: 100%;
+        text-align: center;
+    }
+
+    .staff-treatment-modal {
+        padding: 1.4rem 1rem;
+
+        &__actions {
+            flex-direction: column;
+
+            button { width: 100%; }
+        }
+    }
+}
