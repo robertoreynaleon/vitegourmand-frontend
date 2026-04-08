@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import { useAuth } from '../../context/AuthContext';
@@ -10,6 +10,8 @@ const API_STAFF_ORDERS = 'http://vitegourmand.local/api/staff/orders';
 
 function StaffOrderList() {
     const { token } = useAuth();
+    const location = useLocation();
+    const [treatSuccess, setTreatSuccess] = useState(location.state?.treatSuccess === true);
     const [orders, setOrders]   = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError]     = useState('');
@@ -58,6 +60,19 @@ function StaffOrderList() {
 
                         <h1 className="staff-orders-title">Gestion des commandes</h1>
 
+                        {treatSuccess && (
+                            <div className="staff-orders-success" role="status" aria-live="polite">
+                                <p>La commande a bien été traitée.</p>
+                                <button
+                                    className="staff-orders-success__close"
+                                    onClick={() => setTreatSuccess(false)}
+                                    aria-label="Fermer le message de succès"
+                                >
+                                    ×
+                                </button>
+                            </div>
+                        )}
+
                         <Link to="/staff/dashboard/" className="staff-orders-back">
                             ← Retour au tableau de bord
                         </Link>
@@ -94,14 +109,14 @@ function StaffOrderList() {
                                         <table className="staff-orders-table">
                                             <thead>
                                                 <tr>
-                                                    <th scope="col">N° Commande</th>
+                                                    <th scope="col">N°</th>
                                                     <th scope="col">Client</th>
                                                     <th scope="col">Date commande</th>
                                                     <th scope="col">Date livraison</th>
-                                                    <th scope="col">Heure de livraison</th>
+                                                    <th scope="col">Heure</th>
                                                     <th scope="col">Statut</th>
-                                                    <th scope="col">Montant total</th>
-                                                    <th scope="col">Infos</th>
+                                                    <th scope="col">Montant</th>
+                                                    <th scope="col"></th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -127,7 +142,7 @@ function StaffOrderList() {
                                                         </td>
                                                         <td data-label="Infos">
                                                             <Link
-                                                                to={`/staff/orders/${order.id}/`}
+                                                                to={`/staff/orders/${order.id}/treat/`}
                                                                 className="staff-orders-btn-detail"
                                                                 aria-label={`Voir le détail de la commande #${order.id}`}
                                                             >
