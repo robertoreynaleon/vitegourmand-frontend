@@ -1,0 +1,402 @@
+// =============================================================================
+// STAFF CATALOG MANAGEMENT — Vite & Gourmand
+// =============================================================================
+@use '../../../styles/variables' as *;
+@use '../../../styles/mixins' as *;
+
+// -----------------------------------------------------------------------------
+// Page wrapper — header fixe blanc (même pattern que les autres pages staff)
+// -----------------------------------------------------------------------------
+.catalog-page {
+    .main-header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        background: $color-white;
+        box-shadow: $shadow-md;
+    }
+
+    .logo h1        { color: $color-green; }
+    .nav-menu a     { color: $color-text; &::after { background: $color-green; } }
+    .user-greeting  { color: $color-text; }
+
+    main {
+        padding-top: 90px;
+        background: $color-bg-light;
+        min-height: calc(100vh - 90px);
+    }
+}
+
+// RGAA — contenu uniquement pour les lecteurs d'écran
+.sr-only { @include sr-only; }
+
+// -----------------------------------------------------------------------------
+// Section
+// -----------------------------------------------------------------------------
+.catalog-section {
+    padding: 4rem 0 6rem;
+}
+
+// -----------------------------------------------------------------------------
+// Titre principal
+// -----------------------------------------------------------------------------
+.catalog-title {
+    font-family: $font-heading;
+    font-size: 2.2rem;
+    color: $color-green;
+    letter-spacing: 1.5px;
+    margin-bottom: 1rem;
+
+    span { color: $color-gold; }
+}
+
+// -----------------------------------------------------------------------------
+// Lien retour
+// -----------------------------------------------------------------------------
+.catalog-back {
+    display: inline-block;
+    margin-bottom: 2rem;
+    color: $color-green;
+    font-weight: 600;
+    font-size: 0.95rem;
+    text-decoration: none;
+    @include interactive($color-gold);
+
+    &:hover { text-decoration: underline; }
+}
+
+// -----------------------------------------------------------------------------
+// Erreur de chargement
+// -----------------------------------------------------------------------------
+.catalog-load-error {
+    color: #b91c1c;
+    background: #fee2e2;
+    border-left: 3px solid #b91c1c;
+    padding: 0.9rem 1.2rem;
+    border-radius: 6px;
+    margin-bottom: 1.5rem;
+    font-size: 0.95rem;
+}
+
+// -----------------------------------------------------------------------------
+// Grille 2×2 — passe en 1 colonne sur tablette
+// -----------------------------------------------------------------------------
+.catalog-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.8rem;
+
+    @include tablet {
+        grid-template-columns: 1fr;
+        gap: 1.4rem;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Bloc / carte générique
+// -----------------------------------------------------------------------------
+.catalog-block {
+    background: $color-white;
+    border-radius: $radius-sm;
+    box-shadow: $shadow-sm;
+    padding: 1.8rem 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+
+    &__title {
+        font-family: $font-heading;
+        font-size: 1.15rem;
+        color: $color-green;
+        letter-spacing: 0.5px;
+        margin-bottom: 1.4rem;
+        padding-bottom: 0.8rem;
+        border-bottom: 2px solid rgba(45, 80, 22, 0.1);
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Ligne d'ajout (champ + bouton +)
+// -----------------------------------------------------------------------------
+.catalog-add-row {
+    display: flex;
+    gap: 0.6rem;
+    margin-bottom: 0.7rem;
+    align-items: center;
+}
+
+.catalog-add-input {
+    flex: 1;
+    min-width: 0; // important dans un flex-container
+    padding: 0.65rem 1rem;
+    font-family: $font-body;
+    font-size: 0.93rem;
+    color: $color-text;
+    background: $color-bg-light;
+    border: 1.5px solid #d1d5db;
+    border-radius: 8px;
+    transition: $transition;
+    @include interactive($color-gold);
+
+    &::placeholder {
+        color: #aab2bd;
+    }
+
+    &:focus {
+        border-color: $color-green;
+        background: $color-white;
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(45, 80, 22, 0.12);
+    }
+}
+
+.catalog-add-btn {
+    width: 44px;
+    height: 44px;
+    flex-shrink: 0;
+    border: none;
+    border-radius: $radius-circle;
+    background: $color-green;
+    color: $color-white;
+    font-size: 1.5rem;
+    line-height: 0;
+    padding-bottom: 2px; // optique
+    cursor: pointer;
+    box-shadow: $shadow-btn;
+    transition: $transition;
+    @include interactive($color-gold);
+
+    &:hover:not(:disabled) {
+        background: $color-green-dark;
+        transform: scale(1.1);
+    }
+
+    &:disabled {
+        background: #ccc;
+        cursor: not-allowed;
+        box-shadow: none;
+        transform: none;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Messages de feedback par section
+// -----------------------------------------------------------------------------
+.catalog-feedback {
+    font-size: 0.88rem;
+    padding: 0.6rem 0.9rem;
+    border-radius: 6px;
+    margin-bottom: 0.8rem;
+    line-height: 1.5;
+
+    &--success {
+        background: #f0fdf4;
+        border-left: 3px solid $color-green;
+        color: darken(#2d5016, 5%);
+    }
+
+    &--error {
+        background: #fee2e2;
+        border-left: 3px solid #b91c1c;
+        color: #b91c1c;
+    }
+
+    &--warning {
+        background: #fefce8;
+        border-left: 3px solid #b45309;
+        color: #92400e;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Table statique
+// -----------------------------------------------------------------------------
+.catalog-table {
+    width: 100%;
+    margin-top: 0.8rem;
+    border-collapse: collapse;
+    font-size: 0.92rem;
+
+    thead tr {
+        background: rgba(45, 80, 22, 0.07);
+    }
+
+    th {
+        padding: 0.6rem 0.9rem;
+        text-align: left;
+        font-weight: 700;
+        font-size: 0.82rem;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+        color: $color-green;
+        border-bottom: 2px solid rgba(45, 80, 22, 0.15);
+        white-space: nowrap;
+    }
+
+    td {
+        padding: 0.55rem 0.9rem;
+        color: $color-text;
+        border-bottom: 1px solid rgba(45, 80, 22, 0.07);
+        vertical-align: middle;
+        word-break: break-word;
+    }
+
+    tbody tr:last-child td {
+        border-bottom: none;
+    }
+
+    tbody tr:hover td {
+        background: rgba(45, 80, 22, 0.025);
+    }
+
+    &__action-col {
+        width: 80px;
+        text-align: center;
+    }
+
+    &__empty {
+        padding: 0.85rem 0.9rem;
+        font-style: italic;
+        color: $color-text-light;
+        text-align: center;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Bouton suppression (× rouge)
+// -----------------------------------------------------------------------------
+.catalog-delete-btn {
+    width: 32px;
+    height: 32px;
+    min-width: 32px;
+    border: 1.5px solid #fca5a5;
+    border-radius: $radius-circle;
+    background: #fff1f2;
+    color: #b91c1c;
+    font-size: 1.1rem;
+    line-height: 0;
+    cursor: pointer;
+    transition: $transition;
+    @include interactive(#b91c1c);
+
+    &:hover:not(:disabled) {
+        background: #b91c1c;
+        border-color: #b91c1c;
+        color: $color-white;
+    }
+
+    &:disabled {
+        opacity: 0.4;
+        cursor: not-allowed;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Section Menus — actions (bouton créer)
+// -----------------------------------------------------------------------------
+.catalog-menus-actions {
+    display: flex;
+    gap: 0.8rem;
+    flex-wrap: wrap;
+    margin-bottom: 1rem;
+}
+
+.catalog-btn-create {
+    display: inline-block;
+    padding: 0.65rem 1.5rem;
+    border-radius: $radius-pill;
+    background: $color-green;
+    color: $color-white;
+    font-family: $font-body;
+    font-size: 0.93rem;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    text-decoration: none;
+    cursor: pointer;
+    box-shadow: $shadow-btn;
+    transition: $transition;
+    @include interactive($color-gold);
+
+    &:hover {
+        background: $color-green-dark;
+        transform: translateY(-2px);
+    }
+}
+
+.catalog-btn-edit {
+    display: inline-block;
+    padding: 0.3rem 0.9rem;
+    border-radius: $radius-pill;
+    border: 1.5px solid $color-green;
+    background: transparent;
+    color: $color-green;
+    font-family: $font-body;
+    font-size: 0.83rem;
+    font-weight: 600;
+    text-decoration: none;
+    white-space: nowrap;
+    flex-shrink: 0;
+    transition: $transition;
+    @include interactive($color-gold);
+
+    &:hover {
+        background: $color-green;
+        color: $color-white;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Responsive — tablette (≤ 1024 px)
+// -----------------------------------------------------------------------------
+@include tablet {
+    .catalog-section {
+        padding: 2.5rem 0 4rem;
+    }
+
+    .catalog-title {
+        font-size: 1.75rem;
+    }
+
+    .catalog-back {
+        margin-bottom: 1.4rem;
+    }
+
+    .catalog-block {
+        padding: 1.5rem 1.6rem;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Responsive — mobile (≤ 768 px)
+// -----------------------------------------------------------------------------
+@include mobile {
+    .catalog-section {
+        padding: 2rem 0 3rem;
+    }
+
+    .catalog-title {
+        font-size: 1.45rem;
+    }
+
+    .catalog-block {
+        padding: 1.2rem 1.1rem;
+    }
+
+    .catalog-add-btn {
+        width: 40px;
+        height: 40px;
+        font-size: 1.3rem;
+    }
+
+    .catalog-btn-create {
+        width: 100%;
+        text-align: center;
+    }
+
+    .catalog-table th,
+    .catalog-table td {
+        padding: 0.5rem 0.6rem;
+        font-size: 0.88rem;
+    }
+}
