@@ -1,0 +1,578 @@
+// =============================================================================
+// MENU EDIT — Vite & Gourmand
+// =============================================================================
+@use '../../../styles/variables' as *;
+@use '../../../styles/mixins' as *;
+@use '../../../styles/forms';
+
+// -----------------------------------------------------------------------------
+// Page wrapper — header fixe blanc (même pattern que les autres pages staff)
+// -----------------------------------------------------------------------------
+.menu-form-page {
+    .main-header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        background: $color-white;
+        box-shadow: $shadow-md;
+    }
+
+    .logo h1        { color: $color-green; }
+    .nav-menu a     { color: $color-text; &::after { background: $color-green; } }
+    .user-greeting  { color: $color-text; }
+
+    main {
+        padding-top: 90px;
+        background: $color-bg-light;
+        min-height: calc(100vh - 90px);
+    }
+}
+
+// RGAA
+.sr-only { @include sr-only; }
+
+// -----------------------------------------------------------------------------
+// Section
+// -----------------------------------------------------------------------------
+.menu-form-section {
+    padding: 4rem 0 6rem;
+}
+
+// -----------------------------------------------------------------------------
+// Titre principal
+// -----------------------------------------------------------------------------
+.menu-form-title {
+    font-family: $font-heading;
+    font-size: 2.2rem;
+    color: $color-green;
+    letter-spacing: 1.5px;
+    margin-bottom: 0.5rem;
+
+    span {
+        color: $color-green-dark;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Lien retour
+// -----------------------------------------------------------------------------
+.menu-form-back {
+    display: inline-block;
+    color: $color-text-light;
+    font-size: 0.9rem;
+    margin-bottom: 2rem;
+    text-decoration: none;
+    transition: color 0.2s;
+
+    &:hover { color: $color-green; }
+}
+
+// -----------------------------------------------------------------------------
+// Formulaire principal
+// -----------------------------------------------------------------------------
+.menu-form {
+    display: grid;
+    gap: 2rem;
+    max-width: 860px;
+
+    textarea.menu-form-textarea {
+        resize: vertical;
+        line-height: 1.6;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Fieldset / légende
+// -----------------------------------------------------------------------------
+.menu-form-fieldset {
+    border: 1px solid #e0e0e0;
+    border-radius: $radius-sm;
+    padding: 1.8rem 2rem 1.5rem;
+    background: $color-white;
+    box-shadow: $shadow-sm;
+
+    // Espacement entre tous les enfants directs consécutifs
+    > * + * { margin-top: 1.4rem; }
+
+    // Espace supplémentaire juste après la légende
+    > legend + * { margin-top: 1.6rem; }
+
+    // Espace entre le label et le champ
+    .form-group { gap: 0.9rem; }
+
+    .form-row.form-row--3 {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+.menu-form-legend {
+    font-family: $font-heading;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: $color-green;
+    padding: 0 0.5rem;
+    letter-spacing: 0.5px;
+}
+
+.menu-form-legend-hint {
+    font-weight: 400;
+    font-size: 0.85rem;
+    color: $color-text-light;
+}
+
+// -----------------------------------------------------------------------------
+// Section plats
+// -----------------------------------------------------------------------------
+.menu-form-dish-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr auto;
+    gap: 1rem;
+    align-items: flex-end;
+    margin-bottom: 1.2rem;
+
+    @media (max-width: 600px) {
+        grid-template-columns: 1fr;
+    }
+}
+
+.menu-form-add-dish-btn {
+    align-self: flex-end;
+    padding: 0.85rem 1.4rem;
+    background: $color-green;
+    color: $color-white;
+    border: none;
+    border-radius: $radius-sm;
+    font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background-color 0.2s, transform 0.1s;
+
+    &:hover  { background: darken($color-green, 8%); }
+    &:active { transform: scale(0.97); }
+}
+
+// -----------------------------------------------------------------------------
+// Allergènes
+// -----------------------------------------------------------------------------
+.menu-form-allergens {
+    margin-top: 1rem;
+    padding: 1.2rem 1.4rem;
+    background: $color-bg-light;
+    border: 1px solid #e0e0e0;
+    border-radius: $radius-sm;
+}
+
+.menu-form-allergens-title {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: $color-text;
+    margin-bottom: 0.8rem;
+}
+
+.menu-form-allergens-hint {
+    font-weight: 400;
+    color: $color-text-light;
+}
+
+.menu-form-allergens-empty {
+    font-size: 0.85rem;
+    color: $color-text-light;
+    font-style: italic;
+}
+
+.menu-form-allergens-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem 1.4rem;
+}
+
+.menu-form-allergen-item {
+    display: flex;
+    align-items: center;
+}
+
+.menu-form-allergen-label {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    font-size: 0.9rem;
+    cursor: pointer;
+    color: $color-text;
+}
+
+.menu-form-allergen-checkbox {
+    width: 16px;
+    height: 16px;
+    accent-color: $color-green;
+    cursor: pointer;
+}
+
+// -----------------------------------------------------------------------------
+// Plats ajoutés
+// -----------------------------------------------------------------------------
+.menu-form-dishes-added {
+    margin-top: 1.4rem;
+}
+
+.menu-form-dishes-added-title {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: $color-text;
+    margin-bottom: 0.6rem;
+}
+
+.menu-form-dishes-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 0.5rem;
+}
+
+.menu-form-dish-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.7rem 1rem;
+    background: $color-bg-light;
+    border: 1px solid #e0e0e0;
+    border-radius: $radius-sm;
+    gap: 1rem;
+}
+
+.menu-form-dish-info {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.5rem 1rem;
+    font-size: 0.9rem;
+}
+
+.menu-form-dish-type {
+    padding: 0.2rem 0.6rem;
+    background: lighten($color-green, 50%);
+    color: darken($color-green, 10%);
+    border-radius: 20px;
+    font-size: 0.78rem;
+    font-weight: 600;
+}
+
+.menu-form-dish-allergens {
+    font-size: 0.78rem;
+    color: $color-text-light;
+}
+
+.menu-form-dish-remove {
+    flex-shrink: 0;
+    width: 28px;
+    height: 28px;
+    background: transparent;
+    border: 1px solid #e0e0e0;
+    border-radius: 50%;
+    color: $color-text-light;
+    font-size: 1.1rem;
+    line-height: 1;
+    cursor: pointer;
+    transition: background-color 0.2s, color 0.2s, border-color 0.2s;
+
+    &:hover {
+        background: #fecaca;
+        color: #dc2626;
+        border-color: #dc2626;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Images
+// -----------------------------------------------------------------------------
+.menu-form-image-upload {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.menu-form-image-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.7rem 1.4rem;
+    background: $color-white;
+    border: 2px dashed #e0e0e0;
+    border-radius: $radius-sm;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: $color-green;
+    cursor: pointer;
+    transition: border-color 0.2s, background-color 0.2s;
+
+    &:hover {
+        border-color: $color-green;
+        background: lighten($color-green, 55%);
+    }
+}
+
+.menu-form-image-count {
+    font-size: 0.85rem;
+    color: $color-text-light;
+}
+
+.menu-form-image-compressing {
+    font-size: 0.85rem;
+    color: $color-green-dark;
+    font-style: italic;
+}
+
+.menu-form-image-previews {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+}
+
+.menu-form-image-preview-item {
+    position: relative;
+    width: 110px;
+    height: 110px;
+    border-radius: $radius-sm;
+    overflow: hidden;
+    border: 1px solid #e0e0e0;
+    flex-shrink: 0;
+}
+
+.menu-form-image-thumb {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.menu-form-image-remove {
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    width: 22px;
+    height: 22px;
+    background: rgba(0, 0, 0, 0.55);
+    color: $color-white;
+    border: none;
+    border-radius: 50%;
+    font-size: 0.95rem;
+    line-height: 1;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s;
+
+    &:hover { background: #dc2626; }
+}
+
+.menu-form-existing-images {
+    margin-bottom: 1rem;
+}
+
+.menu-form-existing-label {
+    font-size: 0.85rem;
+    color: $color-text-light;
+    margin-bottom: 0.5rem;
+}
+
+// -----------------------------------------------------------------------------
+// Boutons d'action
+// -----------------------------------------------------------------------------
+.menu-form-actions {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1.2rem;
+    padding-top: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.menu-form-submit {
+    padding: 0.9rem 2.2rem;
+    background: $color-green;
+    color: $color-white;
+    border: none;
+    border-radius: $radius-sm;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.1s;
+
+    &:hover:not(:disabled)  { background: darken($color-green, 8%); }
+    &:active:not(:disabled) { transform: scale(0.98); }
+    &:disabled { opacity: 0.6; cursor: not-allowed; }
+}
+
+.menu-form-cancel {
+    padding: 0.9rem 1.6rem;
+    background: transparent;
+    border: 1px solid #e0e0e0;
+    border-radius: $radius-sm;
+    color: $color-text-light;
+    font-size: 0.95rem;
+    text-decoration: none;
+    transition: border-color 0.2s, color 0.2s;
+
+    &:hover {
+        border-color: $color-text;
+        color: $color-text;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Bouton suppression menu
+// -----------------------------------------------------------------------------
+.menu-form-delete {
+    padding: 0.8rem 2rem;
+    background: transparent;
+    border: 2px solid #b91c1c;
+    border-radius: $radius-pill;
+    color: #b91c1c;
+    font-family: $font-body;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: $transition;
+
+    &:hover:not(:disabled) { background: #fef2f2; }
+    &:disabled { opacity: 0.4; cursor: not-allowed; }
+}
+
+// -----------------------------------------------------------------------------
+// Modale de confirmation de suppression (même pattern que OrderTreatment)
+// -----------------------------------------------------------------------------
+.menu-form-modal {
+    background: $color-white;
+    border: 1px solid rgba(185, 28, 28, 0.25);
+    border-radius: $radius-sm;
+    box-shadow: $shadow-lg;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    max-width: 860px;
+
+    &__text {
+        font-size: 1rem;
+        color: $color-text;
+        line-height: 1.6;
+        margin-bottom: 1.5rem;
+    }
+
+    &__actions {
+        display: flex;
+        gap: 1rem;
+        flex-wrap: wrap;
+    }
+
+    &__confirm {
+        padding: 0.7rem 1.6rem;
+        border-radius: $radius-pill;
+        border: none;
+        background: #b91c1c;
+        color: $color-white;
+        font-family: $font-body;
+        font-size: 0.95rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: $transition;
+
+        &:hover:not(:disabled) { background: darken(#b91c1c, 8%); }
+        &:disabled { opacity: 0.6; cursor: not-allowed; }
+    }
+
+    &__cancel {
+        padding: 0.7rem 1.6rem;
+        border-radius: $radius-pill;
+        border: 2px solid $color-green;
+        background: transparent;
+        color: $color-green;
+        font-family: $font-body;
+        font-size: 0.95rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: $transition;
+
+        &:hover:not(:disabled) { background: lighten($color-green, 55%); }
+        &:disabled { opacity: 0.6; cursor: not-allowed; }
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Avertissement suppression photo + fallback image non disponible
+// -----------------------------------------------------------------------------
+.menu-form-existing-warning {
+    font-weight: 400;
+    font-size: 0.8rem;
+    color: #b91c1c;
+}
+
+.menu-form-img-error {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-size: 0.65rem;
+    color: $color-text-light;
+    padding: 0.5rem;
+    background: $color-bg-light;
+    word-break: break-all;
+}
+
+// -----------------------------------------------------------------------------
+// Responsive — tablette (≤ 1024 px) et mobile (≤ 768 px)
+// -----------------------------------------------------------------------------
+@include tablet {
+    .menu-form-section {
+        padding: 2.5rem 0 4rem;
+    }
+
+    .menu-form-title {
+        font-size: 1.8rem;
+    }
+
+    .menu-form-modal {
+        padding: 1.5rem;
+    }
+}
+
+@include mobile {
+    .menu-form-section {
+        padding: 2rem 0 3rem;
+    }
+
+    .menu-form-title {
+        font-size: 1.5rem;
+    }
+
+    .menu-form-actions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .menu-form-submit,
+    .menu-form-cancel,
+    .menu-form-delete {
+        width: 100%;
+        text-align: center;
+    }
+
+    .menu-form-modal__actions {
+        flex-direction: column;
+    }
+
+    .menu-form-modal__confirm,
+    .menu-form-modal__cancel {
+        width: 100%;
+        text-align: center;
+    }
+}
