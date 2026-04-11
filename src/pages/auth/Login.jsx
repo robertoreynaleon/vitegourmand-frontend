@@ -11,6 +11,7 @@ function Login() {
 	const navigate = useNavigate();
 	const location = useLocation();
 	const justRegistered = location.state?.registered === true;
+	const sessionExpired = location.state?.sessionExpired === true;
 	const [credentialsUpdated] = useState(() => {
 		const flag = sessionStorage.getItem("credentials_updated") === "1";
 		if (flag) sessionStorage.removeItem("credentials_updated");
@@ -89,7 +90,13 @@ function Login() {
 							<h1 id="login-title" className="form-page-title">Connexion</h1>
 							<p className="form-subtitle">Accedez a votre espace ViteGourmand</p>
 
-							{justRegistered && (
+							{sessionExpired && (
+							<p className="form-error" role="alert">
+								Votre session a expiré. Veuillez vous reconnecter.
+							</p>
+						)}
+
+						{justRegistered && (
 								<p className="form-success" role="status" aria-live="polite">
 									Votre compte a bien ete cree. Connectez-vous !
 								</p>

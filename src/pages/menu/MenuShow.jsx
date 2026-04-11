@@ -8,9 +8,12 @@ import { addToCart } from '../../services/cartCalc';
 import './MenuShow.scss';
 
 const API_CART = 'http://vitegourmand.local/api/cart/add';
+const BASE     = 'http://vitegourmand.local';
 
 const API_MENUS = 'http://vitegourmand.local/api/menus';
 const API_DISHES = 'http://vitegourmand.local/api/dishes';
+
+const imgSrc = (path) => `${BASE}/${path.replace(/^\/+/, '')}`;
 
 function MenuShow() {
     const { id } = useParams();
@@ -138,7 +141,7 @@ function MenuShow() {
                 const img = new Image();
                 img.onload = resolve;
                 img.onerror = resolve;
-                img.src = image.imagePath;
+                img.src = imgSrc(image.imagePath);
             });
         });
 
@@ -297,7 +300,7 @@ function MenuShow() {
                                         aria-label="Agrandir la photo"
                                     >
                                         <img
-                                            src={images[activeImageIndex].imagePath}
+                                            src={imgSrc(images[activeImageIndex].imagePath)}
                                             alt={images[activeImageIndex].altText || menu.title || 'Photo du menu'}
                                         />
                                     </button>
@@ -334,7 +337,7 @@ function MenuShow() {
                                             aria-label={`Afficher la photo ${index + 1}`}
                                         >
                                             <img
-                                                src={image.imagePath}
+                                                src={imgSrc(image.imagePath)}
                                                 alt={image.altText || menu.title || 'Miniature du menu'}
                                             />
                                         </button>
@@ -354,7 +357,7 @@ function MenuShow() {
                                 ×
                             </button>
                             <img
-                                src={images[activeImageIndex].imagePath}
+                                src={imgSrc(images[activeImageIndex].imagePath)}
                                 alt={images[activeImageIndex].altText || menu.title || 'Photo du menu'}
                             />
                         </div>

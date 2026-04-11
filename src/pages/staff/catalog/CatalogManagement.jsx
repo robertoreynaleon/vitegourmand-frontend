@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import Header from '../../../components/Header';
 import Footer from '../../../components/Footer';
 import { useAuth } from '../../../context/AuthContext';
@@ -35,7 +35,7 @@ function Feedback({ id, feedback }) {
 
 // ─── Main component ─────────────────────────────────────────────────────────
 function CatalogManagement() {
-    const { token } = useAuth();
+    const { token, logout } = useAuth();
 
     // ── Data ────────────────────────────────────────────────────────────────
     // regimes   : [{ id, label }]
@@ -47,6 +47,8 @@ function CatalogManagement() {
     const [allergens, setAllergens] = useState([]);
     const [menus,     setMenus]     = useState([]);
     const [loadError, setLoadError] = useState('');
+    const location = useLocation();
+    const navigate = useNavigate();
 
     // ── Inputs ──────────────────────────────────────────────────────────────
     const [regimeInput,   setRegimeInput]   = useState('');
@@ -92,8 +94,15 @@ function CatalogManagement() {
             setAllergens(Array.isArray(a) ? a : []);
             setMenus(Array.isArray(m) ? m : []);
         })
-        .catch(() => setLoadError('Erreur lors du chargement des données. Veuillez recharger la page.'));
-    }, [token]);
+        .catch(errCode => {
+            if (errCode === 401) {
+                logout();
+                navigate('/auth/login/', { state: { sessionExpired: true } });
+            } else {
+                setLoadError('Erreur lors du chargement des données. Veuillez recharger la page.');
+            }
+        });
+    }, [token, logout, navigate]);
 
     // ════════════════════════════════════════════════════════════════════════
     // ADD HANDLERS
@@ -287,6 +296,10 @@ function CatalogManagement() {
                         <Link to="/staff/dashboard/" className="catalog-back">
                             ← Retour au tableau de bord
                         </Link>
+
+                        {location.state?.success && (
+                            <p className="catalog-success-banner" role="status">{location.state.success}</p>
+                        )}
 
                         {loadError && (
                             <p className="catalog-load-error" role="alert">{loadError}</p>
