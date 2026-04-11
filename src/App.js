@@ -15,6 +15,7 @@ import OrderEdit from './pages/user/OrderEdit';
 import StaffDashboard from './pages/staff/Dashboard';
 import StaffOrderList from './pages/staff/OrderList';
 import StaffOrderTreatment from './pages/staff/OrderTreatment';
+import CatalogManagement from './pages/staff/catalog/CatalogManagement';
 import './App.scss';
 
 function App() {
@@ -35,6 +36,7 @@ function App() {
           <Route path='/staff/dashboard/' element={<StaffRoute><StaffDashboard /></StaffRoute>} />
           <Route path='/staff/orders/' element={<StaffRoute><StaffOrderList /></StaffRoute>} />
           <Route path='/staff/orders/:id/treat/' element={<StaffRoute><StaffOrderTreatment /></StaffRoute>} />
+          <Route path='/staff/catalog/' element={<StaffRoute><CatalogManagement /></StaffRoute>} />
         </Routes>
       </BrowserRouter>
     </AuthProvider>

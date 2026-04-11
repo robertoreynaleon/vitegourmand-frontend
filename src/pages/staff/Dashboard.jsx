@@ -64,15 +64,13 @@ function StaffDashboard() {
                                 <p className="staff-dashboard-card__desc">
                                     Créer, modifier et supprimer des menus et leur contenu.
                                 </p>
-                                <button
-                                    type="button"
-                                    className="staff-dashboard-card__btn staff-dashboard-card__btn--disabled"
-                                    disabled
-                                    aria-disabled="true"
-                                    aria-label="Gestion des menus — bientôt disponible"
+                                <Link
+                                    to="/staff/catalog/"
+                                    className="staff-dashboard-card__btn"
+                                    aria-label="Accéder à la gestion du catalogue"
                                 >
                                     Gérer les menus
-                                </button>
+                                </Link>
                             </article>
 
                             {/* Carte Avis */}
