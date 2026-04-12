@@ -18,6 +18,9 @@ import StaffOrderTreatment from './pages/staff/OrderTreatment';
 import CatalogManagement from './pages/staff/catalog/CatalogManagement';
 import MenuCreate from './pages/staff/catalog/MenuCreate';
 import MenuEdit from './pages/staff/catalog/MenuEdit';
+import ReviewCreate from './pages/user/ReviewCreate';
+import Reviews from './pages/user/Reviews';
+import ReviewsManage from './pages/staff/ReviewsManage';
 import './App.scss';
 
 function App() {
@@ -35,12 +38,15 @@ function App() {
           <Route path='/user/order/' element={<PrivateRoute><Order /></PrivateRoute>} />
           <Route path='/user/orders/' element={<PrivateRoute><OrderList /></PrivateRoute>} />
           <Route path='/user/orders/:id/edit/' element={<PrivateRoute><OrderEdit /></PrivateRoute>} />
+          <Route path='/user/reviews/' element={<PrivateRoute><Reviews /></PrivateRoute>} />
+          <Route path='/user/reviews/create/:orderId' element={<PrivateRoute><ReviewCreate /></PrivateRoute>} />
           <Route path='/staff/dashboard/' element={<StaffRoute><StaffDashboard /></StaffRoute>} />
           <Route path='/staff/orders/' element={<StaffRoute><StaffOrderList /></StaffRoute>} />
           <Route path='/staff/orders/:id/treat/' element={<StaffRoute><StaffOrderTreatment /></StaffRoute>} />
           <Route path='/staff/catalog/' element={<StaffRoute><CatalogManagement /></StaffRoute>} />
           <Route path='/staff/catalog/menu/create/' element={<StaffRoute><MenuCreate /></StaffRoute>} />
           <Route path='/staff/catalog/menu/:id/edit/' element={<StaffRoute><MenuEdit /></StaffRoute>} />
+          <Route path='/staff/reviews/' element={<StaffRoute><ReviewsManage /></StaffRoute>} />
         </Routes>
       </BrowserRouter>
     </AuthProvider>

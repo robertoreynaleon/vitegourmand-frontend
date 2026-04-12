@@ -5,7 +5,8 @@ import Footer from '../../components/Footer';
 import { useAuth } from '../../context/AuthContext';
 import './OrderList.scss';
 
-const API_USER_ORDERS = 'http://vitegourmand.local/api/user/orders';
+const API_USER_ORDERS  = 'http://vitegourmand.local/api/user/orders';
+const API_USER_REVIEWS = 'http://vitegourmand.local/api/reviews/my';
 
 function OrderList() {
     const { token } = useAuth();
@@ -14,27 +15,35 @@ function OrderList() {
     const orderSuccess  = location.state?.orderSuccess  === true;
     const editSuccess   = location.state?.editSuccess   === true;
     const cancelSuccess = location.state?.cancelSuccess === true;
-    const [orders, setOrders] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState('');
+    const reviewSuccess = location.state?.reviewSuccess === true;
+    const [orders, setOrders]               = useState([]);
+    const [reviewedOrderIds, setReviewedOrderIds] = useState(new Set());
+    const [loading, setLoading]             = useState(true);
+    const [error, setError]                 = useState('');
 
     useEffect(() => {
         if (!token) return;
-        const fetchOrders = async () => {
+        const fetchData = async () => {
             try {
-                const res = await fetch(API_USER_ORDERS, {
-                    headers: { Authorization: `Bearer ${token}` },
-                });
-                if (!res.ok) throw new Error('Erreur lors du chargement des commandes.');
-                const data = await res.json();
-                setOrders(data);
+                const headers = { Authorization: `Bearer ${token}` };
+                const [ordersRes, reviewsRes] = await Promise.all([
+                    fetch(API_USER_ORDERS,  { headers }),
+                    fetch(API_USER_REVIEWS, { headers }),
+                ]);
+                if (!ordersRes.ok) throw new Error('Erreur lors du chargement des commandes.');
+                const ordersData  = await ordersRes.json();
+                setOrders(ordersData);
+                if (reviewsRes.ok) {
+                    const reviewsData = await reviewsRes.json();
+                    setReviewedOrderIds(new Set(reviewsData.map((r) => r.order_id)));
+                }
             } catch (e) {
                 setError(e.message || 'Une erreur est survenue.');
             } finally {
                 setLoading(false);
             }
         };
-        fetchOrders();
+        fetchData();
     }, [token]);
 
     return (
@@ -61,6 +70,12 @@ function OrderList() {
                         {cancelSuccess && (
                             <p className="form-success orders-list-success" role="status" aria-live="polite">
                                 Votre commande a bien été annulée. Un email de confirmation vous a été envoyé.
+                            </p>
+                        )}
+
+                        {reviewSuccess && (
+                            <p className="form-success orders-list-success" role="status" aria-live="polite">
+                                Votre commentaire a bien été enregistré. Il sera publié après validation par notre équipe.
                             </p>
                         )}
 
@@ -130,6 +145,18 @@ function OrderList() {
                                             className="orders-list-btn-edit"
                                         >
                                             Voir ma commande
+                                        </Link>
+                                    </div>
+                                )}
+
+                                {order.status === 'terminée' && !reviewedOrderIds.has(order.id) && (
+                                    <div className="orders-list-card-actions">
+                                        <Link
+                                            to={`/user/reviews/create/${order.id}`}
+                                            state={{ deliveryDate: order.deliveryDate }}
+                                            className="orders-list-btn-review"
+                                        >
+                                            Laisser un commentaire
                                         </Link>
                                     </div>
                                 )}
