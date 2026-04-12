@@ -1,0 +1,408 @@
+// =============================================================================
+// REVIEWS PAGE (user) — Vite & Gourmand
+// =============================================================================
+@use '../../styles/variables' as *;
+@use '../../styles/mixins' as *;
+
+// -----------------------------------------------------------------------------
+// Wrapper page
+// -----------------------------------------------------------------------------
+.reviews-page {
+    .main-header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        background: $color-white;
+        box-shadow: $shadow-md;
+    }
+
+    .logo h1 { color: $color-green; }
+
+    .nav-menu a {
+        color: $color-text;
+
+        &::after { background: $color-green; }
+    }
+
+    .user-greeting { color: $color-text; }
+
+    main {
+        padding-top: 90px;
+        background: $color-bg-light;
+        min-height: calc(100vh - 90px);
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Section
+// -----------------------------------------------------------------------------
+.reviews-section {
+    padding: 4rem 0 6rem;
+}
+
+// -----------------------------------------------------------------------------
+// Title
+// -----------------------------------------------------------------------------
+.reviews-title {
+    font-family: $font-heading;
+    font-size: 2rem;
+    color: $color-green;
+    margin-bottom: 1.5rem;
+    letter-spacing: 1px;
+}
+
+// -----------------------------------------------------------------------------
+// Back link
+// -----------------------------------------------------------------------------
+.reviews-back {
+    display: inline-block;
+    margin-bottom: 2rem;
+    color: $color-green;
+    text-decoration: none;
+    font-weight: 500;
+
+    &:hover { text-decoration: underline; }
+
+    @include focus-ring($color-gold);
+}
+
+// -----------------------------------------------------------------------------
+// States
+// -----------------------------------------------------------------------------
+.reviews-loading {
+    color: $color-text-light;
+    font-style: italic;
+}
+
+.reviews-error {
+    background: #fee2e2;
+    color: #b91c1c;
+    border-left: 3px solid #b91c1c;
+    padding: 0.75rem 1rem;
+    border-radius: 4px;
+    margin-bottom: 1.5rem;
+}
+
+.reviews-empty {
+    background: $color-white;
+    border-radius: $radius-sm;
+    box-shadow: $shadow-sm;
+    padding: 2rem;
+    text-align: center;
+
+    &__text {
+        color: $color-text-light;
+        margin-bottom: 1rem;
+    }
+
+    &__link {
+        display: inline-block;
+        padding: 0.6rem 1.4rem;
+        background: $color-green;
+        color: $color-white;
+        border-radius: $radius-pill;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 0.9rem;
+
+        &:hover { background: $color-green-dark; }
+
+        @include focus-ring($color-gold);
+    }
+}
+
+// -----------------------------------------------------------------------------
+// List
+// -----------------------------------------------------------------------------
+.reviews-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+// -----------------------------------------------------------------------------
+// Card
+// -----------------------------------------------------------------------------
+.reviews-card {
+    background: $color-white;
+    border-radius: $radius-sm;
+    box-shadow: $shadow-sm;
+    padding: 1.5rem;
+    border-left: 4px solid #e5e7eb;
+
+    &--valid   { border-left-color: $color-green; }
+    &--refused { border-left-color: #b91c1c; }
+    &--pending { border-left-color: $color-gold; }
+
+    &__header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 1rem;
+        margin-bottom: 0.75rem;
+        flex-wrap: wrap;
+    }
+
+    &__order {
+        font-weight: 700;
+        color: $color-green;
+        font-size: 1rem;
+    }
+
+    &__badge {
+        display: inline-block;
+        padding: 0.2rem 0.75rem;
+        border-radius: 999px;
+        font-size: 0.8rem;
+        font-weight: 600;
+
+        &--valid {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        &--refused {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        &--pending {
+            background: #fef3c7;
+            color: #92400e;
+        }
+    }
+
+    &__refused-msg {
+        background: #fee2e2;
+        color: #b91c1c;
+        border-left: 3px solid #b91c1c;
+        padding: 0.6rem 0.9rem;
+        border-radius: 4px;
+        font-size: 0.875rem;
+        margin-bottom: 0.75rem;
+    }
+
+    &__comment {
+        color: $color-text;
+        line-height: 1.6;
+        margin: 0.5rem 0;
+        white-space: pre-wrap;
+        word-break: break-word;
+    }
+
+    &__date {
+        font-size: 0.82rem;
+        color: $color-text-light;
+        margin-top: 0.5rem;
+    }
+
+    // Edit form inside card
+    &__edit {
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+        margin-top: 0.5rem;
+    }
+
+    &__edit-field {
+        display: flex;
+        flex-direction: column;
+        gap: 0.3rem;
+    }
+
+    &__edit-label {
+        font-weight: 600;
+        font-size: 0.9rem;
+        color: $color-text;
+    }
+
+    &__stars-hint {
+        font-size: 0.8rem;
+        color: $color-text-light;
+        font-style: italic;
+        margin: 0;
+    }
+
+    &__textarea {
+        width: 100%;
+        border: 1.5px solid #d1d5db;
+        border-radius: 6px;
+        padding: 0.6rem 0.9rem;
+        font-family: $font-body;
+        font-size: 0.9rem;
+        color: $color-text;
+        resize: vertical;
+        min-height: 100px;
+        box-sizing: border-box;
+        transition: border-color 0.2s;
+
+        &:focus {
+            outline: none;
+            border-color: $color-green;
+            box-shadow: 0 0 0 3px rgba(45, 80, 22, 0.12);
+        }
+    }
+
+    &__count {
+        font-size: 0.78rem;
+        color: $color-text-light;
+        text-align: right;
+
+        &--full {
+            color: #b91c1c;
+            font-weight: 600;
+        }
+    }
+
+    &__save-error {
+        font-size: 0.85rem;
+        color: #b91c1c;
+        background: #fee2e2;
+        padding: 0.4rem 0.75rem;
+        border-radius: 4px;
+    }
+
+    &__edit-actions {
+        display: flex;
+        gap: 0.75rem;
+        flex-wrap: wrap;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Star display
+// -----------------------------------------------------------------------------
+.reviews-stars {
+    display: inline-flex;
+    gap: 0.1rem;
+    margin-bottom: 0.4rem;
+}
+
+.reviews-star {
+    font-size: 1.4rem;
+    color: #d1d5db;
+
+    &--on {
+        color: $color-gold;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Star picker
+// -----------------------------------------------------------------------------
+.reviews-star-picker {
+    display: flex;
+    gap: 0.2rem;
+}
+
+.reviews-star-pick {
+    background: none;
+    border: none;
+    font-size: 1.8rem;
+    color: #d1d5db;
+    cursor: pointer;
+    padding: 0;
+    line-height: 1;
+    transition: color 0.15s ease, transform 0.1s ease;
+
+    &--active {
+        color: $color-gold;
+    }
+
+    &:hover {
+        color: $color-gold;
+        transform: scale(1.15);
+    }
+
+    @include focus-ring($color-gold);
+}
+
+// -----------------------------------------------------------------------------
+// Buttons
+// -----------------------------------------------------------------------------
+.reviews-btn {
+    padding: 0.55rem 1.4rem;
+    border-radius: $radius-pill;
+    font-family: $font-body;
+    font-size: 0.875rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: $transition;
+    border: 2px solid transparent;
+
+    &--save {
+        background: $color-green;
+        color: $color-white;
+        border-color: $color-green;
+
+        &:hover:not(:disabled) { background: $color-green-dark; border-color: $color-green-dark; }
+
+        &:disabled { opacity: 0.5; cursor: not-allowed; }
+
+        @include focus-ring($color-gold);
+    }
+
+    &--cancel {
+        background: transparent;
+        color: $color-green;
+        border-color: $color-green;
+
+        &:hover:not(:disabled) { background: $color-green; color: $color-white; }
+
+        &:disabled { opacity: 0.5; cursor: not-allowed; }
+
+        @include focus-ring($color-gold);
+    }
+
+    &--edit {
+        background: transparent;
+        color: $color-green;
+        border-color: $color-green;
+        margin-top: 0.75rem;
+
+        &:hover { background: $color-green; color: $color-white; }
+
+        @include focus-ring($color-gold);
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Responsive
+// -----------------------------------------------------------------------------
+@include tablet {
+    .reviews-section {
+        padding: 3rem 0 4rem;
+    }
+}
+
+@include mobile {
+    .reviews-section {
+        padding: 2rem 0 3rem;
+    }
+
+    .reviews-title {
+        font-size: 1.6rem;
+    }
+
+    .reviews-card {
+        padding: 1.25rem;
+
+        &__header {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        &__edit-actions {
+            flex-direction: column;
+
+            .reviews-btn {
+                width: 100%;
+                text-align: center;
+            }
+        }
+    }
+}
