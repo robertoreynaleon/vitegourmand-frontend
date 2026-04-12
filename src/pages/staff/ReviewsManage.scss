@@ -1,0 +1,270 @@
+// =============================================================================
+// REVIEWS MANAGE PAGE (staff) — Vite & Gourmand
+// =============================================================================
+@use '../../styles/variables' as *;
+@use '../../styles/mixins' as *;
+
+// -----------------------------------------------------------------------------
+// Wrapper page
+// -----------------------------------------------------------------------------
+.reviews-manage-page {
+    .main-header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        background: $color-white;
+        box-shadow: $shadow-md;
+    }
+
+    .logo h1 { color: $color-green; }
+
+    .nav-menu a {
+        color: $color-text;
+
+        &::after { background: $color-green; }
+    }
+
+    .user-greeting { color: $color-text; }
+
+    main {
+        padding-top: 90px;
+        background: $color-bg-light;
+        min-height: calc(100vh - 90px);
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Section
+// -----------------------------------------------------------------------------
+.reviews-manage-section {
+    padding: 4rem 0 6rem;
+}
+
+// -----------------------------------------------------------------------------
+// Title
+// -----------------------------------------------------------------------------
+.reviews-manage-title {
+    font-family: $font-heading;
+    font-size: 2rem;
+    color: $color-green;
+    margin-bottom: 1.5rem;
+    letter-spacing: 1px;
+}
+
+// -----------------------------------------------------------------------------
+// Back link
+// -----------------------------------------------------------------------------
+.reviews-manage-back {
+    display: inline-block;
+    margin-bottom: 2rem;
+    color: $color-green;
+    text-decoration: none;
+    font-weight: 500;
+
+    &:hover { text-decoration: underline; }
+
+    @include focus-ring($color-gold);
+}
+
+// -----------------------------------------------------------------------------
+// States
+// -----------------------------------------------------------------------------
+.reviews-manage-success {
+    background: #d1fae5;
+    color: #065f46;
+    border-left: 3px solid #065f46;
+    padding: 0.75rem 1rem;
+    border-radius: 4px;
+    margin-bottom: 1.5rem;
+    font-weight: 500;
+}
+
+.reviews-manage-error {
+    background: #fee2e2;
+    color: #b91c1c;
+    border-left: 3px solid #b91c1c;
+    padding: 0.75rem 1rem;
+    border-radius: 4px;
+    margin-bottom: 1.5rem;
+}
+
+.reviews-manage-loading {
+    color: $color-text-light;
+    font-style: italic;
+}
+
+.reviews-manage-empty {
+    background: $color-white;
+    border-radius: $radius-sm;
+    box-shadow: $shadow-sm;
+    padding: 2rem;
+    text-align: center;
+    color: $color-text-light;
+}
+
+// -----------------------------------------------------------------------------
+// List
+// -----------------------------------------------------------------------------
+.rm-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+// -----------------------------------------------------------------------------
+// Card
+// -----------------------------------------------------------------------------
+.rm-card {
+    background: $color-white;
+    border-radius: $radius-sm;
+    box-shadow: $shadow-sm;
+    padding: 1.5rem;
+    border-left: 4px solid $color-gold;
+
+    &__header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 1rem;
+        margin-bottom: 0.75rem;
+        flex-wrap: wrap;
+    }
+
+    &__order {
+        font-weight: 700;
+        color: $color-green;
+        font-size: 1rem;
+    }
+
+    &__client {
+        font-weight: 600;
+        color: $color-text-light;
+        font-size: 0.9rem;
+    }
+
+    &__comment {
+        color: $color-text;
+        line-height: 1.6;
+        margin: 0.5rem 0;
+        white-space: pre-wrap;
+        word-break: break-word;
+    }
+
+    &__date {
+        font-size: 0.82rem;
+        color: $color-text-light;
+        margin: 0.5rem 0 1rem;
+    }
+
+    &__actions {
+        display: flex;
+        gap: 0.75rem;
+        flex-wrap: wrap;
+        padding-top: 1rem;
+        border-top: 1px solid rgba(0, 0, 0, 0.07);
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Stars (green for staff page)
+// -----------------------------------------------------------------------------
+.rm-stars {
+    display: inline-flex;
+    gap: 0.1rem;
+    margin-bottom: 0.4rem;
+}
+
+.rm-star {
+    font-size: 1.4rem;
+    color: #d1d5db;
+
+    &--on {
+        color: $color-green;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Buttons
+// -----------------------------------------------------------------------------
+.rm-btn {
+    padding: 0.55rem 1.5rem;
+    border-radius: $radius-pill;
+    font-family: $font-body;
+    font-size: 0.875rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: $transition;
+    border: 2px solid transparent;
+    min-width: 100px;
+
+    &--validate {
+        background: $color-green;
+        color: $color-white;
+        border-color: $color-green;
+
+        &:hover:not(:disabled) {
+            background: $color-green-dark;
+            border-color: $color-green-dark;
+        }
+
+        &:disabled { opacity: 0.5; cursor: not-allowed; }
+
+        @include focus-ring($color-gold);
+    }
+
+    &--refuse {
+        background: transparent;
+        color: #b91c1c;
+        border-color: #b91c1c;
+
+        &:hover:not(:disabled) {
+            background: #b91c1c;
+            color: $color-white;
+        }
+
+        &:disabled { opacity: 0.5; cursor: not-allowed; }
+
+        @include focus-ring(#b91c1c);
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Responsive
+// -----------------------------------------------------------------------------
+@include tablet {
+    .reviews-manage-section {
+        padding: 3rem 0 4rem;
+    }
+}
+
+@include mobile {
+    .reviews-manage-section {
+        padding: 2rem 0 3rem;
+    }
+
+    .reviews-manage-title {
+        font-size: 1.6rem;
+    }
+
+    .rm-card {
+        padding: 1.25rem;
+
+        &__header {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        &__actions {
+            flex-direction: column;
+
+            .rm-btn {
+                width: 100%;
+                text-align: center;
+            }
+        }
+    }
+}
