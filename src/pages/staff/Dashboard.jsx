@@ -86,15 +86,13 @@ function StaffDashboard() {
                                 <p className="staff-dashboard-card__desc">
                                     Valider les avis des clients avant publication.
                                 </p>
-                                <button
-                                    type="button"
-                                    className="staff-dashboard-card__btn staff-dashboard-card__btn--disabled"
-                                    disabled
-                                    aria-disabled="true"
-                                    aria-label="Gestion des avis — bientôt disponible"
+                                <Link
+                                    to="/staff/reviews/"
+                                    className="staff-dashboard-card__btn"
+                                    aria-label="Accéder à la gestion des avis clients"
                                 >
                                     Gérer les avis
-                                </button>
+                                </Link>
                             </article>
 
                         </div>
