@@ -1,0 +1,306 @@
+// =============================================================================
+// REVIEW CREATE PAGE — Vite & Gourmand
+// =============================================================================
+@use '../../styles/variables' as *;
+@use '../../styles/mixins' as *;
+
+// -----------------------------------------------------------------------------
+// Wrapper page (header fixe blanc)
+// -----------------------------------------------------------------------------
+.review-create-page {
+    .main-header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        background: $color-white;
+        box-shadow: $shadow-md;
+    }
+
+    .logo h1 { color: $color-green; }
+
+    .nav-menu a {
+        color: $color-text;
+
+        &::after { background: $color-green; }
+    }
+
+    .user-greeting { color: $color-text; }
+
+    main {
+        padding-top: 90px;
+        background: $color-bg-light;
+        min-height: calc(100vh - 90px);
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Section centred
+// -----------------------------------------------------------------------------
+.review-create-section {
+    padding: 4rem 0 6rem;
+    max-width: 640px;
+    margin: 0 auto;
+}
+
+// -----------------------------------------------------------------------------
+// Title
+// -----------------------------------------------------------------------------
+.review-create-title {
+    font-family: $font-heading;
+    font-size: 2rem;
+    color: $color-green;
+    margin-bottom: 1.5rem;
+    letter-spacing: 1px;
+}
+
+// -----------------------------------------------------------------------------
+// Order meta block
+// -----------------------------------------------------------------------------
+.review-create-meta {
+    background: $color-white;
+    border-radius: $radius-sm;
+    box-shadow: $shadow-sm;
+    padding: 1rem 1.5rem;
+    margin-bottom: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+
+    p {
+        margin: 0;
+    }
+
+    &__label {
+        font-weight: 600;
+        color: $color-text;
+        margin-right: 0.4rem;
+    }
+
+    &__value {
+        color: $color-text-light;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Error
+// -----------------------------------------------------------------------------
+.review-create-error {
+    background: #fee2e2;
+    color: #b91c1c;
+    border-left: 3px solid #b91c1c;
+    padding: 0.75rem 1rem;
+    border-radius: 4px;
+    margin-bottom: 1.5rem;
+    font-size: 0.9rem;
+}
+
+// -----------------------------------------------------------------------------
+// Form card
+// -----------------------------------------------------------------------------
+.review-create-form {
+    background: $color-white;
+    border-radius: $radius-sm;
+    box-shadow: $shadow-md;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.75rem;
+}
+
+// -----------------------------------------------------------------------------
+// Fieldset (stars)
+// -----------------------------------------------------------------------------
+.review-create-fieldset {
+    border: none;
+    padding: 0;
+    margin: 0;
+}
+
+.review-create-legend {
+    font-weight: 600;
+    color: $color-text;
+    font-size: 1rem;
+    margin-bottom: 0.6rem;
+}
+
+.required-mark {
+    color: #b91c1c;
+    margin-left: 2px;
+}
+
+// -----------------------------------------------------------------------------
+// Stars
+// -----------------------------------------------------------------------------
+.review-create-stars {
+    display: flex;
+    gap: 0.3rem;
+    margin-bottom: 0.5rem;
+}
+
+.review-create-star {
+    background: none;
+    border: none;
+    font-size: 2.2rem;
+    color: #d1d5db;
+    cursor: pointer;
+    padding: 0 2px;
+    line-height: 1;
+    transition: color 0.15s ease, transform 0.1s ease;
+
+    &--active {
+        color: $color-gold;
+    }
+
+    &:hover {
+        color: $color-gold;
+        transform: scale(1.15);
+    }
+
+    @include focus-ring($color-gold);
+}
+
+.review-create-stars-hint {
+    font-size: 0.82rem;
+    color: $color-text-light;
+    font-style: italic;
+    margin: 0;
+}
+
+// -----------------------------------------------------------------------------
+// Comment field
+// -----------------------------------------------------------------------------
+.review-create-field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+}
+
+.review-create-label {
+    font-weight: 600;
+    color: $color-text;
+    font-size: 1rem;
+}
+
+.review-create-textarea {
+    width: 100%;
+    border: 1.5px solid #d1d5db;
+    border-radius: $radius-sm;
+    padding: 0.75rem 1rem;
+    font-family: $font-body;
+    font-size: 0.95rem;
+    color: $color-text;
+    resize: vertical;
+    min-height: 140px;
+    transition: border-color 0.2s ease;
+    box-sizing: border-box;
+
+    &:focus {
+        outline: none;
+        border-color: $color-green;
+        box-shadow: 0 0 0 3px rgba(45, 80, 22, 0.12);
+    }
+}
+
+.review-create-count {
+    font-size: 0.8rem;
+    color: $color-text-light;
+    text-align: right;
+
+    &--full {
+        color: #b91c1c;
+        font-weight: 600;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Actions
+// -----------------------------------------------------------------------------
+.review-create-actions {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.review-create-btn {
+    padding: 0.7rem 1.75rem;
+    border-radius: $radius-pill;
+    font-family: $font-body;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: $transition;
+    border: 2px solid transparent;
+
+    &--primary {
+        background: $color-green;
+        color: $color-white;
+        border-color: $color-green;
+
+        &:hover:not(:disabled) {
+            background: $color-green-dark;
+            border-color: $color-green-dark;
+        }
+
+        &:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        @include focus-ring($color-gold);
+    }
+
+    &--cancel {
+        background: transparent;
+        color: $color-green;
+        border-color: $color-green;
+
+        &:hover:not(:disabled) {
+            background: $color-green;
+            color: $color-white;
+        }
+
+        &:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        @include focus-ring($color-gold);
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Responsive
+// -----------------------------------------------------------------------------
+@include tablet {
+    .review-create-section {
+        padding: 3rem 0 4rem;
+    }
+}
+
+@include mobile {
+    .review-create-section {
+        padding: 2rem 0 3rem;
+    }
+
+    .review-create-title {
+        font-size: 1.6rem;
+    }
+
+    .review-create-form {
+        padding: 1.25rem;
+    }
+
+    .review-create-star {
+        font-size: 1.85rem;
+    }
+
+    .review-create-actions {
+        flex-direction: column;
+
+        .review-create-btn {
+            width: 100%;
+            text-align: center;
+        }
+    }
+}
