@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
 import PrivateRoute from './components/PrivateRoute';
 import StaffRoute from './components/StaffRoute';
+import AdminRoute from './components/AdminRoute';
 import HomePage from './pages/HomePage';
 import MenuList from './pages/menu/MenuList';
 import MenuShow from './pages/menu/MenuShow';
@@ -21,6 +22,7 @@ import MenuEdit from './pages/staff/catalog/MenuEdit';
 import ReviewCreate from './pages/user/ReviewCreate';
 import Reviews from './pages/user/Reviews';
 import ReviewsManage from './pages/staff/ReviewsManage';
+import UserCreate from './pages/admin/UserCreate';
 import './App.scss';
 
 function App() {
@@ -47,6 +49,7 @@ function App() {
           <Route path='/staff/catalog/menu/create/' element={<StaffRoute><MenuCreate /></StaffRoute>} />
           <Route path='/staff/catalog/menu/:id/edit/' element={<StaffRoute><MenuEdit /></StaffRoute>} />
           <Route path='/staff/reviews/' element={<StaffRoute><ReviewsManage /></StaffRoute>} />
+          <Route path='/admin/users/' element={<AdminRoute><UserCreate /></AdminRoute>} />
         </Routes>
       </BrowserRouter>
     </AuthProvider>

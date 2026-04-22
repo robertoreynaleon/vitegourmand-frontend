@@ -95,6 +95,61 @@ function StaffDashboard() {
                                 </Link>
                             </article>
 
+                            {/* Cartes Admin uniquement */}
+                            {user?.roles?.includes('ROLE_ADMIN') && (
+                                <>
+                                    {/* Carte Employés */}
+                                    <article className="staff-dashboard-card" aria-labelledby="card-staff-title">
+                                        <div className="staff-dashboard-card__icon" aria-hidden="true">
+                                            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                                                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+                                                <circle cx="9" cy="7" r="4" />
+                                                <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+                                                <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+                                            </svg>
+                                        </div>
+                                        <h2 id="card-staff-title" className="staff-dashboard-card__title">
+                                            Employés
+                                        </h2>
+                                        <p className="staff-dashboard-card__desc">
+                                            Ajouter, consulter et supprimer les membres du staff.
+                                        </p>
+                                        <Link
+                                            to="/admin/users/"
+                                            className="staff-dashboard-card__btn"
+                                            aria-label="Accéder à la gestion des employés"
+                                        >
+                                            Gérer les employés
+                                        </Link>
+                                    </article>
+
+                                    {/* Carte Stats */}
+                                    <article className="staff-dashboard-card" aria-labelledby="card-stats-title">
+                                        <div className="staff-dashboard-card__icon" aria-hidden="true">
+                                            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                                                <line x1="18" y1="20" x2="18" y2="10" />
+                                                <line x1="12" y1="20" x2="12" y2="4" />
+                                                <line x1="6" y1="20" x2="6" y2="14" />
+                                                <line x1="2" y1="20" x2="22" y2="20" />
+                                            </svg>
+                                        </div>
+                                        <h2 id="card-stats-title" className="staff-dashboard-card__title">
+                                            Stats
+                                        </h2>
+                                        <p className="staff-dashboard-card__desc">
+                                            Visualiser les statistiques de commandes par menu.
+                                        </p>
+                                        <Link
+                                            to="/admin/stats/"
+                                            className="staff-dashboard-card__btn"
+                                            aria-label="Accéder aux statistiques"
+                                        >
+                                            Voir les stats
+                                        </Link>
+                                    </article>
+                                </>
+                            )}
+
                         </div>
                     </div>
                 </section>
