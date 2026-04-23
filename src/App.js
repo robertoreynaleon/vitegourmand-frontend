@@ -23,6 +23,7 @@ import ReviewCreate from './pages/user/ReviewCreate';
 import Reviews from './pages/user/Reviews';
 import ReviewsManage from './pages/staff/ReviewsManage';
 import UserCreate from './pages/admin/UserCreate';
+import Stats from './pages/admin/Stats';
 import './App.scss';
 
 function App() {
@@ -50,6 +51,7 @@ function App() {
           <Route path='/staff/catalog/menu/:id/edit/' element={<StaffRoute><MenuEdit /></StaffRoute>} />
           <Route path='/staff/reviews/' element={<StaffRoute><ReviewsManage /></StaffRoute>} />
           <Route path='/admin/users/' element={<AdminRoute><UserCreate /></AdminRoute>} />
+          <Route path='/admin/stats/' element={<AdminRoute><Stats /></AdminRoute>} />
         </Routes>
       </BrowserRouter>
     </AuthProvider>
