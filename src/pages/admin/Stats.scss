@@ -1,0 +1,448 @@
+// =============================================================================
+// ADMIN — STATS — Vite & Gourmand
+// =============================================================================
+@use '../../styles/variables' as *;
+@use '../../styles/mixins' as *;
+
+// -----------------------------------------------------------------------------
+// Page wrapper (header fixe blanc, identique aux autres pages internes)
+// -----------------------------------------------------------------------------
+.stats-page {
+    .main-header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        background: $color-white;
+        box-shadow: $shadow-md;
+    }
+
+    .logo h1 {
+        color: $color-green;
+    }
+
+    .nav-menu a {
+        color: $color-text;
+
+        &::after {
+            background: $color-green;
+        }
+    }
+
+    .user-greeting {
+        color: $color-text;
+    }
+
+    main {
+        padding-top: 90px;
+        background: $color-bg-light;
+        min-height: calc(100vh - 90px);
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Section filtres
+// -----------------------------------------------------------------------------
+.stats-filters-section {
+    padding: 4rem 0 2rem;
+}
+
+.stats-title {
+    font-family: $font-heading;
+    font-size: 2rem;
+    color: $color-green;
+    letter-spacing: 1.5px;
+    margin-bottom: 0.4rem;
+    text-align: center;
+}
+
+.stats-subtitle {
+    font-size: 0.9rem;
+    color: $color-text-light;
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.stats-filters {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    gap: 1.2rem;
+    background: $color-white;
+    border-radius: $radius-sm;
+    box-shadow: $shadow-sm;
+    padding: 1.6rem 2rem;
+    overflow: visible; // allow DatePicker calendars to overflow the card
+
+    @include mobile {
+        flex-direction: column;
+        align-items: stretch;
+        padding: 1.2rem;
+    }
+}
+
+.stats-filter-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    flex: 1;
+    min-width: 180px;
+    position: relative; // needed so dp-calendar positions correctly
+
+    @include mobile {
+        min-width: unset;
+    }
+}
+
+.stats-filter-label {
+    font-weight: 600;
+    font-size: 0.88rem;
+    color: $color-text;
+}
+
+.stats-filter-select,
+.stats-filter-input {
+    padding: 0.7rem 1rem;
+    border: 1.5px solid #ddd;
+    border-radius: $radius-sm;
+    font-family: $font-body;
+    font-size: 0.9rem;
+    color: $color-text;
+    background: $color-white;
+    transition: border-color 0.2s ease;
+
+    &:focus {
+        outline: none;
+        border-color: $color-green;
+        box-shadow: 0 0 0 3px rgba(45, 80, 22, 0.15);
+    }
+}
+
+.stats-filter-btn {
+    padding: 0.7rem 1.6rem;
+    border-radius: $radius-pill;
+    background: $color-green;
+    color: $color-white;
+    font-family: $font-body;
+    font-size: 0.9rem;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    transition: $transition;
+    align-self: flex-end;
+
+    @include focus-ring($color-green);
+
+    &:hover {
+        background: $color-green-dark;
+        transform: translateY(-1px);
+    }
+
+    &--reset {
+        background: transparent;
+        color: $color-text-light;
+        border: 1.5px solid #ddd;
+
+        @include focus-ring($color-text);
+
+        &:hover {
+            border-color: $color-text;
+            color: $color-text;
+            background: transparent;
+            transform: translateY(-1px);
+        }
+    }
+
+    @include mobile {
+        width: 100%;
+        text-align: center;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Sections table + graphique
+// -----------------------------------------------------------------------------
+.stats-table-section {
+    padding: 2rem 0;
+}
+
+.stats-chart-section {
+    padding: 2rem 0 6rem;
+}
+
+.stats-section-title {
+    font-family: $font-heading;
+    font-size: 1.5rem;
+    color: $color-green;
+    letter-spacing: 1px;
+    margin-bottom: 1.6rem;
+    text-align: center;
+}
+
+.stats-loading,
+.stats-empty {
+    text-align: center;
+    color: $color-text-light;
+    padding: 2rem 0;
+}
+
+// -----------------------------------------------------------------------------
+// Tableau
+// -----------------------------------------------------------------------------
+.stats-table-wrapper {
+    overflow-x: auto;
+    border-radius: $radius-sm;
+    box-shadow: $shadow-sm;
+}
+
+.stats-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: $color-white;
+    font-size: 0.95rem;
+
+    thead {
+        background: $color-green;
+        color: $color-white;
+
+        th {
+            padding: 1rem 1.4rem;
+            text-align: left;
+            font-family: $font-heading;
+            font-size: 0.9rem;
+            letter-spacing: 0.5px;
+
+            &.stats-table__num {
+                text-align: right;
+            }
+        }
+    }
+
+    tbody {
+        tr {
+            border-bottom: 1px solid #f0f0f0;
+            transition: background 0.15s ease;
+
+            &:hover {
+                background: rgba(45, 80, 22, 0.04);
+            }
+        }
+
+        td {
+            padding: 0.9rem 1.4rem;
+            color: $color-text;
+
+            &.stats-table__num {
+                text-align: right;
+                font-variant-numeric: tabular-nums;
+            }
+        }
+    }
+
+    tfoot {
+        .stats-table__total {
+            background: rgba(201, 169, 97, 0.12);
+            border-top: 2px solid $color-gold;
+
+            td {
+                padding: 0.9rem 1.4rem;
+                color: $color-text;
+
+                &.stats-table__num {
+                    text-align: right;
+                    font-variant-numeric: tabular-nums;
+                }
+            }
+        }
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Graphique
+// -----------------------------------------------------------------------------
+.stats-chart-wrapper {
+    background: $color-white;
+    border-radius: $radius-sm;
+    box-shadow: $shadow-sm;
+    padding: 2rem 1rem 1rem;
+
+    @include mobile {
+        padding: 1rem 0.5rem;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Desktop chart / mobile chart visibility
+// -----------------------------------------------------------------------------
+.stats-chart-desktop {
+    @include tablet {
+        display: none;
+    }
+}
+
+.stats-chart-mobile {
+    display: none;
+
+    @include tablet {
+        display: block;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Mobile horizontal-bar chart (one card per menu)
+// -----------------------------------------------------------------------------
+.stats-mobile-chart {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+
+    &__card {
+        background: $color-white;
+        border-radius: $radius-sm;
+        box-shadow: $shadow-sm;
+        padding: 1.2rem 1.4rem;
+    }
+
+    &__name {
+        font-family: $font-heading;
+        font-size: 1rem;
+        color: $color-green;
+        margin-bottom: 0.8rem;
+    }
+
+    &__row {
+        display: flex;
+        align-items: center;
+        gap: 0.6rem;
+        margin-bottom: 0.5rem;
+
+        &:last-child {
+            margin-bottom: 0;
+        }
+    }
+
+    &__label {
+        width: 2.4rem;
+        font-size: 0.78rem;
+        font-weight: 700;
+        color: $color-text-light;
+        flex-shrink: 0;
+    }
+
+    &__bar-wrap {
+        flex: 1;
+        height: 16px;
+        background: #f0f0f0;
+        border-radius: 8px;
+        overflow: hidden;
+    }
+
+    &__bar {
+        height: 100%;
+        border-radius: 8px;
+        transition: width 0.4s ease;
+        min-width: 4px;
+
+        &--qty {
+            background: $color-green;
+        }
+
+        &--rev {
+            background: $color-gold;
+        }
+    }
+
+    &__value {
+        font-size: 0.82rem;
+        font-weight: 600;
+        color: $color-text;
+        min-width: 5rem;
+        text-align: right;
+        flex-shrink: 0;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Responsive table (stacked cards on mobile)
+// -----------------------------------------------------------------------------
+@include mobile {
+    .stats-table-wrapper {
+        overflow-x: unset;
+        box-shadow: none;
+        background: transparent;
+    }
+
+    .stats-table {
+        thead {
+            display: none;
+        }
+
+        tbody {
+            tr {
+                display: block;
+                margin-bottom: 0.75rem;
+                border: 1px solid #eee;
+                border-radius: $radius-sm;
+                background: $color-white;
+                box-shadow: $shadow-sm;
+                overflow: hidden;
+            }
+
+            td {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 0.6rem 1rem;
+                border-bottom: 1px solid #f5f5f5;
+
+                &::before {
+                    content: attr(data-label);
+                    font-weight: 600;
+                    font-size: 0.82rem;
+                    color: $color-green;
+                    flex-shrink: 0;
+                    margin-right: 0.5rem;
+                }
+
+                &.stats-table__num {
+                    text-align: right;
+                }
+
+                &:last-child {
+                    border-bottom: none;
+                }
+            }
+        }
+
+        tfoot {
+            .stats-table__total {
+                display: block;
+                border: 2px solid $color-gold;
+                border-radius: $radius-sm;
+                overflow: hidden;
+                background: rgba(201, 169, 97, 0.08);
+
+                td {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    padding: 0.6rem 1rem;
+                    border-bottom: 1px solid rgba(201, 169, 97, 0.2);
+
+                    &::before {
+                        content: attr(data-label);
+                        font-weight: 700;
+                        font-size: 0.82rem;
+                        color: $color-green;
+                        flex-shrink: 0;
+                        margin-right: 0.5rem;
+                    }
+
+                    &:last-child {
+                        border-bottom: none;
+                    }
+                }
+            }
+        }
+    }
+}
