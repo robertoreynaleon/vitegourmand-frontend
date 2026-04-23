@@ -87,13 +87,25 @@
     margin-bottom: 0.8rem;
 }
 
-.dp-month-label {
+.dp-month-btn {
+    flex: 1;
+    background: transparent;
+    border: none;
     font-family: $font-heading;
     font-size: 1rem;
     color: $color-green;
     letter-spacing: 0.5px;
     text-align: center;
-    flex: 1;
+    cursor: pointer;
+    padding: 0.25rem 0.5rem;
+    border-radius: $radius-sm;
+    transition: $transition;
+    @include focus-ring($color-gold);
+
+    &:hover {
+        background: $color-bg-light;
+        color: $color-green-dark;
+    }
 }
 
 .dp-nav-btn {
@@ -117,6 +129,52 @@
     }
 
     &:disabled {
+        color: $color-text-muted;
+        cursor: not-allowed;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Grille de sélection année
+// -----------------------------------------------------------------------------
+.dp-year-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 6px;
+    margin-top: 0.4rem;
+}
+
+.dp-year-btn {
+    padding: 0.55rem 0.25rem;
+    border: none;
+    border-radius: 6px;
+    background: transparent;
+    font-family: $font-body;
+    font-size: 0.92rem;
+    color: $color-text;
+    cursor: pointer;
+    text-align: center;
+    transition: background 0.15s ease, color 0.15s ease;
+    @include focus-ring($color-gold);
+
+    &:hover:not(:disabled):not(.dp-year-btn--selected) {
+        background: $color-gold-light;
+        color: $color-green;
+    }
+
+    &--selected {
+        background: $color-green;
+        color: $color-white;
+        font-weight: 600;
+    }
+
+    &--current {
+        border: 2px solid $color-gold;
+        font-weight: 600;
+        color: $color-green;
+    }
+
+    &--disabled {
         color: $color-text-muted;
         cursor: not-allowed;
     }

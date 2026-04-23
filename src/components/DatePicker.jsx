@@ -20,9 +20,24 @@ function DatePicker({ id, value, onChange, minDate }) {
     const selectedDateObj = value ? new Date(value + 'T00:00:00') : null;
 
     const [open, setOpen] = useState(false);
-    const [viewYear, setViewYear] = useState(minDateObj.getFullYear());
-    const [viewMonth, setViewMonth] = useState(minDateObj.getMonth());
+    const [viewYear, setViewYear] = useState(today.getFullYear());
+    const [viewMonth, setViewMonth] = useState(today.getMonth());
+    const [yearView, setYearView] = useState(false);
+    const [decadeStart, setDecadeStart] = useState(
+        () => Math.floor(today.getFullYear() / 10) * 10
+    );
     const wrapperRef = useRef(null);
+
+    // À l'ouverture : positionner sur la date sélectionnée, ou aujourd'hui
+    useEffect(() => {
+        if (open) {
+            const ref = selectedDateObj || today;
+            setViewYear(ref.getFullYear());
+            setViewMonth(ref.getMonth());
+            setDecadeStart(Math.floor(ref.getFullYear() / 10) * 10);
+            setYearView(false);
+        }
+    }, [open]); // eslint-disable-line react-hooks/exhaustive-deps
 
     // Fermeture au clic extérieur
     useEffect(() => {
@@ -111,31 +126,75 @@ function DatePicker({ id, value, onChange, minDate }) {
 
             {open && (
                 <div className="dp-calendar" role="dialog" aria-label="Choisir une date">
-                    {/* Navigation mois */}
+                    {/* Navigation */}
                     <div className="dp-header">
                         <button
                             type="button"
                             className="dp-nav-btn"
-                            onClick={handlePrevMonth}
-                            disabled={!canGoPrev}
-                            aria-label="Mois précédent"
+                            onClick={yearView
+                                ? () => setDecadeStart((d) => d - 10)
+                                : handlePrevMonth}
+                            disabled={yearView
+                                ? decadeStart <= minDateObj.getFullYear()
+                                : !canGoPrev}
+                            aria-label={yearView ? 'Décennie précédente' : 'Mois précédent'}
                         >
                             ‹
                         </button>
-                        <span className="dp-month-label">
-                            {MONTHS[viewMonth]} {viewYear}
-                        </span>
+                        <button
+                            type="button"
+                            className="dp-month-btn"
+                            onClick={() => setYearView((v) => !v)}
+                            aria-label={yearView ? 'Retour à la vue mois' : 'Choisir une année'}
+                        >
+                            {yearView
+                                ? `${decadeStart} – ${decadeStart + 9}`
+                                : `${MONTHS[viewMonth]} ${viewYear}`}
+                        </button>
                         <button
                             type="button"
                             className="dp-nav-btn"
-                            onClick={handleNextMonth}
-                            aria-label="Mois suivant"
+                            onClick={yearView
+                                ? () => setDecadeStart((d) => d + 10)
+                                : handleNextMonth}
+                            aria-label={yearView ? 'Décennie suivante' : 'Mois suivant'}
                         >
                             ›
                         </button>
                     </div>
 
-                    {/* Grille */}
+                    {/* Grille années */}
+                    {yearView && (
+                        <div className="dp-year-grid" role="grid" aria-label="Choisir une année">
+                            {Array.from({ length: 12 }, (_, i) => decadeStart + i).map((yr) => {
+                                const disabled = yr < minDateObj.getFullYear() || yr > today.getFullYear() + 2;
+                                const isCurrent = yr === today.getFullYear();
+                                const isSelected = yr === viewYear;
+                                const cls = [
+                                    'dp-year-btn',
+                                    isSelected ? 'dp-year-btn--selected' : '',
+                                    isCurrent && !isSelected ? 'dp-year-btn--current' : '',
+                                    disabled ? 'dp-year-btn--disabled' : '',
+                                ].filter(Boolean).join(' ');
+                                return (
+                                    <button
+                                        key={yr}
+                                        type="button"
+                                        className={cls}
+                                        disabled={disabled}
+                                        onClick={() => { setViewYear(yr); setYearView(false); }}
+                                        aria-label={String(yr)}
+                                        aria-pressed={isSelected || undefined}
+                                    >
+                                        {yr}
+                                    </button>
+                                );
+                            })}
+                        </div>
+                    )}
+
+                    {/* Grille jours */}
+                    {!yearView && (
                     <div className="dp-grid" role="grid">
                         {/* En-têtes jours */}
                         {DAYS_SHORT.map((d) => (
@@ -177,6 +236,7 @@ function DatePicker({ id, value, onChange, minDate }) {
                             );
                         })}
                     </div>
+                    )}
                 </div>
             )}
         </div>
