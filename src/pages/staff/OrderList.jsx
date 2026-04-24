@@ -8,6 +8,12 @@ import './OrderList.scss';
 
 const API_STAFF_ORDERS = 'http://vitegourmand.local/api/staff/orders';
 
+/**
+ * Page de liste des commandes pour le staff.
+ * Affiche toutes les commandes avec leurs statuts et permet de les filtrer
+ * (numéro, client, date, heure, statut) via la SearchBar.
+ * Chaque commande est un lien vers la page de traitement.
+ */
 function StaffOrderList() {
     const { token } = useAuth();
     const location = useLocation();

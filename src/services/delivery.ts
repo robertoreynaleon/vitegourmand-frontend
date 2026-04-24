@@ -22,11 +22,15 @@ export interface DeliveryError {
 
 export type DeliveryResponse = DeliveryResult | DeliveryError;
 
+/** Convertit un angle en degrés en radians (utilisé par la formule de Haversine). */
 function toRadians(degrees: number): number {
     return degrees * (Math.PI / 180);
 }
 
-// Formule de Haversine : distance à vol d'oiseau entre deux points GPS
+/**
+ * Calcule la distance à vol d'oiseau entre deux coordonnées GPS (formule de Haversine).
+ * Retourne la distance en kilomètres.
+ */
 function calculateDistance(
     lat1: number,
     lon1: number,
@@ -46,7 +50,12 @@ function calculateDistance(
     return R * c;
 }
 
-// Géocode une adresse et calcule les frais de livraison depuis Bordeaux
+/**
+ * Géocode l'adresse via l'API adresse.data.gouv.fr, puis calcule les frais de livraison
+ * depuis le centre de Bordeaux. Retourne un objet DeliveryResult ou DeliveryError.
+ * - Dans un rayon de 5 km (ou ville « Bordeaux ») : tarif fixe de 5 €.
+ * - Au-delà : 5 € + 0,59 €/km.
+ */
 export async function calculateDeliveryFee(
     address: string
 ): Promise<DeliveryResponse> {

@@ -1,6 +1,11 @@
 import React from 'react';
 import './Footer.scss';
 
+/**
+ * Pied de page de l'application.
+ * Affiche les informations de contact, les liens de navigation (ancres page d'accueil),
+ * les icônes réseaux sociaux et les liens légaux.
+ */
 function Footer() {
     return (
         <footer className="footer">

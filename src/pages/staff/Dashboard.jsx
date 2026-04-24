@@ -6,13 +6,21 @@ import { useAuth } from '../../context/AuthContext';
 import './Dashboard.scss';
 
 const API_MESSAGES = 'http://vitegourmand.local/api/staff/messages';
+/** Intervalle de polling pour vérifier les nouveaux messages (toutes les 5 minutes). */
 const POLL_INTERVAL = 5 * 60 * 1000; // 5 minutes
 
+/**
+ * Tableau de bord staff.
+ * Affiche un indicateur du nombre de messages non lus et des liens rapides vers
+ * les principales fonctionnalités staff (commandes, catalogue, avis, messages).
+ * Interroge l'API toutes les 5 minutes pour mettre à jour le compteur de messages.
+ */
 function StaffDashboard() {
     const { user, token } = useAuth();
     const [unreadCount, setUnreadCount] = useState(0);
     const intervalRef = useRef(null);
 
+    /** Récupère le nombre de messages non lus depuis l'API staff/messages. */
     const fetchUnread = async () => {
         if (!token) return;
         try {
@@ -25,7 +33,7 @@ function StaffDashboard() {
                 setUnreadCount(data.filter((m) => m.status === 'unread').length);
             }
         } catch {
-            // silent — dashboard polling should not break the page
+            // Silencieux : une erreur de polling ne doit pas bloquer le tableau de bord
         }
     };
 

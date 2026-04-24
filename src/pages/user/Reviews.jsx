@@ -5,8 +5,11 @@ import Footer from '../../components/Footer';
 import { useAuth } from '../../context/AuthContext';
 import './Reviews.scss';
 
+/** URL de l'API pour récupérer les avis de l'utilisateur connecté. */
 const API_MY_REVIEWS  = 'http://vitegourmand.local/api/reviews/my';
+/** URL de base pour les actions sur les avis (modification, suppression). */
 const API_REVIEW_BASE = 'http://vitegourmand.local/api/reviews';
+/** Nombre maximal de caractères autorisés dans le texte d'un avis. */
 const MAX_CHARS       = 1000;
 
 const STATUS_LABEL = {
@@ -22,8 +25,12 @@ const STATUS_CLASS = {
 };
 
 // ---------------------------------------------------------------------------
-// Star display (read-only)
+// Affichage des étoiles (lecture seule)
 // ---------------------------------------------------------------------------
+/**
+ * Affiche les étoiles d'une note sous forme de span accessibles.
+ * @param {{ rating: number }} props - Note de 1 à 5
+ */
 function StarDisplay({ rating }) {
     return (
         <span
@@ -44,8 +51,13 @@ function StarDisplay({ rating }) {
 }
 
 // ---------------------------------------------------------------------------
-// Star picker (interactive)
+// Sélecteur d'étoiles (interactif)
 // ---------------------------------------------------------------------------
+/**
+ * Composant de sélection de note par étoiles.
+ * Met en surbrillance les étoiles au survol et confirme la sélection au clic.
+ * @param {{ value: number, onChange: (rating: number) => void }} props
+ */
 function StarPicker({ value, onChange }) {
     const [hovered, setHovered] = useState(0);
 
@@ -74,8 +86,13 @@ function StarPicker({ value, onChange }) {
 }
 
 // ---------------------------------------------------------------------------
-// Main component
+// Composant principal
 // ---------------------------------------------------------------------------
+/**
+ * Page des avis du client connecté.
+ * Affiche la liste des avis existants (avec possibilité de modifier ou supprimer)
+ * et les commandes éligibles pour un nouvel avis (terminées, sans avis).
+ */
 function Reviews() {
     const { token } = useAuth();
     const [reviews, setReviews]         = useState([]);

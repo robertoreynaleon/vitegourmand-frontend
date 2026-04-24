@@ -7,7 +7,9 @@ import { useAuth } from '../../context/AuthContext';
 import { addToCart } from '../../services/cartCalc';
 import './MenuShow.scss';
 
+/** URL de l'API pour ajouter un article au panier. */
 const API_CART = 'http://vitegourmand.local/api/cart/add';
+/** URL de base pour construire les chemins des images. */
 const BASE     = 'http://vitegourmand.local';
 
 const API_MENUS = 'http://vitegourmand.local/api/menus';

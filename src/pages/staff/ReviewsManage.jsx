@@ -8,7 +8,7 @@ import './ReviewsManage.scss';
 const API_STAFF_REVIEWS = 'http://vitegourmand.local/api/staff/reviews';
 
 // ---------------------------------------------------------------------------
-// Star display (green for staff page)
+// Affichage des étoiles (version verte pour la page staff)
 // ---------------------------------------------------------------------------
 function StarDisplay({ rating }) {
     return (
@@ -30,8 +30,14 @@ function StarDisplay({ rating }) {
 }
 
 // ---------------------------------------------------------------------------
-// Main component
 // ---------------------------------------------------------------------------
+// Composant principal
+// ---------------------------------------------------------------------------
+/**
+ * Page de gestion des avis clients pour le staff.
+ * Affiche tous les avis avec leur note, leur statut (publié/masqué) et les actions disponibles
+ * (publier, masquer, supprimer).
+ */
 function ReviewsManage() {
     const { token } = useAuth();
     const [reviews, setReviews]   = useState([]);

@@ -18,33 +18,40 @@ const CART_KEY = 'vg_cart';
 
 // ─── Calculs ──────────────────────────────────────────────────────────────────
 
+/** Retourne true si la quantité dépasse le seuil de réduction (minPeople + 5). */
 export function hasDiscount(item: CartItem): boolean {
     return item.quantity > item.minPeople + DISCOUNT_THRESHOLD;
 }
 
+/** Calcule le sous-total d'un article avant application de la réduction. */
 export function subtotalBeforeDiscount(item: CartItem): number {
     return item.pricePerPerson * item.quantity;
 }
 
+/** Calcule le sous-total d'un article après application éventuelle de la réduction. */
 export function subtotal(item: CartItem): number {
     const base = subtotalBeforeDiscount(item);
     return hasDiscount(item) ? base * (1 - DISCOUNT_RATE) : base;
 }
 
+/** Calcule le sous-total de tous les articles du panier (sans livraison). */
 export function cartSubtotal(items: CartItem[]): number {
     return items.reduce((acc, item) => acc + subtotal(item), 0);
 }
 
+/** Calcule le total final du panier en ajoutant les frais de livraison. */
 export function cartTotal(items: CartItem[], deliveryFee: number): number {
     return cartSubtotal(items) + deliveryFee;
 }
 
+/** Formate un prix numérique en chaîne lisible (ex. « 12,50 € »). */
 export function formatPrice(price: number): string {
     return price.toFixed(2).replace('.', ',') + ' €';
 }
 
 // ─── Persistance localStorage ─────────────────────────────────────────────────
 
+/** Charge le panier depuis localStorage. Retourne un tableau vide en cas d'erreur de parsing. */
 export function loadCart(): CartItem[] {
     try {
         const raw = localStorage.getItem(CART_KEY);
@@ -54,11 +61,15 @@ export function loadCart(): CartItem[] {
     }
 }
 
+/** Sauvegarde le panier dans localStorage (remplace le panier précédent). */
 export function saveCart(items: CartItem[]): void {
     localStorage.setItem(CART_KEY, JSON.stringify(items));
 }
 
-// Ajoute ou remplace un item (même menuId = mise à jour)
+/**
+ * Ajoute un article au panier. Si un article avec le même menuId existe déjà,
+ * il est remplacé (mise à jour de la quantité). Retourne le panier mis à jour.
+ */
 export function addToCart(newItem: CartItem): CartItem[] {
     const items = loadCart();
     const index = items.findIndex((i) => i.menuId === newItem.menuId);
@@ -71,12 +82,14 @@ export function addToCart(newItem: CartItem): CartItem[] {
     return items;
 }
 
+/** Supprime l'article correspondant au menuId du panier. Retourne le panier mis à jour. */
 export function removeFromCart(menuId: number): CartItem[] {
     const items = loadCart().filter((i) => i.menuId !== menuId);
     saveCart(items);
     return items;
 }
 
+/** Met à jour la quantité d'un article du panier identifié par son menuId. Retourne le panier mis à jour. */
 export function updateCartQuantity(menuId: number, quantity: number): CartItem[] {
     const items = loadCart().map((i) =>
         i.menuId === menuId ? { ...i, quantity } : i
@@ -85,6 +98,7 @@ export function updateCartQuantity(menuId: number, quantity: number): CartItem[]
     return items;
 }
 
+/** Vide complètement le panier en supprimant l'entrée localStorage. */
 export function clearCart(): void {
     localStorage.removeItem(CART_KEY);
 }

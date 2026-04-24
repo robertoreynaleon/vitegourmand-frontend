@@ -7,6 +7,10 @@ import './StaffMessages.scss';
 
 const API_MESSAGES = 'http://vitegourmand.local/api/staff/messages';
 
+/**
+ * Formate une chaîne de date « Y-m-d H:i:s » en format lisible (ex. « lun. 10 mars 2025 à 14h30 »).
+ * Retourne « — » si la chaîne est vide ou invalide.
+ */
 function formatDate(str) {
     if (!str) return '—';
     const d = new Date(str.replace(' ', 'T'));
@@ -17,6 +21,10 @@ function formatDate(str) {
     });
 }
 
+/**
+ * Affiche un badge coloré représentant le statut d'un message (Non lu / Lu / Répondu).
+ * @param {{ status: 'unread' | 'read' | 'replied' }} props
+ */
 function StatusBadge({ status }) {
     const labels = { unread: 'Non lu', read: 'Lu', replied: 'Répondu' };
     return (
@@ -26,6 +34,11 @@ function StatusBadge({ status }) {
     );
 }
 
+/**
+ * Page des messages de contact (staff).
+ * Affiche la liste des messages reçus, permet de les filtrer par statut,
+ * de les marquer comme lus et d'y répondre directement depuis l'interface.
+ */
 function StaffMessages() {
     const { token } = useAuth();
 
@@ -39,6 +52,7 @@ function StaffMessages() {
     const [successMsg, setSuccessMsg] = useState('');
     const [filter, setFilter]         = useState('all');
 
+    /** Récupère tous les messages de contact depuis l'API et met à jour l'état local. */
     const fetchMessages = useCallback(async () => {
         setLoading(true);
         setError('');
@@ -71,7 +85,7 @@ function StaffMessages() {
         setReplyText('');
         setReplyError('');
 
-        // Mark as read if unread
+        // Marque le message comme lu s'il est encore non lu
         if (msg.status === 'unread') {
             try {
                 await fetch(`${API_MESSAGES}/${msg._id}/read`, {

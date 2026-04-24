@@ -3,6 +3,13 @@ import './SearchBar.scss';
 
 const API_REGIMES = 'http://vitegourmand.local/api/regimes';
 
+/**
+ * Barre de recherche et de filtrage pour la liste des menus.
+ * Récupère les régimes alimentaires disponibles depuis l'API
+ * et permet de filtrer les menus par régime, prix et nombre de personnes.
+ * Appelle la fonction onSearch avec les paramètres sous forme de chaîne URL.
+ * @param {{ onSearch: (queryString: string) => void }} props
+ */
 function SearchBar({ onSearch }) {
     const [regimes, setRegimes] = useState([]);
     const [filters, setFilters] = useState({

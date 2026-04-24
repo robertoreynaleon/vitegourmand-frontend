@@ -5,8 +5,8 @@ import Footer from '../../../components/Footer';
 import { useAuth } from '../../../context/AuthContext';
 import './CatalogManagement.scss';
 
-// ─── API endpoints ─────────────────────────────────────────────────────────
-// Lecture — contrôleurs Symfony dédiés (plain JSON, toutes les entrées de la BDD)
+// ─── Points d'accès API ───────────────────────────────────────────────────────
+// Lecture — contrôleurs Symfony dédiés (JSON brut, toutes les entrées de la BDD)
 const API_STAFF_REGIMES   = 'http://vitegourmand.local/api/staff/catalog/regimes';
 const API_STAFF_DISHES    = 'http://vitegourmand.local/api/staff/catalog/dishes';
 const API_STAFF_ALLERGENS = 'http://vitegourmand.local/api/staff/catalog/allergens';
@@ -33,7 +33,12 @@ function Feedback({ id, feedback }) {
     );
 }
 
-// ─── Main component ─────────────────────────────────────────────────────────
+// ─── Composant principal ────────────────────────────────────────────────────────────
+/**
+ * Page de gestion du catalogue (regimes, plats, allèrgènes).
+ * Permet au staff de créer, modifier et supprimer des régimes alimentaires,
+ * des plats (avec leurs allèrgènes) et des allèrgènes de manière indépendante.
+ */
 function CatalogManagement() {
     const { token, logout } = useAuth();
 

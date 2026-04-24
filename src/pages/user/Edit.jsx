@@ -7,6 +7,11 @@ import { updateMe } from '../../services/userService';
 import { validateEdit } from './editValidation';
 import '../auth/Auth.scss';
 
+/**
+ * Page de modification du profil client.
+ * Permet de mettre à jour les informations personnelles et optionnellement le mot de passe.
+ * Redirige vers la connexion si les identifiants sont modifiés (nouveau mot de passe ou e-mail).
+ */
 function Edit() {
     const { user, token, updateUser, logout } = useAuth();
     const navigate = useNavigate();

@@ -6,6 +6,12 @@ import './Contact.scss';
 
 const API_BASE = 'http://vitegourmand.local';
 
+/**
+ * Page de contact publique.
+ * Affiche un formulaire permettant à tout visiteur d'envoyer un message au restaurant.
+ * Si l'utilisateur est connecté, son e-mail est pré-rempli.
+ * Les messages sont envoyés à l'API et stockés dans MongoDB.
+ */
 function Contact() {
     const { user } = useAuth();
 
@@ -19,6 +25,7 @@ function Contact() {
     const [success, setSuccess] = useState(false);
     const [serverError, setServerError] = useState('');
 
+    /** Valide les champs du formulaire de contact. Retourne un objet d'erreurs (vide si tout est valide). */
     const validate = (values) => {
         const errs = {};
         const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -30,6 +37,7 @@ function Contact() {
         return errs;
     };
 
+    /** Met à jour la valeur du champ modifié et efface son message d'erreur. */
     const handleChange = (e) => {
         const { name, value } = e.target;
         setForm((prev) => ({ ...prev, [name]: value }));
@@ -37,6 +45,7 @@ function Contact() {
         setServerError('');
     };
 
+    /** Valide le champ au moment où l'utilisateur le quitte (blur), pour un retour immédiat. */
     const handleBlur = (e) => {
         const { name } = e.target;
         const fieldErrors = validate(form);
@@ -45,6 +54,7 @@ function Contact() {
         }
     };
 
+    /** Soumet le formulaire après validation, envoie la requête POST à l'API et affiche le résultat. */
     const handleSubmit = async (e) => {
         e.preventDefault();
         const errs = validate(form);

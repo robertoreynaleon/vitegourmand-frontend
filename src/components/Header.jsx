@@ -4,11 +4,20 @@ import { useScrollHeader, scrollToAnchor } from '../hooks/useScrollHeader';
 import { useAuth } from '../context/AuthContext';
 import './Header.scss';
 
+/**
+ * En-tête principal de l'application.
+ * Affiche le logo, la navigation et les liens adaptés au rôle de l'utilisateur connecté
+ * (client, staff, admin ou non connecté). Gère le menu hamburger mobile,
+ * le scroll (ajout de la classe « scrolled ») et la navigation vers les ancres de la page d'accueil.
+ */
 function Header() {
     const { user, logout } = useAuth();
     const navigate = useNavigate();
     const [menuOpen, setMenuOpen] = useState(false);
 
+    /**
+     * Déconnecte l'utilisateur, ferme le menu mobile et redirige vers l'accueil.
+     */
     const handleLogout = (e) => {
         e.preventDefault();
         logout();
@@ -18,6 +27,11 @@ function Header() {
     const headerRef = useRef(null);
     const { scrolled } = useScrollHeader();
 
+    /**
+     * Gère le clic sur un lien de navigation.
+     * Si le lien pointe vers une ancre (#...), fait défiler la page en douceur
+     * en tenant compte de la hauteur fixe du header. Ferme le menu mobile dans tous les cas.
+     */
     const handleAnchorClick = (e, href) => {
         if (href.startsWith('#')) {
             e.preventDefault();
@@ -27,6 +41,7 @@ function Header() {
         setMenuOpen(false);
     };
 
+    /** Ferme le menu mobile (utilisé sur les liens simples sans comportement spécial). */
     const closeMenu = () => setMenuOpen(false);
 
     return (

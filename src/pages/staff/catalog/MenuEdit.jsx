@@ -6,6 +6,7 @@ import Footer from '../../../components/Footer';
 import { useAuth } from '../../../context/AuthContext';
 import './MenuEdit.scss';
 
+/** URL de base de l'API. */
 const BASE          = 'http://vitegourmand.local';
 const API_REGIMES   = `${BASE}/api/staff/catalog/regimes`;
 const API_DISHES    = `${BASE}/api/staff/catalog/dishes`;
@@ -27,6 +28,12 @@ const COMPRESSION_OPTIONS = {
     initialQuality:   0.8,
 };
 
+/**
+ * Page de modification d'un menu existant.
+ * Pré-charge les données du menu depuis l'API et permet au staff
+ * de modifier tous les champs, d'ajouter ou supprimer des images
+ * et de gérer les plats/régimes/allèrgènes associés.
+ */
 function MenuEdit() {
     const { token }  = useAuth();
     const navigate   = useNavigate();

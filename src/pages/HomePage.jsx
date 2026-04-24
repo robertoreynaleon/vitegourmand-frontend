@@ -7,9 +7,16 @@ import Footer from '../components/Footer';
 import PageLoader from '../components/PageLoader';
 import { fadeUpVariants, staggerContainerVariants } from '../hooks/useScrollReveal';
 
-// Options viewport communes — calquées sur home.js (threshold 0.1, rootMargin -100px bas)
+// Options viewport communes — déclenchement des animations au scroll
+// (seuil 10 %, marge basse -100px pour anticiper l'entrée dans le champ de vision)
 const vp = { once: true, amount: 0.1, margin: '0px 0px -100px 0px' };
 
+/**
+ * Page d'accueil de l'application.
+ * Affiche le hero, les sections de présentation du restaurant (about, charte, valeurs)
+ * et les avis clients récupérés depuis l'API MongoDB.
+ * Les sections sont animées au scroll via Framer Motion.
+ */
 function HomePage() {
     const [isLoading, setIsLoading] = useState(true);
     const heroImageUrl = '/assets/img/hero/hero.webp';

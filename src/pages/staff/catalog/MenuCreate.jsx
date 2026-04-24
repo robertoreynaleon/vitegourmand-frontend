@@ -6,6 +6,7 @@ import Footer from '../../../components/Footer';
 import { useAuth } from '../../../context/AuthContext';
 import './MenuCreate.scss';
 
+/** URL de base de l'API. */
 const BASE             = 'http://vitegourmand.local';
 const API_REGIMES      = `${BASE}/api/staff/catalog/regimes`;
 const API_DISHES       = `${BASE}/api/staff/catalog/dishes`;
@@ -28,6 +29,11 @@ const COMPRESSION_OPTIONS = {
     initialQuality:   0.8,
 };
 
+/**
+ * Page de création d'un menu.
+ * Permet au staff de saisir toutes les informations d'un menu :
+ * titre, description, prix, régime, plats, allèrgènes et images (compressées avant envoi).
+ */
 function MenuCreate() {
     const { token }  = useAuth();
     const navigate   = useNavigate();

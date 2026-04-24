@@ -1,6 +1,7 @@
 import React from 'react';
 import './SearchBar.scss';
 
+/** Liste des statuts de commande utilisables comme options de filtre. */
 const STATUS_OPTIONS = [
     { value: '', label: 'Tous les statuts' },
     { value: 'en attente', label: 'En attente' },
@@ -25,6 +26,7 @@ function SearchBar({ filters, onChange }) {
 
     const hasActiveFilter = Object.values(filters).some(Boolean);
 
+    /** Réinitialise tous les filtres à leur valeur par défaut (chaîne vide). */
     const reset = () =>
         onChange({ number: '', client: '', date: '', time: '', status: '' });
 

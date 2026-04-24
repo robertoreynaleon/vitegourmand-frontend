@@ -23,6 +23,12 @@ import './Order.scss';
 
 const API_ORDERS = 'http://vitegourmand.local/api/orders/create';
 
+/**
+ * Page de commande (panier).
+ * Affiche le contenu du panier localStorage, le récapitulatif des prix et des réductions,
+ * le formulaire de livraison (adresse géolocalisée), le sélecteur de date et d'heure,
+ * et finalise la commande via l'API après validation.
+ */
 function Order() {
     const { user, token } = useAuth();
     const navigate = useNavigate();

@@ -71,6 +71,11 @@ function MobileBarChart({ rows }) {
     );
 }
 
+/**
+ * Page de statistiques (admin uniquement).
+ * Affiche un graphique des commandes par menu sur une période sélectionnable,
+ * avec un tableau récapitulatif et un graphique adaptatif (barres mobiles ou Recharts).
+ */
 function Stats() {
     const { token } = useAuth();
 

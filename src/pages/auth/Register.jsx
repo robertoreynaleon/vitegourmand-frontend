@@ -5,6 +5,12 @@ import Footer from '../../components/Footer';
 import './Auth.scss';
 import { validateRegister } from './registerValidation';
 
+/**
+ * Page d'inscription.
+ * Affiche le formulaire de création de compte client avec validation côté frontend.
+ * En cas de succès, redirige vers la page de connexion avec un flag pour afficher
+ * un message de confirmation.
+ */
 function Register() {
 	const navigate = useNavigate();
 

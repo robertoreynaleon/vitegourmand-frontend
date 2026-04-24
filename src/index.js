@@ -4,6 +4,7 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
+// Point d'entrée React : monte le composant racine App dans le div#root du fichier public/index.html
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
@@ -11,7 +12,6 @@ root.render(
   </React.StrictMode>
 );
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
+// Mesure de performance optionnelle (désactivée par défaut).
+// Passer reportWebVitals(console.log) pour afficher les métriques Core Web Vitals.
 reportWebVitals();

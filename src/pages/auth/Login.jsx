@@ -6,19 +6,30 @@ import { useAuth } from "../../context/AuthContext";
 import { loginUser } from "../../services/authService";
 import "./Auth.scss";
 
+/**
+ * Page de connexion.
+ * Permet à l'utilisateur de s'authentifier avec son e-mail et son mot de passe.
+ * Après connexion réussie, redirige vers la page d'origine (ou l'accueil).
+ * Affiche des messages contextuels si l'utilisateur vient de s'inscrire,
+ * si sa session a expiré ou si ses identifiants viennent d'être modifiés.
+ */
 function Login() {
 	const { login } = useAuth();
 	const navigate = useNavigate();
 	const location = useLocation();
+	// Vrai si l'utilisateur arrive depuis la page d'inscription
 	const justRegistered = location.state?.registered === true;
+	// Vrai si la session JWT a expiré et l'utilisateur a été redirigé
 	const sessionExpired = location.state?.sessionExpired === true;
 	const [credentialsUpdated] = useState(() => {
+		// Flag sessionStorage posé après modification d'e-mail ou de mot de passe
 		const flag = sessionStorage.getItem("credentials_updated") === "1";
 		if (flag) sessionStorage.removeItem("credentials_updated");
 		return flag;
 	});
 
 	const [cartLoginRequired] = useState(() => {
+		// Flag sessionStorage posé quand l'utilisateur tente de passer commande sans être connecté
 		const flag = sessionStorage.getItem('cart_login_required') === '1';
 		if (flag) sessionStorage.removeItem('cart_login_required');
 		return flag;
@@ -30,6 +41,7 @@ function Login() {
 	const [isSubmitting, setIsSubmitting] = useState(false);
 	const [showPassword, setShowPassword] = useState(false);
 
+	/** Met à jour le champ modifié et efface ses messages d'erreur. */
 	const handleChange = (event) => {
 		const { name, value } = event.target;
 		setFormValues((prev) => ({ ...prev, [name]: value }));
@@ -37,6 +49,7 @@ function Login() {
 		setServerError("");
 	};
 
+	/** Valide les champs e-mail et mot de passe. Retourne un objet d'erreurs (vide si valide). */
 	const validate = () => {
 		const newErrors = {};
 		if (!formValues.email.trim()) {
@@ -50,6 +63,7 @@ function Login() {
 		return newErrors;
 	};
 
+	/** Soumet le formulaire après validation et déclenche la connexion via l'API. */
 	const handleSubmit = async (event) => {
 		event.preventDefault();
 		const validationErrors = validate();

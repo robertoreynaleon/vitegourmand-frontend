@@ -5,7 +5,9 @@ import Footer from '../../components/Footer';
 import { useAuth } from '../../context/AuthContext';
 import './OrderTreatment.scss';
 
+/** Construit l'URL pour récupérer une commande par son identifiant. */
 const API_ORDER      = (id) => `http://vitegourmand.local/api/staff/orders/${id}`;
+/** Construit l'URL pour traiter (changer le statut de) une commande. */
 const API_ORDER_TREAT = (id) => `http://vitegourmand.local/api/staff/orders/${id}/treat`;
 
 const STATUS_OPTIONS = [
@@ -21,6 +23,11 @@ const STATUS_OPTIONS = [
 
 const MAX_MESSAGE = 500;
 
+/**
+ * Page de traitement d'une commande (staff).
+ * Permet au staff de mettre à jour le statut, ajouter un message, indiquer
+ * un prêt de matériel et refuser la commande avec motif.
+ */
 function OrderTreatment() {
     const { id }          = useParams();
     const { token }       = useAuth();
@@ -69,6 +76,10 @@ function OrderTreatment() {
     }, [id, token]);
 
     // ─── Soumission commune ────────────────────────────────────────────────
+    /**
+     * Soumet le traitement de la commande.
+     * @param {'update' | 'refuse'} action - Type d'action à effectuer
+     */
     const submitTreat = async (action) => {
         const isSave = action === 'update';
         if (isSave) setIsSaving(true);

@@ -1,10 +1,22 @@
+/** Expression régulière de validation d'une adresse e-mail. */
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+/** Expression régulière de validation d'un numéro de téléphone français (ex. 0612345678). */
 const phoneRegex = /^0[1-9][0-9]{8}$/;
+/** Expression régulière de validation d'un code postal français (5 chiffres). */
 const postalCodeRegex = /^[0-9]{5}$/;
+/** Expression régulière : mot de passe min. 12 caractères avec majuscule, chiffre et caractère spécial. */
 const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\w\s]).{12,}$/;
 
+/** Normalise une valeur en chaîne trimée, jamais null/undefined. */
 const normalize = (value) => (value || '').trim();
 
+/**
+ * Valide les champs du formulaire de modification du profil.
+ * Le nouveau mot de passe est optionnel : il est validé uniquement si un nouveau mot de passe est saisi.
+ * Retourne un objet d'erreurs vide si le formulaire est valide.
+ * @param {object} values - Valeurs du formulaire (name, lastname, email, phone, address, city, postalCode, new_password, password_confirm)
+ * @returns {object} Objet d'erreurs { champ: message }
+ */
 export function validateEdit(values) {
     const errors = {};
 

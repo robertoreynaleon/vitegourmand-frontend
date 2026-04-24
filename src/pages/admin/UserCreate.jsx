@@ -4,6 +4,7 @@ import Footer from '../../components/Footer';
 import { useAuth } from '../../context/AuthContext';
 import './UserCreate.scss';
 
+/** URL de l'API de gestion des employés (admin). */
 const API_BASE = 'http://vitegourmand.local/api/admin/staff';
 
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -40,6 +41,11 @@ function validateForm(values) {
     return errors;
 }
 
+/**
+ * Page de gestion des employés (admin uniquement).
+ * Permet à l'administrateur de voir la liste des employés, de créer
+ * un nouveau compte staff et de supprimer un compte existant.
+ */
 function UserCreate() {
     const { token } = useAuth();
 

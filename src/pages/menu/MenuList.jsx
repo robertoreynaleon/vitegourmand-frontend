@@ -6,6 +6,11 @@ import './MenuList.scss';
 
 const API_MENUS = 'http://vitegourmand.local/api/menus';
 
+/**
+ * Page de liste des menus.
+ * Récupère les menus depuis l'API (avec filtres via la SearchBar)
+ * et les affiche sous forme de cartes cliquables.
+ */
 function MenuList() {
     const [menus, setMenus] = useState([]);
     const [loading, setLoading] = useState(true);

@@ -7,6 +7,11 @@ import { deleteAccount } from '../../services/userService';
 import { loadCart } from '../../services/cartCalc';
 import './Dashboard.scss';
 
+/**
+ * Tableau de bord du client connecté.
+ * Affiche les informations du compte, le lien vers les commandes, les avis
+ * et la possibilité de supprimer le compte de façon définitive.
+ */
 function Dashboard() {
     const { user, token, logout } = useAuth();
     const location = useLocation();

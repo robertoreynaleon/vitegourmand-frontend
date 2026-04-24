@@ -1,6 +1,11 @@
 import React from "react";
 import './Hero.scss';
 
+/**
+ * Section hero de la page d'accueil.
+ * Affiche l'image de fond, le nom du restaurant, le slogan
+ * et un bouton d'appel à l'action vers la liste des menus.
+ */
 function Hero() {
     return (
         <section

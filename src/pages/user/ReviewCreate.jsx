@@ -5,9 +5,17 @@ import Footer from '../../components/Footer';
 import { useAuth } from '../../context/AuthContext';
 import './ReviewCreate.scss';
 
+/** URL de l'API pour la création d'un avis. */
 const API_REVIEWS = 'http://vitegourmand.local/api/reviews';
+/** Nombre maximal de caractères autorisés dans le texte de l'avis. */
 const MAX_CHARS   = 1000;
 
+/**
+ * Page de création d'un avis.
+ * Accessible après une commande terminée, avec le titre du menu pré-rempli
+ * depuis l'état de navigation (useLocation state).
+ * La note est sélectionnable à l'aide d'un composant d'étoiles interactif.
+ */
 function ReviewCreate() {
     const { token }   = useAuth();
     const navigate    = useNavigate();

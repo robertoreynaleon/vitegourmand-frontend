@@ -40,6 +40,12 @@ function formatOrderDate(dateStr) {
     return `${day}/${month}/${year} à ${hours}:${mins}`;
 }
 
+/**
+ * Page de modification d'une commande existante.
+ * Permet au client de modifier les menus, quantités, adresse de livraison
+ * et créneau horaire d'une commande « en attente » ou « acceptée ».
+ * Recalcule les frais de livraison à chaque changement d'adresse.
+ */
 function OrderEdit() {
     const { id } = useParams();
     const { user, token } = useAuth();
