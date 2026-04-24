@@ -1,0 +1,437 @@
+// =============================================================================
+// STAFF MESSAGES — Vite & Gourmand
+// =============================================================================
+@use '../../styles/variables' as *;
+@use '../../styles/mixins' as *;
+
+// -----------------------------------------------------------------------------
+// Page wrapper
+// -----------------------------------------------------------------------------
+.staff-messages-page {
+    .main-header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        background: $color-white;
+        box-shadow: $shadow-md;
+    }
+
+    .logo h1 {
+        color: $color-green;
+    }
+
+    .nav-menu a {
+        color: $color-text;
+
+        &::after {
+            background: $color-green;
+        }
+    }
+
+    .user-greeting {
+        color: $color-text;
+    }
+
+    main {
+        padding-top: 90px;
+        background: $color-bg-light;
+        min-height: calc(100vh - 90px);
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Section
+// -----------------------------------------------------------------------------
+.staff-messages-section {
+    padding: 3rem 0 6rem;
+}
+
+// -----------------------------------------------------------------------------
+// Header row
+// -----------------------------------------------------------------------------
+.sm-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.sm-title {
+    font-family: $font-heading;
+    font-size: 2rem;
+    color: $color-green;
+    letter-spacing: 1.2px;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+}
+
+.sm-unread-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: #c0392b;
+    color: $color-white;
+    font-family: $font-body;
+    font-size: 0.8rem;
+    font-weight: 700;
+    min-width: 22px;
+    height: 22px;
+    border-radius: 11px;
+    padding: 0 6px;
+    vertical-align: middle;
+}
+
+// -----------------------------------------------------------------------------
+// Alerts
+// -----------------------------------------------------------------------------
+.sm-alert {
+    padding: 0.7rem 1rem;
+    border-radius: 6px;
+    margin-bottom: 1.2rem;
+    font-size: 0.95rem;
+
+    &--success {
+        background: #eaf6ec;
+        border-left: 3px solid $color-green;
+        color: $color-green-dark;
+    }
+
+    &--error {
+        background: #fdecea;
+        border-left: 3px solid #c0392b;
+        color: #c0392b;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Filters
+// -----------------------------------------------------------------------------
+.sm-filters {
+    display: flex;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+    margin-bottom: 1.8rem;
+}
+
+.sm-filter-btn {
+    padding: 0.45rem 1.1rem;
+    border-radius: $radius-pill;
+    border: 2px solid rgba(45, 80, 22, 0.2);
+    background: $color-white;
+    color: $color-text-light;
+    font-family: $font-body;
+    font-size: 0.9rem;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    transition: $transition;
+
+    &:hover {
+        border-color: $color-green;
+        color: $color-green;
+    }
+
+    &--active {
+        background: $color-green;
+        border-color: $color-green;
+        color: $color-white;
+
+        &:hover {
+            background: $color-green-dark;
+            border-color: $color-green-dark;
+            color: $color-white;
+        }
+    }
+}
+
+.sm-filter-count {
+    background: rgba(255, 255, 255, 0.3);
+    color: inherit;
+    font-size: 0.78rem;
+    font-weight: 700;
+    padding: 0 5px;
+    border-radius: 8px;
+
+    .sm-filter-btn--active & {
+        background: rgba(255, 255, 255, 0.25);
+    }
+}
+
+.sm-back {
+    display: inline-block;
+    margin-bottom: 2rem;
+    color: $color-green;
+    text-decoration: none;
+    font-weight: 500;
+
+    &:hover { text-decoration: underline; }
+
+    @include focus-ring($color-gold);
+}
+
+// -----------------------------------------------------------------------------
+// Loading / empty
+// -----------------------------------------------------------------------------
+.sm-loading,
+.sm-empty {
+    text-align: center;
+    color: $color-text-light;
+    padding: 3rem 0;
+    font-size: 1rem;
+}
+
+// -----------------------------------------------------------------------------
+// List
+// -----------------------------------------------------------------------------
+.sm-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+}
+
+.sm-item {
+    background: $color-white;
+    border-radius: $radius-sm;
+    box-shadow: $shadow-sm;
+    overflow: hidden;
+    border-left: 4px solid transparent;
+    transition: $transition;
+
+    &--unread {
+        border-left-color: #c0392b;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Item header (clickable row)
+// -----------------------------------------------------------------------------
+.sm-item-header {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1rem 1.4rem;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    text-align: left;
+    flex-wrap: wrap;
+
+    &:hover {
+        background: rgba(45, 80, 22, 0.04);
+    }
+
+    @include mobile {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
+
+.sm-item-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+    min-width: 0;
+}
+
+.sm-item-email {
+    font-weight: 600;
+    color: $color-text;
+    font-size: 0.95rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 260px;
+}
+
+.sm-item-date {
+    font-size: 0.82rem;
+    color: $color-text-muted;
+}
+
+.sm-item-right {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    flex-wrap: wrap;
+
+    @include mobile {
+        width: 100%;
+        justify-content: space-between;
+    }
+}
+
+.sm-item-subject {
+    font-size: 0.9rem;
+    color: $color-text-light;
+    max-width: 200px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+// -----------------------------------------------------------------------------
+// Status badge
+// -----------------------------------------------------------------------------
+.sm-badge {
+    display: inline-block;
+    padding: 0.2rem 0.7rem;
+    border-radius: $radius-pill;
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+
+    &--unread {
+        background: #fdecea;
+        color: #c0392b;
+    }
+
+    &--read {
+        background: #f0f0f0;
+        color: #666;
+    }
+
+    &--replied {
+        background: #eaf6ec;
+        color: $color-green-dark;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Chevron
+// -----------------------------------------------------------------------------
+.sm-chevron {
+    width: 18px;
+    height: 18px;
+    stroke: $color-text-muted;
+    fill: none;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    flex-shrink: 0;
+    transition: transform 0.2s ease;
+
+    &--open {
+        transform: rotate(180deg);
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Expanded body
+// -----------------------------------------------------------------------------
+.sm-item-body {
+    padding: 0 1.4rem 1.4rem;
+    border-top: 1px solid rgba(45, 80, 22, 0.08);
+    display: grid;
+    gap: 0.8rem;
+}
+
+.sm-content-label {
+    font-weight: 600;
+    color: $color-text;
+    font-size: 0.9rem;
+    margin-bottom: 0.2rem;
+}
+
+.sm-content-text {
+    color: $color-text-light;
+    font-size: 0.95rem;
+    line-height: 1.7;
+    white-space: pre-wrap;
+
+    &--reply {
+        background: rgba(45, 80, 22, 0.05);
+        border-left: 3px solid $color-green;
+        padding: 0.6rem 1rem;
+        border-radius: 0 6px 6px 0;
+    }
+}
+
+.sm-previous-reply {
+    border-top: 1px dashed rgba(45, 80, 22, 0.15);
+    padding-top: 0.8rem;
+    display: grid;
+    gap: 0.4rem;
+}
+
+.sm-replied-date {
+    font-size: 0.8rem;
+    color: $color-text-muted;
+}
+
+// -----------------------------------------------------------------------------
+// Reply form
+// -----------------------------------------------------------------------------
+.sm-reply-form {
+    border-top: 1px solid rgba(45, 80, 22, 0.1);
+    padding-top: 1rem;
+    display: grid;
+    gap: 0.6rem;
+}
+
+.sm-reply-label {
+    font-weight: 600;
+    color: $color-text;
+    font-size: 0.9rem;
+}
+
+.sm-reply-textarea {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border-radius: $radius-sm;
+    border: 1px solid rgba(45, 80, 22, 0.2);
+    background: $color-white;
+    color: $color-text;
+    font-family: $font-body;
+    font-size: 0.95rem;
+    resize: vertical;
+    @include interactive($color-gold);
+
+    &:focus-visible {
+        border-color: $color-green;
+        outline: none;
+    }
+
+    &--error {
+        border-color: #c0392b;
+    }
+}
+
+.sm-reply-error {
+    color: #c0392b;
+    font-size: 0.85rem;
+}
+
+.sm-reply-btn {
+    justify-self: start;
+    padding: 0.65rem 1.6rem;
+    border-radius: $radius-pill;
+    border: none;
+    background: $color-green;
+    color: $color-white;
+    font-family: $font-body;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: $shadow-sm;
+    @include interactive($color-gold);
+
+    &:hover {
+        background: $color-green-dark;
+    }
+
+    &:disabled {
+        background: #ccc;
+        cursor: not-allowed;
+        box-shadow: none;
+    }
+}
