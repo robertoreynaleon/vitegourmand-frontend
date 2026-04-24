@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
+import ScrollToTop from './components/ScrollToTop';
 import PrivateRoute from './components/PrivateRoute';
 import StaffRoute from './components/StaffRoute';
 import AdminRoute from './components/AdminRoute';
@@ -41,6 +42,7 @@ function App() {
   return (
     <AuthProvider>
       <BrowserRouter>
+        <ScrollToTop />
         <Routes>
           {/* Pages publiques */}
           <Route path='/' element={<HomePage />} />
