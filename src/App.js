@@ -24,6 +24,8 @@ import Reviews from './pages/user/Reviews';
 import ReviewsManage from './pages/staff/ReviewsManage';
 import UserCreate from './pages/admin/UserCreate';
 import Stats from './pages/admin/Stats';
+import Contact from './pages/Contact';
+import StaffMessages from './pages/staff/StaffMessages';
 import './App.scss';
 
 function App() {
@@ -52,6 +54,8 @@ function App() {
           <Route path='/staff/reviews/' element={<StaffRoute><ReviewsManage /></StaffRoute>} />
           <Route path='/admin/users/' element={<AdminRoute><UserCreate /></AdminRoute>} />
           <Route path='/admin/stats/' element={<AdminRoute><Stats /></AdminRoute>} />
+          <Route path='/contact/' element={<Contact />} />
+          <Route path='/staff/messages/' element={<StaffRoute><StaffMessages /></StaffRoute>} />
         </Routes>
       </BrowserRouter>
     </AuthProvider>

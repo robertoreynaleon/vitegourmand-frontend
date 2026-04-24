@@ -1,12 +1,39 @@
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import { useAuth } from '../../context/AuthContext';
 import './Dashboard.scss';
 
+const API_MESSAGES = 'http://vitegourmand.local/api/staff/messages';
+const POLL_INTERVAL = 5 * 60 * 1000; // 5 minutes
+
 function StaffDashboard() {
-    const { user } = useAuth();
+    const { user, token } = useAuth();
+    const [unreadCount, setUnreadCount] = useState(0);
+    const intervalRef = useRef(null);
+
+    const fetchUnread = async () => {
+        if (!token) return;
+        try {
+            const res = await fetch(API_MESSAGES, {
+                headers: { Authorization: `Bearer ${token}` },
+            });
+            if (!res.ok) return;
+            const data = await res.json();
+            if (Array.isArray(data)) {
+                setUnreadCount(data.filter((m) => m.status === 'unread').length);
+            }
+        } catch {
+            // silent — dashboard polling should not break the page
+        }
+    };
+
+    useEffect(() => {
+        fetchUnread();
+        intervalRef.current = setInterval(fetchUnread, POLL_INTERVAL);
+        return () => clearInterval(intervalRef.current);
+    }, [token]); // eslint-disable-line react-hooks/exhaustive-deps
 
     return (
         <div className="staff-dashboard-page">
@@ -92,6 +119,37 @@ function StaffDashboard() {
                                     aria-label="Accéder à la gestion des avis clients"
                                 >
                                     Gérer les avis
+                                </Link>
+                            </article>
+
+                            {/* Carte Messages — visible pour ROLE_ADMIN et ROLE_STAFF_MEMBER */}
+                            <article className="staff-dashboard-card" aria-labelledby="card-messages-title">
+                                <div className="staff-dashboard-card__icon staff-dashboard-card__icon--messages" aria-hidden="true">
+                                    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+                                        <polyline points="22,6 12,13 2,6" />
+                                    </svg>
+                                    {unreadCount > 0 && (
+                                        <span
+                                            className="staff-dashboard-card__badge"
+                                            aria-label={`${unreadCount} message${unreadCount > 1 ? 's' : ''} non lu${unreadCount > 1 ? 's' : ''}`}
+                                        >
+                                            {unreadCount}
+                                        </span>
+                                    )}
+                                </div>
+                                <h2 id="card-messages-title" className="staff-dashboard-card__title">
+                                    Messages
+                                </h2>
+                                <p className="staff-dashboard-card__desc">
+                                    Lire et répondre aux messages de contact des visiteurs.
+                                </p>
+                                <Link
+                                    to="/staff/messages/"
+                                    className="staff-dashboard-card__btn"
+                                    aria-label="Accéder aux messages de contact"
+                                >
+                                    Voir les messages
                                 </Link>
                             </article>
 
