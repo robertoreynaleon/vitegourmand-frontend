@@ -2,6 +2,7 @@ import React, { useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useScrollHeader, scrollToAnchor } from '../hooks/useScrollHeader';
 import { useAuth } from '../context/AuthContext';
+import { useNotification } from '../context/NotificationContext';
 import './Header.scss';
 
 /**
@@ -12,6 +13,7 @@ import './Header.scss';
  */
 function Header() {
     const { user, logout } = useAuth();
+    const { showNotification } = useNotification();
     const navigate = useNavigate();
     const [menuOpen, setMenuOpen] = useState(false);
 
@@ -21,6 +23,7 @@ function Header() {
     const handleLogout = (e) => {
         e.preventDefault();
         logout();
+        showNotification('Vous avez ete deconnecte. A bientot\u00a0!', 'error');
         setMenuOpen(false);
         navigate('/');
     };

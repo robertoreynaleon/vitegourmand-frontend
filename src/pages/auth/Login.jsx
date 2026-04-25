@@ -3,6 +3,7 @@ import { useNavigate, useLocation, Link } from "react-router-dom";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import { useAuth } from "../../context/AuthContext";
+import { useNotification } from "../../context/NotificationContext";
 import { loginUser } from "../../services/authService";
 import { loadCart } from "../../services/cartCalc";
 import "./Auth.scss";
@@ -16,6 +17,7 @@ import "./Auth.scss";
  */
 function Login() {
 	const { login } = useAuth();
+	const { showNotification } = useNotification();
 	const navigate = useNavigate();
 	const location = useLocation();
 	// Vrai si l'utilisateur arrive depuis la page d'inscription
@@ -84,6 +86,7 @@ function Login() {
 		try {
 			const { token, user } = await loginUser(formValues.email, formValues.password);
 			login(user, token);
+			showNotification('Bienvenue ! Vous etes maintenant connecte.', 'success');
 
 			// ── Redirection selon le rôle ─────────────────────────────────────
 			const roles = user.roles ?? [];
@@ -105,9 +108,9 @@ function Login() {
 			}
 		} catch (err) {
 			if (err.response?.status === 401) {
-				setServerError("Email ou mot de passe incorrect.");
+				setServerError('Email ou mot de passe incorrect. Verifiez vos identifiants et reessayez.');
 			} else {
-				setServerError("Une erreur est survenue. Veuillez reessayer.");
+				setServerError('Une erreur est survenue. Veuillez reessayer.');
 			}
 		} finally {
 			setIsSubmitting(false);
@@ -214,6 +217,17 @@ function Login() {
 										<p id="password-error" className="form-error" aria-live="polite">{errors.password}</p>
 									)}
 								</div>
+
+								{serverError && (
+									<p
+										id="server-error"
+										className="form-error--server"
+										role="alert"
+										aria-live="assertive"
+									>
+										{serverError}
+									</p>
+								)}
 
 								<button type="submit" className="form-btn-submit" disabled={isSubmitting}>
 									{isSubmitting ? "Connexion..." : "Se connecter"}

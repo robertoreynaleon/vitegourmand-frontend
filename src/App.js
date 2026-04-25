@@ -1,6 +1,8 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
+import { NotificationProvider } from './context/NotificationContext';
 import ScrollToTop from './components/ScrollToTop';
+import Toast from './components/Toast';
 import PrivateRoute from './components/PrivateRoute';
 import StaffRoute from './components/StaffRoute';
 import AdminRoute from './components/AdminRoute';
@@ -42,9 +44,11 @@ import './App.scss';
  */
 function App() {
   return (
-    <AuthProvider>
+    <NotificationProvider>
+      <AuthProvider>
       <BrowserRouter>
         <ScrollToTop />
+        <Toast />
         <Routes>
           {/* Pages publiques */}
           <Route path='/' element={<HomePage />} />
@@ -78,7 +82,8 @@ function App() {
           <Route path='/staff/messages/' element={<StaffRoute><StaffMessages /></StaffRoute>} />
         </Routes>
       </BrowserRouter>
-    </AuthProvider>
+      </AuthProvider>
+    </NotificationProvider>
   );
 }
 
