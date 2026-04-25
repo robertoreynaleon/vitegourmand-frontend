@@ -9,6 +9,8 @@ import MenuList from './pages/menu/MenuList';
 import MenuShow from './pages/menu/MenuShow';
 import Login from './pages/auth/Login';
 import Register from './pages/auth/Register';
+import ForgotPassword from './pages/auth/ForgotPassword';
+import ResetPassword from './pages/auth/ResetPassword';
 import Dashboard from './pages/user/Dashboard';
 import Edit from './pages/user/Edit';
 import Order from './pages/user/Order';
@@ -50,6 +52,8 @@ function App() {
           <Route path='/menu/show/:id' element={<MenuShow />} />
           <Route path='/auth/login/' element={<Login />} />
           <Route path='/auth/register/' element={<Register />} />
+          <Route path='/auth/forgot-password/' element={<ForgotPassword />} />
+          <Route path='/auth/reset-password/' element={<ResetPassword />} />
           {/* Pages client connecté */}
           <Route path='/user/dashboard/' element={<PrivateRoute><Dashboard /></PrivateRoute>} />
           <Route path='/user/edit/' element={<PrivateRoute><Edit /></PrivateRoute>} />

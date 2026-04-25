@@ -1,5 +1,5 @@
 ﻿import React, { useState } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, Link } from "react-router-dom";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import { useAuth } from "../../context/AuthContext";
@@ -21,6 +21,8 @@ function Login() {
 	const justRegistered = location.state?.registered === true;
 	// Vrai si la session JWT a expiré et l'utilisateur a été redirigé
 	const sessionExpired = location.state?.sessionExpired === true;
+	// Vrai si l'utilisateur vient de réinitialiser son mot de passe avec succès
+	const passwordReset = location.state?.passwordReset === true;
 	const [credentialsUpdated] = useState(() => {
 		// Flag sessionStorage posé après modification d'e-mail ou de mot de passe
 		const flag = sessionStorage.getItem("credentials_updated") === "1";
@@ -122,6 +124,12 @@ function Login() {
 								</p>
 							)}
 
+							{passwordReset && (
+								<p className="form-success" role="status" aria-live="polite">
+									Votre mot de passe a été réinitialisé avec succès. Connectez-vous avec vos nouveaux identifiants.
+								</p>
+							)}
+
 							{cartLoginRequired && (
 								<p className="form-info" role="status" aria-live="polite">
 									Il est nécessaire d'être connecté pour acheter un menu.
@@ -195,6 +203,9 @@ function Login() {
 							</form>
 
 							<div className="form-alt-section">
+								<Link to="/auth/forgot-password/" className="form-alt-link">
+									Mot de passe oublié ?
+								</Link>
 								<p className="form-alt-text">Vous n avez pas encore de compte ?</p>
 								<a href="/auth/register/" className="form-alt-link">Creer un compte</a>
 							</div>
