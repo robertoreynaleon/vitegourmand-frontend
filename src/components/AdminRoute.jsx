@@ -4,7 +4,8 @@ import { useAuth } from '../context/AuthContext';
 /**
  * Protège les pages réservées aux administrateurs (ROLE_ADMIN uniquement).
  * - Non connecté → redirection vers /auth/login/
- * - Connecté sans ROLE_ADMIN → redirection vers /staff/dashboard/
+ * - Connecté ROLE_CLIENT → redirection vers /user/dashboard/
+ * - Connecté ROLE_STAFF_MEMBER → redirection vers /staff/dashboard/
  * - Admin → accès accordé
  */
 export default function AdminRoute({ children }) {
@@ -20,7 +21,9 @@ export default function AdminRoute({ children }) {
     }
 
     if (!user.roles?.includes('ROLE_ADMIN')) {
-        return <Navigate to="/staff/dashboard/" replace />;
+        // Rediriger vers le dashboard approprié selon le rôle réel de l'utilisateur
+        const isClient = user.roles?.includes('ROLE_CLIENT');
+        return <Navigate to={isClient ? '/user/dashboard/' : '/staff/dashboard/'} replace />;
     }
 
     return children;

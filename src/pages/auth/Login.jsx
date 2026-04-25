@@ -4,6 +4,7 @@ import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import { useAuth } from "../../context/AuthContext";
 import { loginUser } from "../../services/authService";
+import { loadCart } from "../../services/cartCalc";
 import "./Auth.scss";
 
 /**
@@ -83,8 +84,25 @@ function Login() {
 		try {
 			const { token, user } = await loginUser(formValues.email, formValues.password);
 			login(user, token);
-			const from = location.state?.from;
-			navigate(typeof from === 'string' ? from : from?.pathname || '/');
+
+			// ── Redirection selon le rôle ─────────────────────────────────────
+			const roles = user.roles ?? [];
+			const isStaff  = roles.includes('ROLE_STAFF_MEMBER');
+			const isAdmin  = roles.includes('ROLE_ADMIN');
+			const isClient = roles.includes('ROLE_CLIENT');
+
+			if (isStaff || isAdmin) {
+				// STAFF et ADMIN → TOUJOURS vers le tableau de bord staff, sans exception
+				navigate('/staff/dashboard/');
+			} else if (isClient) {
+				// CLIENT avec des menus dans le panier → page MON PANIER
+				// CLIENT sans panier → tableau de bord client
+				const cartItems = loadCart();
+				navigate(cartItems.length > 0 ? '/user/order/' : '/user/dashboard/');
+			} else {
+				// Rôle inconnu : accueil par défaut
+				navigate('/');
+			}
 		} catch (err) {
 			if (err.response?.status === 401) {
 				setServerError("Email ou mot de passe incorrect.");

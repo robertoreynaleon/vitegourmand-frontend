@@ -14,7 +14,11 @@ export interface CartItem {
 export const DISCOUNT_THRESHOLD = 5;
 export const DISCOUNT_RATE = 0.1;
 
-const CART_KEY = 'vg_cart';
+const CART_KEY         = 'vg_cart';
+// Clé stockant le timestamp Unix (ms) au-delà duquel le panier est considéré expiré
+const CART_EXPIRES_KEY = 'vg_cart_expires_at';
+// Durée de vie du panier : 2 heures en millisecondes
+const CART_TTL_MS      = 2 * 60 * 60 * 1000;
 
 // ─── Calculs ──────────────────────────────────────────────────────────────────
 
@@ -52,8 +56,17 @@ export function formatPrice(price: number): string {
 // ─── Persistance localStorage ─────────────────────────────────────────────────
 
 /** Charge le panier depuis localStorage. Retourne un tableau vide en cas d'erreur de parsing. */
+/** Si le panier a dépassé sa durée de vie de 2 heures, il est purgé automatiquement. */
 export function loadCart(): CartItem[] {
     try {
+        // Vérifier l'expiration avant de lire le contenu
+        const expiresAt = localStorage.getItem(CART_EXPIRES_KEY);
+        if (expiresAt && Date.now() > Number(expiresAt)) {
+            // Panier expiré (plus de 2h) : purge automatique
+            localStorage.removeItem(CART_KEY);
+            localStorage.removeItem(CART_EXPIRES_KEY);
+            return [];
+        }
         const raw = localStorage.getItem(CART_KEY);
         return raw ? (JSON.parse(raw) as CartItem[]) : [];
     } catch {
@@ -61,9 +74,11 @@ export function loadCart(): CartItem[] {
     }
 }
 
-/** Sauvegarde le panier dans localStorage (remplace le panier précédent). */
+/** Sauvegarde le panier dans localStorage (remplace le panier précédent). Renouvelle l'expiration à 2h. */
 export function saveCart(items: CartItem[]): void {
     localStorage.setItem(CART_KEY, JSON.stringify(items));
+    // Renouveler le TTL à chaque modification du panier
+    localStorage.setItem(CART_EXPIRES_KEY, String(Date.now() + CART_TTL_MS));
 }
 
 /**
@@ -98,7 +113,8 @@ export function updateCartQuantity(menuId: number, quantity: number): CartItem[]
     return items;
 }
 
-/** Vide complètement le panier en supprimant l'entrée localStorage. */
+/** Vide complètement le panier en supprimant l'entrée localStorage et son timestamp d'expiration. */
 export function clearCart(): void {
     localStorage.removeItem(CART_KEY);
+    localStorage.removeItem(CART_EXPIRES_KEY);
 }
