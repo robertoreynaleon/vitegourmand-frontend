@@ -4,8 +4,8 @@ const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const phoneRegex = /^0[1-9][0-9]{8}$/;
 /** Expression régulière de validation d'un code postal français (5 chiffres). */
 const postalCodeRegex = /^[0-9]{5}$/;
-/** Expression régulière : mot de passe min. 12 caractères avec majuscule, chiffre et caractère spécial. */
-const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\w\s]).{12,}$/;
+/** Expression régulière : mot de passe min. 8 caractères avec majuscule, chiffre et caractère spécial. */
+const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\w\s]).{8,}$/;
 
 /** Normalise une valeur en chaîne trimée, jamais null/undefined. */
 const normalize = (value) => (value || '').trim();
@@ -41,7 +41,7 @@ export function validateEdit(values) {
     // Mot de passe optionnel — validé seulement si l'utilisateur saisit quelque chose
     if (newPwd) {
         if (!passwordRegex.test(newPwd)) {
-            errors.new_password = 'Min. 12 caractères avec majuscule, chiffre et caractère spécial.';
+            errors.new_password = 'Min. 8 caractères avec majuscule, chiffre et caractère spécial.';
         }
         if (newPwd !== confirmPwd) {
             errors.password_confirm = 'Les mots de passe ne correspondent pas.';

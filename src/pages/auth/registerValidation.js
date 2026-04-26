@@ -4,6 +4,8 @@ const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const phoneRegex = /^0[1-9][0-9]{8}$/;
 /** Expression régulière de validation d'un code postal français (5 chiffres). */
 const postalCodeRegex = /^[0-9]{5}$/;
+/** Expression régulière : mot de passe min. 8 caractères avec majuscule, chiffre et caractère spécial. */
+const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\w\s]).{8,}$/;
 
 /** Normalise une valeur en chaîne trimée, jamais null/undefined. */
 const normalize = (value) => (value || '').trim();
@@ -35,7 +37,7 @@ export function validateRegister(values) {
     if (!address) errors.address = 'Champ requis.';
     if (!city) errors.city = 'Champ requis.';
     if (!postalCode || !postalCodeRegex.test(postalCode)) errors.postalCode = 'Champ requis.';
-    if (!password || password.length < 12) errors.password = 'Mot de passe invalide.';
+    if (!password || !passwordRegex.test(password)) errors.password = 'Min. 8 caractères avec majuscule, chiffre et caractère spécial.';
     if (!passwordConfirm || passwordConfirm !== password) errors.password_confirm = 'Confirmation invalide.';
 
     return errors;
