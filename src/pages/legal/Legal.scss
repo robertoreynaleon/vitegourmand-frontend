@@ -1,0 +1,164 @@
+// =============================================================================
+// PAGES LÉGALES — Mentions légales & CGV — Vite & Gourmand
+// =============================================================================
+@use '../../styles/variables' as *;
+@use '../../styles/mixins' as *;
+
+// -----------------------------------------------------------------------------
+// Wrapper de page (même pattern que Contact)
+// -----------------------------------------------------------------------------
+.legal-page {
+    .main-header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        background: $color-white;
+        box-shadow: $shadow-md;
+    }
+
+    .logo h1 {
+        color: $color-green;
+    }
+
+    .nav-menu a {
+        color: $color-text;
+
+        &::after {
+            background: $color-green;
+        }
+    }
+
+    .user-greeting {
+        color: $color-text;
+    }
+
+    .hamburger span {
+        background: $color-green;
+    }
+
+    main {
+        padding-top: 90px;
+        background: $color-bg-light;
+        min-height: calc(100vh - 90px);
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Section principale
+// -----------------------------------------------------------------------------
+.legal-section {
+    padding: 4rem 0;
+}
+
+// -----------------------------------------------------------------------------
+// En-tête de page
+// -----------------------------------------------------------------------------
+.legal-header {
+    margin-bottom: 3rem;
+    padding-bottom: 2rem;
+    border-bottom: 2px solid $color-gold;
+
+    h1 {
+        font-family: $font-heading;
+        font-size: clamp(1.8rem, 4vw, 2.5rem);
+        color: $color-green;
+        margin-bottom: 0.5rem;
+    }
+
+    .legal-date {
+        font-size: 0.9rem;
+        color: $color-text-muted;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Corps du document légal
+// -----------------------------------------------------------------------------
+.legal-body {
+    max-width: 860px;
+
+    h2 {
+        font-family: $font-heading;
+        font-size: 1.2rem;
+        color: $color-green;
+        margin: 2.5rem 0 0.75rem;
+        padding-left: 1rem;
+        border-left: 3px solid $color-gold;
+    }
+
+    h3 {
+        font-size: 1rem;
+        font-weight: 600;
+        color: $color-text;
+        margin: 1.5rem 0 0.5rem;
+    }
+
+    p {
+        font-size: 0.95rem;
+        line-height: 1.8;
+        color: $color-text;
+        margin-bottom: 1rem;
+    }
+
+    ul {
+        list-style: disc;
+        padding-left: 1.5rem;
+        margin-bottom: 1rem;
+
+        li {
+            font-size: 0.95rem;
+            line-height: 1.8;
+            color: $color-text;
+        }
+    }
+
+    a {
+        color: $color-green;
+        text-decoration: underline;
+
+        &:hover {
+            color: $color-green-dark;
+        }
+    }
+
+    strong {
+        font-weight: 600;
+    }
+
+    // Séparateur de section
+    hr {
+        border: none;
+        border-top: 1px solid rgba($color-green, 0.15);
+        margin: 2rem 0;
+    }
+
+    // Boîte d'information encadrée
+    .legal-info-box {
+        background: rgba($color-green, 0.05);
+        border: 1px solid rgba($color-green, 0.2);
+        border-radius: $radius-sm;
+        padding: 1.25rem 1.5rem;
+        margin: 1.5rem 0;
+
+        p {
+            margin: 0;
+            font-size: 0.9rem;
+        }
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Responsive
+// -----------------------------------------------------------------------------
+@include mobile {
+    .legal-section {
+        padding: 2rem 0;
+    }
+
+    .legal-header {
+        h1 {
+            font-size: 1.6rem;
+        }
+    }
+}

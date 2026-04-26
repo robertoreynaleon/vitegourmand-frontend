@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import './Footer.scss';
 
 /**
@@ -23,10 +24,20 @@ function Footer() {
                     <div className="footer-col">
                         <h3>NAVIGATION</h3>
                         <ul>
-                            <li><a href="#about">À propos</a></li>
-                            <li><a href="#welcome">Nos menus</a></li>
-                            <li><a href="#charte">Notre Charte</a></li>
-                            <li><a href="#values">Nos valeurs</a></li>
+                            <li><Link to="/#about">À propos</Link></li>
+                            <li><Link to="/#welcome">Nos menus</Link></li>
+                            <li><Link to="/#charte">Notre Charte</Link></li>
+                            <li><Link to="/#values">Nos valeurs</Link></li>
+                        </ul>
+                    </div>
+
+                    <div className="footer-col">
+                        <h3>HORAIRES</h3>
+                        <ul className="footer-hours">
+                            <li><span>Lun.</span><span>Fermé</span></li>
+                            <li><span>Mar. – Ven.</span><span>9h – 18h</span></li>
+                            <li><span>Sam.</span><span>9h – 13h</span></li>
+                            <li><span>Dim.</span><span>Fermé</span></li>
                         </ul>
                     </div>
 
@@ -50,9 +61,9 @@ function Footer() {
                 <div className="footer-bottom">
                     <p>&copy; 2026 Vite Gourmand - Tous droits réservés</p>
                     <div className="footer-links">
-                        <a href="#">Mentions légales</a>
-                        <a href="#">Politique de confidentialité</a>
-                        <a href="#">Gestion des cookies</a>
+                        <Link to="/mentions-legales/">Mentions légales</Link>
+                        <Link to="/cgv/">CGV</Link>
+                        <Link to="/cgv/#confidentialite">Politique de confidentialité</Link>
                     </div>
                 </div>
             </div>

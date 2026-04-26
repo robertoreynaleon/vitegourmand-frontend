@@ -31,6 +31,8 @@ import UserCreate from './pages/admin/UserCreate';
 import Stats from './pages/admin/Stats';
 import Contact from './pages/Contact';
 import StaffMessages from './pages/staff/StaffMessages';
+import MentionsLegales from './pages/legal/MentionsLegales';
+import CGV from './pages/legal/CGV';
 import './App.scss';
 
 /**
@@ -80,6 +82,8 @@ function App() {
           {/* Autres */}
           <Route path='/contact/' element={<Contact />} />
           <Route path='/staff/messages/' element={<StaffRoute><StaffMessages /></StaffRoute>} />
+          <Route path='/mentions-legales/' element={<MentionsLegales />} />
+          <Route path='/cgv/' element={<CGV />} />
         </Routes>
       </BrowserRouter>
       </AuthProvider>
