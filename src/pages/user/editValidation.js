@@ -6,6 +6,10 @@ const phoneRegex = /^0[1-9][0-9]{8}$/;
 const postalCodeRegex = /^[0-9]{5}$/;
 /** Expression régulière : mot de passe min. 8 caractères avec majuscule, chiffre et caractère spécial. */
 const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\w\s]).{8,}$/;
+/** Lettres (dont accents), espaces, tirets et apostrophes uniquement — pour nom, prénom, ville. */
+const nameRegex = /^[a-zA-ZÀ-ÿ\s\-']+$/;
+/** Adresse postale : lettres, chiffres, espaces et ponctuation courante. */
+const addressRegex = /^[a-zA-ZÀ-ÿ0-9\s\-',./]+$/
 
 /** Normalise une valeur en chaîne trimée, jamais null/undefined. */
 const normalize = (value) => (value || '').trim();
@@ -30,13 +34,13 @@ export function validateEdit(values) {
     const newPwd     = values.new_password || '';
     const confirmPwd = values.password_confirm || '';
 
-    if (!name || name.length < 2)             errors.name       = 'Champ requis.';
-    if (!lastname || lastname.length < 2)     errors.lastname   = 'Champ requis.';
-    if (!email || !emailRegex.test(email))    errors.email      = 'Email invalide.';
-    if (!phone || !phoneRegex.test(phone))    errors.phone      = 'Format invalide (ex : 0612345678).';
-    if (!address || address.length < 5)       errors.address    = 'Champ requis.';
-    if (!city || city.length < 2)             errors.city       = 'Champ requis.';
-    if (!postalCode || !postalCodeRegex.test(postalCode)) errors.postalCode = 'Code postal invalide.';
+    if (!name || name.length < 2 || !nameRegex.test(name))         errors.name       = 'Lettres, espaces, tirets et apostrophes uniquement (min. 2 caractères).';
+    if (!lastname || lastname.length < 2 || !nameRegex.test(lastname)) errors.lastname = 'Lettres, espaces, tirets et apostrophes uniquement (min. 2 caractères).';
+    if (!email || !emailRegex.test(email))                          errors.email      = 'Adresse e-mail invalide.';
+    if (!phone || !phoneRegex.test(phone))                          errors.phone      = 'Format invalide (ex : 0612345678).';
+    if (!address || address.length < 5 || !addressRegex.test(address)) errors.address = 'Adresse invalide (min. 5 caractères, lettres et chiffres).';
+    if (!city || city.length < 2 || !nameRegex.test(city))         errors.city       = 'Ville invalide (lettres, espaces, tirets uniquement).';
+    if (!postalCode || !postalCodeRegex.test(postalCode))           errors.postalCode = 'Code postal invalide (5 chiffres).';
 
     // Mot de passe optionnel — validé seulement si l'utilisateur saisit quelque chose
     if (newPwd) {
