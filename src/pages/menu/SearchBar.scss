@@ -6,7 +6,19 @@
 
 .filter-section {
     background: $color-white;
-    padding: 2.5rem 0 1.5rem;
+    padding: calc(8.3rem - 90px) 0 1.5rem;
+}
+
+@include tablet {
+    .filter-section {
+        padding-top: 1.5rem;
+    }
+}
+
+@include mobile {
+    .filter-section {
+        padding-top: 1rem;
+    }
 }
 
 .filter-bar {

@@ -25,7 +25,7 @@ function MentionsLegales() {
                             <h2>1. Éditeur du site</h2>
                             <p>
                                 Le présent site est édité par :<br />
-                                <strong>Vite Gourmand</strong><br />
+                                <strong>Roberto Reyna Leon</strong><br />
                                 Forme juridique : Entreprise individuelle<br />
                                 Adresse : 3 rue Dupaty, 33300 Bordeaux<br />
                                 Téléphone : <a href="tel:+33540250651">05 40 25 06 51</a><br />

@@ -42,7 +42,7 @@
 // Section principale
 // -----------------------------------------------------------------------------
 .menu-page {
-    padding: $section-padding;
+    padding: 3.5rem 0 5rem;
     background: $color-gold-light;
 }
 
@@ -200,11 +200,15 @@
     .menu-grid {
         @include grid-cols(2, 2rem);
     }
+
+    .menu-page {
+        padding: 2rem 0 3rem;
+    }
 }
 
 @include mobile {
     .menu-page {
-        padding: 4rem 0;
+        padding: 1.5rem 0 2.5rem;
     }
 
     .menu-grid {

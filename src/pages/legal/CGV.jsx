@@ -64,7 +64,7 @@ function CGV() {
 
                             <h3>4.2 Délai de commande</h3>
                             <p>
-                                Toute commande doit être effectuée au minimum <strong>2 jours ouvrables</strong>
+                                Toute commande doit être effectuée au minimum <strong>2 jours ouvrables </strong>
                                 avant la date de prestation souhaitée, sauf accord exprès du Prestataire.
                                 Ce délai peut être supérieur pour certains menus dont les caractéristiques
                                 sont précisées sur la fiche du menu.

@@ -53,3 +53,20 @@
         padding-bottom: 5rem;
     }
 }
+
+// -----------------------------------------------------------------------------
+// Responsive — réduit l'espace header → formulaire sur mobile/tablette
+// -----------------------------------------------------------------------------
+@include tablet {
+    .auth-page-wrapper .form-page-section {
+        padding-top: 1.5rem;
+        padding-bottom: 3rem;
+    }
+}
+
+@include mobile {
+    .auth-page-wrapper .form-page-section {
+        padding-top: 1rem;
+        padding-bottom: 2.5rem;
+    }
+}

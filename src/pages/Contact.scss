@@ -49,7 +49,19 @@
 // Section
 // -----------------------------------------------------------------------------
 .contact-section {
-    padding: 5rem 0 6rem;
+    padding: calc(8.3rem - 90px) 0 5rem;
+}
+
+@include tablet {
+    .contact-section {
+        padding: 1.5rem 0 3rem;
+    }
+}
+
+@include mobile {
+    .contact-section {
+        padding: 1rem 0 2.5rem;
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -68,7 +80,7 @@
     text-align: center;
     color: $color-text-light;
     font-size: 1.05rem;
-    margin-bottom: 3rem;
+    margin-bottom: 1.5rem;
     line-height: 1.6;
 }
 
