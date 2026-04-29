@@ -83,6 +83,28 @@
     margin-bottom: 1rem;
 }
 
+.order-error {
+    color: #c0392b;
+    font-size: 0.9rem;
+    font-weight: 500;
+
+    &::before {
+        content: '⚠ ';
+    }
+
+    &--submit {
+        display: block;
+        background: #fff0f0;
+        border: 1px solid #c0392b;
+        border-left: 4px solid #c0392b;
+        border-radius: $radius-sm;
+        padding: 0.9rem 1.1rem;
+        font-size: 1rem;
+        line-height: 1.5;
+        margin-bottom: 1rem;
+    }
+}
+
 .order-edit-back {
     display: inline-block;
     color: $color-green;
