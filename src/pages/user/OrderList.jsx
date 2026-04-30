@@ -6,8 +6,8 @@ import { useAuth } from '../../context/AuthContext';
 import './OrderList.scss';
 
 /** URL de l'API des commandes du client connecté. */
-const API_USER_ORDERS  = 'http://vitegourmand.local/api/user/orders';
-const API_USER_REVIEWS = 'http://vitegourmand.local/api/reviews/my';
+const API_USER_ORDERS  = `${process.env.REACT_APP_API_URL}/api/user/orders`;
+const API_USER_REVIEWS = `${process.env.REACT_APP_API_URL}/api/reviews/my`;
 
 function OrderList() {
     const { token } = useAuth();

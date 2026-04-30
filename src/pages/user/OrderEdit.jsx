@@ -17,9 +17,9 @@ import DatePicker from '../../components/DatePicker';
 import TimePicker from '../../components/TimePicker';
 import './OrderEdit.scss';
 
-const API_ORDER      = (id) => `http://vitegourmand.local/api/orders/${id}/detail`;
-const API_ORDER_EDIT = (id) => `http://vitegourmand.local/api/orders/${id}/edit`;
-const API_ORDER_CANCEL = (id) => `http://vitegourmand.local/api/orders/${id}/cancel`;
+const API_ORDER      = (id) => `${process.env.REACT_APP_API_URL}/api/orders/${id}/detail`;
+const API_ORDER_EDIT = (id) => `${process.env.REACT_APP_API_URL}/api/orders/${id}/edit`;
+const API_ORDER_CANCEL = (id) => `${process.env.REACT_APP_API_URL}/api/orders/${id}/cancel`;
 
 /**
  * Formate une date de commande pour l'affichage.

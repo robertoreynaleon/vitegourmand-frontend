@@ -6,9 +6,9 @@ import { useAuth } from '../../context/AuthContext';
 import './Reviews.scss';
 
 /** URL de l'API pour récupérer les avis de l'utilisateur connecté. */
-const API_MY_REVIEWS  = 'http://vitegourmand.local/api/reviews/my';
+const API_MY_REVIEWS  = `${process.env.REACT_APP_API_URL}/api/reviews/my`;
 /** URL de base pour les actions sur les avis (modification, suppression). */
-const API_REVIEW_BASE = 'http://vitegourmand.local/api/reviews';
+const API_REVIEW_BASE = `${process.env.REACT_APP_API_URL}/api/reviews`;
 /** Nombre maximal de caractères autorisés dans le texte d'un avis. */
 const MAX_CHARS       = 1000;
 

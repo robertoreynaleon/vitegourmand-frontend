@@ -7,15 +7,15 @@ import './CatalogManagement.scss';
 
 // ─── Points d'accès API ───────────────────────────────────────────────────────
 // Lecture — contrôleurs Symfony dédiés (JSON brut, toutes les entrées de la BDD)
-const API_STAFF_REGIMES   = 'http://vitegourmand.local/api/staff/catalog/regimes';
-const API_STAFF_DISHES    = 'http://vitegourmand.local/api/staff/catalog/dishes';
-const API_STAFF_ALLERGENS = 'http://vitegourmand.local/api/staff/catalog/allergens';
-const API_STAFF_MENUS     = 'http://vitegourmand.local/api/staff/catalog/menus';
+const API_STAFF_REGIMES   = `${process.env.REACT_APP_API_URL}/api/staff/catalog/regimes`;
+const API_STAFF_DISHES    = `${process.env.REACT_APP_API_URL}/api/staff/catalog/dishes`;
+const API_STAFF_ALLERGENS = `${process.env.REACT_APP_API_URL}/api/staff/catalog/allergens`;
+const API_STAFF_MENUS     = `${process.env.REACT_APP_API_URL}/api/staff/catalog/menus`;
 
 // Écriture — API Platform (POST) + suppression (DELETE)
-const API_REGIMES   = 'http://vitegourmand.local/api/regimes';
-const API_DISHES    = 'http://vitegourmand.local/api/dishes';
-const API_ALLERGENS = 'http://vitegourmand.local/api/allergens';
+const API_REGIMES   = `${process.env.REACT_APP_API_URL}/api/regimes`;
+const API_DISHES    = `${process.env.REACT_APP_API_URL}/api/dishes`;
+const API_ALLERGENS = `${process.env.REACT_APP_API_URL}/api/allergens`;
 
 // ─── Sub-component: Feedback message ──────────────────────────────────────
 function Feedback({ id, feedback }) {

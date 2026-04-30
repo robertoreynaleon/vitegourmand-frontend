@@ -5,7 +5,7 @@ import Footer from '../../components/Footer';
 import { useAuth } from '../../context/AuthContext';
 import './StaffMessages.scss';
 
-const API_MESSAGES = 'http://vitegourmand.local/api/staff/messages';
+const API_MESSAGES = `${process.env.REACT_APP_API_URL}/api/staff/messages`;
 
 /**
  * Formate une chaîne de date « Y-m-d H:i:s » en format lisible (ex. « lun. 10 mars 2025 à 14h30 »).

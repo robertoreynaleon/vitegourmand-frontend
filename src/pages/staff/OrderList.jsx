@@ -6,7 +6,7 @@ import { useAuth } from '../../context/AuthContext';
 import SearchBar from './SearchBar';
 import './OrderList.scss';
 
-const API_STAFF_ORDERS = 'http://vitegourmand.local/api/staff/orders';
+const API_STAFF_ORDERS = `${process.env.REACT_APP_API_URL}/api/staff/orders`;
 
 /**
  * Page de liste des commandes pour le staff.

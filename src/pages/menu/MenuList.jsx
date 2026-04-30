@@ -4,7 +4,7 @@ import SearchBar from "./SearchBar";
 import Footer from '../../components/Footer';
 import './MenuList.scss';
 
-const API_MENUS = 'http://vitegourmand.local/api/menus';
+const API_MENUS = `${process.env.REACT_APP_API_URL}/api/menus`;
 
 /**
  * Page de liste des menus.

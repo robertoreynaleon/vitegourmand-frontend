@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 /** URL de base de l'API Symfony. */
-const API_URL = 'http://vitegourmand.local';
+const API_URL = process.env.REACT_APP_API_URL;
 
 /**
  * Envoie les identifiants au serveur et retourne le token JWT et les données utilisateur.

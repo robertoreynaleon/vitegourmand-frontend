@@ -5,7 +5,7 @@ import Footer from '../../components/Footer';
 import { useAuth } from '../../context/AuthContext';
 import './Dashboard.scss';
 
-const API_MESSAGES = 'http://vitegourmand.local/api/staff/messages';
+const API_MESSAGES = `${process.env.REACT_APP_API_URL}/api/staff/messages`;
 /** Intervalle de polling pour vérifier les nouveaux messages (toutes les 5 minutes). */
 const POLL_INTERVAL = 5 * 60 * 1000; // 5 minutes
 

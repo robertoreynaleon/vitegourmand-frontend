@@ -15,8 +15,8 @@ import DatePicker from '../../components/DatePicker';
 import { useAuth } from '../../context/AuthContext';
 import './Stats.scss';
 
-const API_STATS = 'http://vitegourmand.local/api/admin/stats';
-const API_MENUS = 'http://vitegourmand.local/api/menus';
+const API_STATS = `${process.env.REACT_APP_API_URL}/api/admin/stats`;
+const API_MENUS = `${process.env.REACT_APP_API_URL}/api/menus`;
 
 /**
  * Aggregates raw MongoDB documents by menu name.

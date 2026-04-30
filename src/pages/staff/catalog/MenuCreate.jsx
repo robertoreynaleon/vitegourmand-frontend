@@ -7,7 +7,7 @@ import { useAuth } from '../../../context/AuthContext';
 import './MenuCreate.scss';
 
 /** URL de base de l'API. */
-const BASE             = 'http://vitegourmand.local';
+const BASE             = process.env.REACT_APP_API_URL;
 const API_REGIMES      = `${BASE}/api/staff/catalog/regimes`;
 const API_DISHES       = `${BASE}/api/staff/catalog/dishes`;
 const API_ALLERGENS    = `${BASE}/api/staff/catalog/allergens`;

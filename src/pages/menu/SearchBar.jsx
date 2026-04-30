@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import './SearchBar.scss';
 
-const API_REGIMES = 'http://vitegourmand.local/api/regimes';
+const API_REGIMES = `${process.env.REACT_APP_API_URL}/api/regimes`;
 
 /**
  * Barre de recherche et de filtrage pour la liste des menus.

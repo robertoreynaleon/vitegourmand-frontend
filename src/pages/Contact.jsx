@@ -4,7 +4,7 @@ import Footer from '../components/Footer';
 import { useAuth } from '../context/AuthContext';
 import './Contact.scss';
 
-const API_BASE = 'http://vitegourmand.local';
+const API_BASE = process.env.REACT_APP_API_URL;
 
 /**
  * Page de contact publique.

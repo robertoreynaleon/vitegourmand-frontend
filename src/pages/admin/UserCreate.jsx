@@ -5,7 +5,7 @@ import { useAuth } from '../../context/AuthContext';
 import './UserCreate.scss';
 
 /** URL de l'API de gestion des employés (admin). */
-const API_BASE = 'http://vitegourmand.local/api/admin/staff';
+const API_BASE = `${process.env.REACT_APP_API_URL}/api/admin/staff`;
 
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const phoneRegex = /^0[1-9][0-9]{8}$/;

@@ -8,12 +8,12 @@ import { addToCart } from '../../services/cartCalc';
 import './MenuShow.scss';
 
 /** URL de l'API pour ajouter un article au panier. */
-const API_CART = 'http://vitegourmand.local/api/cart/add';
+const API_CART = `${process.env.REACT_APP_API_URL}/api/cart/add`;
 /** URL de base pour construire les chemins des images. */
-const BASE     = 'http://vitegourmand.local';
+const BASE     = process.env.REACT_APP_API_URL;
 
-const API_MENUS = 'http://vitegourmand.local/api/menus';
-const API_DISHES = 'http://vitegourmand.local/api/dishes';
+const API_MENUS = `${process.env.REACT_APP_API_URL}/api/menus`;
+const API_DISHES = `${process.env.REACT_APP_API_URL}/api/dishes`;
 
 const imgSrc = (path) => `${BASE}/${path.replace(/^\/+/, '')}`;
 

@@ -5,7 +5,7 @@ import Footer from '../../components/Footer';
 import { useAuth } from '../../context/AuthContext';
 import './ReviewsManage.scss';
 
-const API_STAFF_REVIEWS = 'http://vitegourmand.local/api/staff/reviews';
+const API_STAFF_REVIEWS = `${process.env.REACT_APP_API_URL}/api/staff/reviews`;
 
 // ---------------------------------------------------------------------------
 // Affichage des étoiles (version verte pour la page staff)

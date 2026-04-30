@@ -56,7 +56,7 @@ function Register() {
 			const body = new URLSearchParams();
 			Object.entries(formValues).forEach(([key, val]) => body.append(key, val));
 
-			const response = await fetch('http://vitegourmand.local/auth/register/', {
+			const response = await fetch(`${process.env.REACT_APP_API_URL}/auth/register/`, {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
 				body: body.toString(),

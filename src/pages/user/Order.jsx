@@ -21,7 +21,7 @@ import DatePicker from '../../components/DatePicker';
 import TimePicker from '../../components/TimePicker';
 import './Order.scss';
 
-const API_ORDERS = 'http://vitegourmand.local/api/orders/create';
+const API_ORDERS = `${process.env.REACT_APP_API_URL}/api/orders/create`;
 
 /**
  * Page de commande (panier).

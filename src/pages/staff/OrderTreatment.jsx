@@ -6,9 +6,9 @@ import { useAuth } from '../../context/AuthContext';
 import './OrderTreatment.scss';
 
 /** Construit l'URL pour récupérer une commande par son identifiant. */
-const API_ORDER      = (id) => `http://vitegourmand.local/api/staff/orders/${id}`;
+const API_ORDER      = (id) => `${process.env.REACT_APP_API_URL}/api/staff/orders/${id}`;
 /** Construit l'URL pour traiter (changer le statut de) une commande. */
-const API_ORDER_TREAT = (id) => `http://vitegourmand.local/api/staff/orders/${id}/treat`;
+const API_ORDER_TREAT = (id) => `${process.env.REACT_APP_API_URL}/api/staff/orders/${id}/treat`;
 
 const STATUS_OPTIONS = [
     { value: 'en attente',                      label: 'En attente' },

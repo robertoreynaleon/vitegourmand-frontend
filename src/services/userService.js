@@ -1,5 +1,5 @@
 /** URL de base des routes API utilisateur. */
-const API_BASE = 'http://vitegourmand.local/api/user';
+const API_BASE = `${process.env.REACT_APP_API_URL}/api/user`;
 
 /**
  * Met à jour les informations du profil de l'utilisateur connecté.
