@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import { useAuth } from '../../context/AuthContext';
@@ -15,7 +15,6 @@ import './Dashboard.scss';
 function Dashboard() {
     const { user, token, logout } = useAuth();
     const location = useLocation();
-    const navigate = useNavigate();
     const justUpdated = location.state?.updated === true;
     const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
     const [isDeleting, setIsDeleting] = useState(false);

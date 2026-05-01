@@ -361,7 +361,10 @@ function Order() {
                             <label htmlFor="delivery_address">
                                 Adresse de livraison :
                             </label>
-                            <div className="order-address-wrapper" ref={addressWrapperRef}>
+                            <div className="order-address-wrapper" ref={addressWrapperRef}
+                                aria-expanded={showSuggestions}
+                                aria-haspopup="listbox"
+                            >
                                 <input
                                     id="delivery_address"
                                     type="text"
@@ -372,7 +375,6 @@ function Order() {
                                     autoComplete="off"
                                     aria-autocomplete="list"
                                     aria-controls="address-suggestions"
-                                    aria-expanded={showSuggestions}
                                 />
                                 {showSuggestions && (
                                     <ul
@@ -382,7 +384,7 @@ function Order() {
                                         aria-label="Suggestions d'adresse"
                                     >
                                         {suggestions.map((s, i) => (
-                                            <li key={i} role="option">
+                                            <li key={i} role="option" aria-selected={false}>
                                                 <button
                                                     type="button"
                                                     className="order-address-suggestion-btn"

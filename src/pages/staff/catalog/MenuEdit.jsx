@@ -1,4 +1,4 @@
-﻿import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import imageCompression from 'browser-image-compression';
 import Header from '../../../components/Header';
@@ -507,7 +507,7 @@ function MenuEdit() {
                                         {allergens.length === 0 ? (
                                             <p className="menu-form-allergens-empty">Aucun allergène enregistré.</p>
                                         ) : (
-                                            <ul className="menu-form-allergens-list" role="list">
+                                            <ul className="menu-form-allergens-list" >
                                                 {allergens.map(a => (
                                                     <li key={a.id} className="menu-form-allergen-item">
                                                         <label className="menu-form-allergen-label">
@@ -530,7 +530,7 @@ function MenuEdit() {
                                 {menuDishes.length > 0 && (
                                     <div className="menu-form-dishes-added" aria-live="polite">
                                         <p className="menu-form-dishes-added-title">Plats du menu :</p>
-                                        <ul className="menu-form-dishes-list" role="list">
+                                        <ul className="menu-form-dishes-list" >
                                             {menuDishes.map(md => (
                                                 <li key={md.dishId} className="menu-form-dish-item">
                                                     <span className="menu-form-dish-info">
@@ -577,7 +577,7 @@ function MenuEdit() {
                                                 (la suppression est définitive une fois les modifications enregistrées)
                                             </span>
                                         </p>
-                                        <ul className="menu-form-image-previews" role="list" aria-label="Photos actuelles">
+                                        <ul className="menu-form-image-previews"  aria-label="Photos actuelles">
                                             {existingImages.map(img => (
                                                 <li key={img.id} className="menu-form-image-preview-item">
                                                     {imgErrors[img.id] ? (
@@ -640,7 +640,7 @@ function MenuEdit() {
                                         <p className="menu-form-existing-label" style={{ marginTop: '0.8rem' }}>
                                             Nouvelles photos :
                                         </p>
-                                        <ul className="menu-form-image-previews" role="list" aria-label="Nouvelles photos">
+                                        <ul className="menu-form-image-previews"  aria-label="Nouvelles photos">
                                             {newImageFiles.map((img, i) => (
                                                 <li key={i} className="menu-form-image-preview-item">
                                                     <img
@@ -728,3 +728,4 @@ function MenuEdit() {
 }
 
 export default MenuEdit;
+

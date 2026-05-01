@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import { useAuth } from '../../context/AuthContext';
@@ -12,7 +12,6 @@ const API_USER_REVIEWS = `${process.env.REACT_APP_API_URL}/api/reviews/my`;
 function OrderList() {
     const { token } = useAuth();
     const location = useLocation();
-    const navigate = useNavigate();
     const orderSuccess  = location.state?.orderSuccess  === true;
     const editSuccess   = location.state?.editSuccess   === true;
     const cancelSuccess = location.state?.cancelSuccess === true;

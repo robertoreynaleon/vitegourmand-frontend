@@ -48,7 +48,7 @@ function formatOrderDate(dateStr) {
  */
 function OrderEdit() {
     const { id } = useParams();
-    const { user, token } = useAuth();
+    const { token } = useAuth();
     const navigate = useNavigate();
 
     const [loading, setLoading]         = useState(true);
@@ -434,7 +434,7 @@ function OrderEdit() {
                                             aria-label="Suggestions d'adresse"
                                         >
                                             {suggestions.map((s, i) => (
-                                                <li key={i} role="option">
+                                                <li key={i} role="option" aria-selected={false}>
                                                     <button
                                                         type="button"
                                                         className="order-address-suggestion-btn"
