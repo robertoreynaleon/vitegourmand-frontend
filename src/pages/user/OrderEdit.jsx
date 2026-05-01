@@ -413,7 +413,10 @@ function OrderEdit() {
                                 <label htmlFor="delivery_address">
                                     Adresse de livraison :
                                 </label>
-                                <div className="order-address-wrapper" ref={addressWrapperRef}>
+                                <div className="order-address-wrapper" ref={addressWrapperRef}
+                                    aria-expanded={showSuggestions}
+                                    aria-haspopup="listbox"
+                                >
                                     <input
                                         id="delivery_address"
                                         type="text"
@@ -424,7 +427,6 @@ function OrderEdit() {
                                         autoComplete="off"
                                         aria-autocomplete="list"
                                         aria-controls="address-suggestions"
-                                        aria-expanded={showSuggestions}
                                     />
                                     {showSuggestions && (
                                         <ul
