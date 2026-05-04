@@ -45,7 +45,7 @@
 // Section formulaire
 // -----------------------------------------------------------------------------
 .user-create-section {
-    padding: 4rem 0 3rem;
+    padding: 2rem 0 5rem;
 }
 
 .user-create-form-wrapper {
@@ -64,6 +64,19 @@
     letter-spacing: 1.5px;
     margin-bottom: 0.4rem;
     text-align: center;
+}
+
+.user-create-back {
+    display: inline-block;
+    margin-bottom: 1.5rem;
+    color: $color-green;
+    font-weight: 500;
+    font-size: 0.9rem;
+    text-decoration: none;
+
+    &:hover {
+        text-decoration: underline;
+    }
 }
 
 .user-create-subtitle {

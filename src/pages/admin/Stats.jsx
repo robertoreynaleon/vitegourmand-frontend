@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
+import { Link } from 'react-router-dom';
 import {
     ResponsiveContainer,
     BarChart,
@@ -151,6 +152,9 @@ function Stats() {
                         <h1 id="stats-filters-title" className="stats-title">
                             Statistiques des commandes
                         </h1>
+                        <Link to="/staff/dashboard/" className="stats-back">
+                            ← Retour au dashboard
+                        </Link>
                         <p className="stats-subtitle">
                             Comparez les commandes et le chiffre d'affaires par menu.
                         </p>

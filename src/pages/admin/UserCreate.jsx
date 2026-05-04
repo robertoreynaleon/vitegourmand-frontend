@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
+import { Link } from 'react-router-dom';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import { useAuth } from '../../context/AuthContext';
@@ -190,6 +191,9 @@ function UserCreate() {
                             <h1 id="create-section-title" className="user-create-title">
                                 Ajouter un employé
                             </h1>
+                            <Link to="/staff/dashboard/" className="user-create-back">
+                                ← Retour au dashboard
+                            </Link>
                             <p className="user-create-subtitle">
                                 Le nouvel employé recevra un e-mail lui indiquant que son compte a été créé.
                             </p>

@@ -35,6 +35,24 @@
 
     main {
         padding-top: 90px;
+
+        @include mobile {
+            display: flex;
+            flex-direction: column;
+
+            .menu-page {
+                order: -1;
+            }
+        }
+
+        @include tablet {
+            display: flex;
+            flex-direction: column;
+
+            .menu-page {
+                order: -1;
+            }
+        }
     }
 }
 

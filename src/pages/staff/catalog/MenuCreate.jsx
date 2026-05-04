@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+﻿import React, { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import imageCompression from 'browser-image-compression';
 import Header from '../../../components/Header';
@@ -14,7 +14,7 @@ const API_ALLERGENS    = `${BASE}/api/staff/catalog/allergens`;
 const API_MENUS_CREATE = `${BASE}/api/staff/catalog/menus`;
 
 const DISH_TYPES = [
-    { value: 'entrÃ©e',         label: 'EntrÃ©e' },
+    { value: 'entrée',         label: 'Entrée' },
     { value: 'plat_principal', label: 'Plat principal' },
     { value: 'dessert',        label: 'Dessert' },
 ];
@@ -30,15 +30,15 @@ const COMPRESSION_OPTIONS = {
 };
 
 /**
- * Page de crÃ©ation d'un menu.
+ * Page de création d'un menu.
  * Permet au staff de saisir toutes les informations d'un menu :
- * titre, description, prix, rÃ©gime, plats, allÃ¨rgÃ¨nes et images (compressÃ©es avant envoi).
+ * titre, description, prix, régime, plats, allèrgènes et images (compressées avant envoi).
  */
 function MenuCreate() {
     const { token }  = useAuth();
     const navigate   = useNavigate();
 
-    // â”€â”€ DonnÃ©es de rÃ©fÃ©rence â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    // â”€â”€ Données de référence â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
     const [regimes,   setRegimes]   = useState([]);
     const [dishes,    setDishes]    = useState([]);
     const [allergens, setAllergens] = useState([]);
@@ -53,9 +53,9 @@ function MenuCreate() {
     const [remainingQuantity, setRemainingQuantity] = useState(0);
     const [advanceOrderDays,  setAdvanceOrderDays]  = useState(2);
 
-    // â”€â”€ SÃ©lection d'un plat â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    // â”€â”€ Sélection d'un plat â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
     const [selDishId,      setSelDishId]      = useState('');
-    const [selDishType,    setSelDishType]    = useState('entrÃ©e');
+    const [selDishType,    setSelDishType]    = useState('entrée');
     const [selAllergenIds, setSelAllergenIds] = useState([]);
     const [menuDishes,     setMenuDishes]     = useState([]);
     // menuDishes : [{ dishId, dishTitle, dishType, allergenIds[] }]
@@ -65,12 +65,12 @@ function MenuCreate() {
     // imageFiles : [{ file: File, preview: string }]
     const fileInputRef = useRef(null);
 
-    // â”€â”€ Ã‰tat du formulaire â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    // â”€â”€ État du formulaire â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
     const [errors,      setErrors]      = useState({});
     const [busy,        setBusy]        = useState(false);
     const [compressing, setCompressing] = useState(false);
 
-    // â”€â”€ Chargement des donnÃ©es de rÃ©fÃ©rence â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    // â”€â”€ Chargement des données de référence â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
     useEffect(() => {
         if (!token) return;
         const h = { Authorization: `Bearer ${token}` };
@@ -84,10 +84,10 @@ function MenuCreate() {
                 setDishes(Array.isArray(d) ? d : []);
                 setAllergens(Array.isArray(a) ? a : []);
             })
-            .catch(() => setLoadError('Erreur lors du chargement des donnÃ©es de rÃ©fÃ©rence.'));
+            .catch(() => setLoadError('Erreur lors du chargement des données de référence.'));
     }, [token]);
 
-    // â”€â”€ PrÃ©-remplissage des allergÃ¨nes quand le plat change â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    // â”€â”€ Pré-remplissage des allergènes quand le plat change â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
     useEffect(() => {
         if (!selDishId) { setSelAllergenIds([]); return; }
         const dish = dishes.find(d => d.id === parseInt(selDishId, 10));
@@ -98,11 +98,11 @@ function MenuCreate() {
     const handleAddDish = () => {
         const id = parseInt(selDishId, 10);
         if (!id) {
-            setErrors(e => ({ ...e, dish: 'Veuillez sÃ©lectionner un plat.' }));
+            setErrors(e => ({ ...e, dish: 'Veuillez sélectionner un plat.' }));
             return;
         }
         if (menuDishes.some(md => md.dishId === id)) {
-            setErrors(e => ({ ...e, dish: 'Ce plat est dÃ©jÃ  ajoutÃ© Ã  ce menu.' }));
+            setErrors(e => ({ ...e, dish: 'Ce plat est déjà ajouté à ce menu.' }));
             return;
         }
         const dish = dishes.find(d => d.id === id);
@@ -113,7 +113,7 @@ function MenuCreate() {
             { dishId: dish.id, dishTitle: dish.title, dishType: selDishType, allergenIds: [...selAllergenIds] },
         ]);
         setSelDishId('');
-        setSelDishType('entrÃ©e');
+        setSelDishType('entrée');
         setSelAllergenIds([]);
         setErrors(e => ({ ...e, dish: '' }));
     };
@@ -136,7 +136,7 @@ function MenuCreate() {
         const msgList   = [];
 
         if (files.length > remaining) {
-            msgList.push(`Quota atteint : seulement ${remaining} photo${remaining !== 1 ? 's' : ''} ajoutÃ©e${remaining !== 1 ? 's' : ''} (maximum ${MAX_IMAGES} au total).`);
+            msgList.push(`Quota atteint : seulement ${remaining} photo${remaining !== 1 ? 's' : ''} ajoutée${remaining !== 1 ? 's' : ''} (maximum ${MAX_IMAGES} au total).`);
         }
         if (toProcess.length === 0) {
             setErrors(prev => ({ ...prev, images: msgList.join(' ') }));
@@ -174,8 +174,8 @@ function MenuCreate() {
     const validate = () => {
         const errs = {};
         if (!title.trim())                          errs.title            = 'Le titre est obligatoire.';
-        else if (title.trim().length > 100)         errs.title            = 'Maximum 100 caractÃ¨res.';
-        if (!regimeId)                              errs.regimeId         = 'Veuillez sÃ©lectionner un rÃ©gime.';
+        else if (title.trim().length > 100)         errs.title            = 'Maximum 100 caractères.';
+        if (!regimeId)                              errs.regimeId         = 'Veuillez sélectionner un régime.';
         const p = parseFloat(pricePerPerson);
         if (isNaN(p) || p < 0)                     errs.pricePerPerson   = 'Prix invalide (nombre positif requis).';
         if (parseInt(minPeople, 10) < 1)            errs.minPeople        = 'Minimum 1 personne.';
@@ -209,13 +209,13 @@ function MenuCreate() {
                 body:    fd,
             });
             if (res.status === 201) {
-                navigate('/staff/catalog/', { state: { success: 'Menu crÃ©Ã© avec succÃ¨s.' } });
+                navigate('/staff/catalog/', { state: { success: 'Menu créé avec succès.' } });
             } else {
                 const json = await res.json().catch(() => ({}));
-                setErrors({ server: json.message || 'Erreur lors de la crÃ©ation.' });
+                setErrors({ server: json.message || 'Erreur lors de la création.' });
             }
         } catch {
-            setErrors({ server: 'Erreur rÃ©seau. Veuillez rÃ©essayer.' });
+            setErrors({ server: 'Erreur réseau. Veuillez réessayer.' });
         } finally {
             setBusy(false);
         }
@@ -230,7 +230,7 @@ function MenuCreate() {
                 <section className="menu-form-section" aria-labelledby="create-menu-title">
                     <div className="container">
                         <h1 id="create-menu-title" className="menu-form-title">
-                            CrÃ©er un <span>menu</span>
+                            Créer un <span>menu</span>
                         </h1>
 
                         <Link to="/staff/catalog/" className="menu-form-back">
@@ -245,15 +245,15 @@ function MenuCreate() {
                             className="menu-form"
                             onSubmit={handleSubmit}
                             noValidate
-                            aria-label="Formulaire de crÃ©ation de menu"
+                            aria-label="Formulaire de création de menu"
                         >
                             {errors.server && (
                                 <p className="form-error--server" role="alert">{errors.server}</p>
                             )}
 
-                            {/* â”€â”€ Informations gÃ©nÃ©rales â”€â”€ */}
+                            {/* â”€â”€ Informations générales â”€â”€ */}
                             <fieldset className="menu-form-fieldset">
-                                <legend className="menu-form-legend">Informations gÃ©nÃ©rales</legend>
+                                <legend className="menu-form-legend">Informations générales</legend>
 
                                 <div className="form-group">
                                     <label className="form-label" htmlFor="menu-title">
@@ -270,7 +270,7 @@ function MenuCreate() {
                                         aria-required="true"
                                         aria-invalid={!!errors.title}
                                         autoComplete="off"
-                                        placeholder="Ex. VÃ©gÃ©tarien Printemps"
+                                        placeholder="Ex. Végétarien Printemps"
                                     />
                                     {errors.title && <span className="form-error" role="alert">{errors.title}</span>}
                                 </div>
@@ -292,7 +292,7 @@ function MenuCreate() {
                                 <div className="form-row">
                                     <div className="form-group">
                                         <label className="form-label" htmlFor="menu-regime">
-                                            RÃ©gime <span aria-hidden="true">*</span>
+                                            Régime <span aria-hidden="true">*</span>
                                         </label>
                                         <select
                                             id="menu-regime"
@@ -303,7 +303,7 @@ function MenuCreate() {
                                             aria-required="true"
                                             aria-invalid={!!errors.regimeId}
                                         >
-                                            <option value="">-- SÃ©lectionner --</option>
+                                            <option value="">-- Sélectionner --</option>
                                             {regimes.map(r => (
                                                 <option key={r.id} value={r.id}>{r.label}</option>
                                             ))}
@@ -353,7 +353,7 @@ function MenuCreate() {
 
                                     <div className="form-group">
                                         <label className="form-label" htmlFor="menu-remaining">
-                                            QuantitÃ© restante
+                                            Quantité restante
                                         </label>
                                         <input
                                             id="menu-remaining"
@@ -368,7 +368,7 @@ function MenuCreate() {
 
                                     <div className="form-group">
                                         <label className="form-label" htmlFor="menu-advance">
-                                            Jours Ã  l'avance
+                                            Jours à l'avance
                                         </label>
                                         <input
                                             id="menu-advance"
@@ -435,18 +435,18 @@ function MenuCreate() {
 
                                 {errors.dish && <p className="form-error" role="alert">{errors.dish}</p>}
 
-                                {/* AllergÃ¨nes du plat sÃ©lectionnÃ© */}
+                                {/* Allergènes du plat sélectionné */}
                                 {selDishId && (
                                     <div className="menu-form-allergens" aria-live="polite">
                                         <p className="menu-form-allergens-title">
-                                            AllergÃ¨nes pour{' '}
+                                            Allergènes pour{' '}
                                             <strong>{selectedDish?.title}</strong>
                                             <span className="menu-form-allergens-hint">
-                                                {' '}â€” cochez ceux associÃ©s Ã  ce plat
+                                                {' '}â€” cochez ceux associés à ce plat
                                             </span>
                                         </p>
                                         {allergens.length === 0 ? (
-                                            <p className="menu-form-allergens-empty">Aucun allergÃ¨ne enregistrÃ©.</p>
+                                            <p className="menu-form-allergens-empty">Aucun allergène enregistré.</p>
                                         ) : (
                                             <ul className="menu-form-allergens-list" >
                                                 {allergens.map(a => (
@@ -467,10 +467,10 @@ function MenuCreate() {
                                     </div>
                                 )}
 
-                                {/* Plats dÃ©jÃ  ajoutÃ©s */}
+                                {/* Plats déjà ajoutés */}
                                 {menuDishes.length > 0 && (
                                     <div className="menu-form-dishes-added" aria-live="polite">
-                                        <p className="menu-form-dishes-added-title">Plats ajoutÃ©s :</p>
+                                        <p className="menu-form-dishes-added-title">Plats ajoutés :</p>
                                         <ul className="menu-form-dishes-list" >
                                             {menuDishes.map(md => (
                                                 <li key={md.dishId} className="menu-form-dish-item">
@@ -481,7 +481,7 @@ function MenuCreate() {
                                                         </span>
                                                         {md.allergenIds.length > 0 && (
                                                             <span className="menu-form-dish-allergens">
-                                                                {md.allergenIds.length} allergÃ¨ne{md.allergenIds.length > 1 ? 's' : ''}
+                                                                {md.allergenIds.length} allergène{md.allergenIds.length > 1 ? 's' : ''}
                                                             </span>
                                                         )}
                                                     </span>
@@ -491,7 +491,7 @@ function MenuCreate() {
                                                         onClick={() => handleRemoveDish(md.dishId)}
                                                         aria-label={`Retirer ${md.dishTitle} du menu`}
                                                     >
-                                                        Ã—
+                                                        ×
                                                     </button>
                                                 </li>
                                             ))}
@@ -536,12 +536,12 @@ function MenuCreate() {
                                 {errors.images && <p className="form-error" role="alert">{errors.images}</p>}
 
                                 {imageFiles.length > 0 && (
-                                    <ul className="menu-form-image-previews"  aria-label="Photos sÃ©lectionnÃ©es">
+                                    <ul className="menu-form-image-previews"  aria-label="Photos sélectionnées">
                                         {imageFiles.map((img, i) => (
                                             <li key={i} className="menu-form-image-preview-item">
                                                 <img
                                                     src={img.preview}
-                                                    alt={`AperÃ§u ${i + 1}`}
+                                                    alt={`Aperçu ${i + 1}`}
                                                     className="menu-form-image-thumb"
                                                 />
                                                 <button
@@ -550,7 +550,7 @@ function MenuCreate() {
                                                     onClick={() => handleRemoveImage(i)}
                                                     aria-label={`Supprimer la photo ${i + 1}`}
                                                 >
-                                                    Ã—
+                                                    ×
                                                 </button>
                                             </li>
                                         ))}
@@ -569,7 +569,7 @@ function MenuCreate() {
                                     disabled={busy || compressing}
                                     aria-busy={busy || compressing}
                                 >
-                                    {busy ? 'CrÃ©ation en coursâ€¦' : 'CrÃ©er le menu'}
+                                    {busy ? 'Création en coursâ€¦' : 'Créer le menu'}
                                 </button>
                             </div>
                         </form>
