@@ -269,23 +269,24 @@ function Order() {
                                 </p>
 
                                 <div className="order-quantity-row">
-                                    <label htmlFor={`qty-${item.menuId}`}>
-                                        <strong>Quantité commandée :</strong>
-                                    </label>
-                                    <input
-                                        id={`qty-${item.menuId}`}
-                                        type="number"
-                                        min={item.minPeople}
-                                        max={100}
-                                        value={item.quantity}
-                                        onChange={(e) =>
-                                            handleQuantityChange(
-                                                item.menuId,
-                                                item.minPeople,
-                                                e.target.value
-                                            )
-                                        }
-                                    />
+                                    <label><strong>Quantité commandée :</strong></label>
+                                    <div className="order-qty-stepper" role="group" aria-label={`Quantité pour ${item.menuTitle}`}>
+                                        <button
+                                            type="button"
+                                            className="order-qty-btn"
+                                            onClick={() => handleQuantityChange(item.menuId, item.minPeople, item.quantity - 1)}
+                                            aria-label="Diminuer la quantité"
+                                            disabled={item.quantity <= item.minPeople}
+                                        >−</button>
+                                        <span className="order-qty-value" aria-live="polite">{item.quantity}</span>
+                                        <button
+                                            type="button"
+                                            className="order-qty-btn"
+                                            onClick={() => handleQuantityChange(item.menuId, item.minPeople, item.quantity + 1)}
+                                            aria-label="Augmenter la quantité"
+                                            disabled={item.quantity >= 100}
+                                        >+</button>
+                                    </div>
                                     <small>Minimum : {item.minPeople} personnes</small>
                                 </div>
 
