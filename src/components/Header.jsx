@@ -94,7 +94,7 @@ function Header() {
                             <li><a href="/staff/dashboard/" onClick={closeMenu}>STAFF</a></li>
                         )}
                         {user && (
-                            <li><button onClick={handleLogout} className="nav-logout-btn">DÉCONNEXION</button></li>
+                            <li><a href="/" onClick={handleLogout} className="nav-logout-btn">DÉCONNEXION</a></li>
                         )}
                         <li><a href="/contact/" onClick={closeMenu}>CONTACT</a></li>
                     </ul>
