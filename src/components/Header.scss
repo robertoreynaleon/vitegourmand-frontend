@@ -217,13 +217,16 @@
             width: 100%;
         }
 
-        a {
+        a,
+        .nav-logout-btn {
             display: block;
             padding: 0.9rem 1.5rem;
             color: $color-text !important;
             font-size: 0.9rem;
             border-bottom: 1px solid rgba(0, 0, 0, 0.06);
             transition: background 0.2s ease, color 0.2s ease;
+            text-align: left;
+            width: 100%;
 
             &::after {
                 display: none;
@@ -232,12 +235,13 @@
             &:hover {
                 background: $color-bg-light;
                 color: $color-green !important;
-                padding-left: 2rem; // léger indent au hover
+                padding-left: 2rem;
                 transition: padding 0.2s ease, background 0.2s ease;
             }
         }
 
-        li:last-child a {
+        li:last-child a,
+        li:last-child .nav-logout-btn {
             border-bottom: none;
         }
     }
