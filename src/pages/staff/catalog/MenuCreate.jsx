@@ -38,13 +38,13 @@ function MenuCreate() {
     const { token }  = useAuth();
     const navigate   = useNavigate();
 
-    // â”€â”€ Données de référence â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    // ── Données de référence ──────────────────────────────────────────────
     const [regimes,   setRegimes]   = useState([]);
     const [dishes,    setDishes]    = useState([]);
     const [allergens, setAllergens] = useState([]);
     const [loadError, setLoadError] = useState('');
 
-    // â”€â”€ Champs du formulaire â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    // ── Champs du formulaire ──────────────────────────────────────────────
     const [title,             setTitle]             = useState('');
     const [description,       setDescription]       = useState('');
     const [regimeId,          setRegimeId]          = useState('');
@@ -53,24 +53,24 @@ function MenuCreate() {
     const [remainingQuantity, setRemainingQuantity] = useState(0);
     const [advanceOrderDays,  setAdvanceOrderDays]  = useState(2);
 
-    // â”€â”€ Sélection d'un plat â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    // ── Sélection d'un plat ───────────────────────────────────────────────
     const [selDishId,      setSelDishId]      = useState('');
     const [selDishType,    setSelDishType]    = useState('entrée');
     const [selAllergenIds, setSelAllergenIds] = useState([]);
     const [menuDishes,     setMenuDishes]     = useState([]);
     // menuDishes : [{ dishId, dishTitle, dishType, allergenIds[] }]
 
-    // â”€â”€ Images â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    // ── Images ────────────────────────────────────────────────────────────
     const [imageFiles, setImageFiles] = useState([]);
     // imageFiles : [{ file: File, preview: string }]
     const fileInputRef = useRef(null);
 
-    // â”€â”€ État du formulaire â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    // ── État du formulaire ────────────────────────────────────────────────
     const [errors,      setErrors]      = useState({});
     const [busy,        setBusy]        = useState(false);
     const [compressing, setCompressing] = useState(false);
 
-    // â”€â”€ Chargement des données de référence â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    // ── Chargement des données de référence ───────────────────────────────
     useEffect(() => {
         if (!token) return;
         const h = { Authorization: `Bearer ${token}` };
@@ -87,14 +87,14 @@ function MenuCreate() {
             .catch(() => setLoadError('Erreur lors du chargement des données de référence.'));
     }, [token]);
 
-    // â”€â”€ Pré-remplissage des allergènes quand le plat change â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    // ── Pré-remplissage des allergènes quand le plat change ───────────────
     useEffect(() => {
         if (!selDishId) { setSelAllergenIds([]); return; }
         const dish = dishes.find(d => d.id === parseInt(selDishId, 10));
         setSelAllergenIds(dish ? (dish.allergenIds ?? []) : []);
     }, [selDishId, dishes]);
 
-    // â”€â”€ Gestion des plats â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    // ── Gestion des plats ─────────────────────────────────────────────────
     const handleAddDish = () => {
         const id = parseInt(selDishId, 10);
         if (!id) {
@@ -126,7 +126,7 @@ function MenuCreate() {
             prev.includes(aId) ? prev.filter(id => id !== aId) : [...prev, aId]
         );
 
-    // â”€â”€ Gestion des images â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    // ── Gestion des images ────────────────────────────────────────────────
     const handleImageSelect = async (e) => {
         const files = Array.from(e.target.files);
         if (e.target) e.target.value = '';
@@ -170,7 +170,7 @@ function MenuCreate() {
         setErrors(e => ({ ...e, images: '' }));
     };
 
-    // â”€â”€ Validation â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    // ── Validation ────────────────────────────────────────────────────────
     const validate = () => {
         const errs = {};
         if (!title.trim())                          errs.title            = 'Le titre est obligatoire.';
@@ -183,7 +183,7 @@ function MenuCreate() {
         return errs;
     };
 
-    // â”€â”€ Soumission â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    // ── Soumission ────────────────────────────────────────────────────────
     const handleSubmit = async (e) => {
         e.preventDefault();
         const errs = validate();
@@ -251,7 +251,7 @@ function MenuCreate() {
                                 <p className="form-error--server" role="alert">{errors.server}</p>
                             )}
 
-                            {/* â”€â”€ Informations générales â”€â”€ */}
+                            {/* ── Informations générales ── */}
                             <fieldset className="menu-form-fieldset">
                                 <legend className="menu-form-legend">Informations générales</legend>
 
@@ -385,7 +385,7 @@ function MenuCreate() {
                                 </div>
                             </fieldset>
 
-                            {/* â”€â”€ Plats â”€â”€ */}
+                            {/* ── Plats ── */}
                             <fieldset className="menu-form-fieldset">
                                 <legend className="menu-form-legend">Plats du menu</legend>
 
@@ -442,7 +442,7 @@ function MenuCreate() {
                                             Allergènes pour{' '}
                                             <strong>{selectedDish?.title}</strong>
                                             <span className="menu-form-allergens-hint">
-                                                {' '}â€” cochez ceux associés à ce plat
+                                                {' '}— cochez ceux associés à ce plat
                                             </span>
                                         </p>
                                         {allergens.length === 0 ? (
@@ -500,7 +500,7 @@ function MenuCreate() {
                                 )}
                             </fieldset>
 
-                            {/* â”€â”€ Photos â”€â”€ */}
+                            {/* ── Photos ── */}
                             <fieldset className="menu-form-fieldset">
                                 <legend className="menu-form-legend">
                                     Photos du menu{' '}
@@ -527,7 +527,7 @@ function MenuCreate() {
                                         </span>
                                         {compressing && (
                                             <span className="menu-form-image-compressing" role="status">
-                                                Compression en coursâ€¦
+                                                Compression en cours…
                                             </span>
                                         )}
                                     </div>
@@ -558,7 +558,7 @@ function MenuCreate() {
                                 )}
                             </fieldset>
 
-                            {/* â”€â”€ Actions â”€â”€ */}
+                            {/* ── Actions ── */}
                             <div className="menu-form-actions">
                                 <Link to="/staff/catalog/" className="menu-form-cancel">
                                     Annuler
@@ -569,7 +569,7 @@ function MenuCreate() {
                                     disabled={busy || compressing}
                                     aria-busy={busy || compressing}
                                 >
-                                    {busy ? 'Création en coursâ€¦' : 'Créer le menu'}
+                                    {busy ? 'Création en cours…' : 'Créer le menu'}
                                 </button>
                             </div>
                         </form>
