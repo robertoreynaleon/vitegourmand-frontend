@@ -1,5 +1,5 @@
-/** Expression régulière de validation d'une adresse e-mail. */
-const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+/** Expression régulière de validation d'une adresse e-mail (caractères pratiques uniquement). */
+const emailRegex = /^[a-zA-Z0-9._+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$/;
 /** Expression régulière de validation d'un numéro de téléphone français (ex. 0612345678). */
 const phoneRegex = /^0[1-9][0-9]{8}$/;
 /** Expression régulière de validation d'un code postal français (5 chiffres). */
