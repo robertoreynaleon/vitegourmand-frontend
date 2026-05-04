@@ -17,6 +17,17 @@ function MenuList() {
     const [error, setError] = useState(null);
     const [fetchUrl, setFetchUrl] = useState(`${API_MENUS}${window.location.search || ''}`);
 
+    // Sur mobile/tablette : scroll vers les cartes au chargement
+    // La searchbar reste accessible en scrollant vers le haut
+    useEffect(() => {
+        if (window.innerWidth <= 1024) {
+            const section = document.querySelector('.menu-page');
+            if (section) {
+                section.scrollIntoView({ behavior: 'instant', block: 'start' });
+            }
+        }
+    }, []);
+
     useEffect(() => {
         setLoading(true);
         setError(null);
