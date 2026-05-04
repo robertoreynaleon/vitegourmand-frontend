@@ -23,7 +23,8 @@ function MenuList() {
         if (window.innerWidth <= 1024) {
             const section = document.querySelector('.menu-page');
             if (section) {
-                section.scrollIntoView({ behavior: 'instant', block: 'start' });
+                const headerHeight = 90;
+                window.scrollTo({ top: section.offsetTop - headerHeight, behavior: 'instant' });
             }
         }
     }, []);

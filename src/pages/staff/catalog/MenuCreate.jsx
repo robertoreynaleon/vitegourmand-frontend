@@ -234,7 +234,7 @@ function MenuCreate() {
                         </h1>
 
                         <Link to="/staff/catalog/" className="menu-form-back">
-                            â† Retour au catalogue
+                            ← Retour au catalogue
                         </Link>
 
                         {loadError && (
@@ -285,7 +285,7 @@ function MenuCreate() {
                                         value={description}
                                         onChange={e => setDescription(e.target.value)}
                                         rows={4}
-                                        placeholder="Description du menuâ€¦"
+                                        placeholder="Description du menu"
                                     />
                                 </div>
 
@@ -313,7 +313,7 @@ function MenuCreate() {
 
                                     <div className="form-group">
                                         <label className="form-label" htmlFor="menu-price">
-                                            Prix / personne (â‚¬) <span aria-hidden="true">*</span>
+                                            Prix / personne (€) <span aria-hidden="true">*</span>
                                         </label>
                                         <input
                                             id="menu-price"
