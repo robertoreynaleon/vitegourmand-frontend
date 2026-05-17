@@ -146,7 +146,7 @@ function SearchBar({ onSearch }) {
                         </div>
 
                         <div className="filter-group">
-                            <label htmlFor="min_people">Personnes min / menu</label>
+                            <label htmlFor="min_people">Pers. min / menu</label>
                             <input
                                 type="number"
                                 min="6"
