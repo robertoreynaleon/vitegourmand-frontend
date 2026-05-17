@@ -118,7 +118,7 @@ function SearchBar({ onSearch }) {
                         </div>
 
                         <div className="filter-group">
-                            <label htmlFor="price_min">Prix min</label>
+                            <label htmlFor="price_min">Prix min / pers.</label>
                             <input
                                 type="number"
                                 step="10"
@@ -132,7 +132,7 @@ function SearchBar({ onSearch }) {
                         </div>
 
                         <div className="filter-group">
-                            <label htmlFor="price_max">Prix max</label>
+                            <label htmlFor="price_max">Prix max / pers.</label>
                             <input
                                 type="number"
                                 step="10"
@@ -146,7 +146,7 @@ function SearchBar({ onSearch }) {
                         </div>
 
                         <div className="filter-group">
-                            <label htmlFor="min_people">Personnes min</label>
+                            <label htmlFor="min_people">Personnes min / menu</label>
                             <input
                                 type="number"
                                 min="6"

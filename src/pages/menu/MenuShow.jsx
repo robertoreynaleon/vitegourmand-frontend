@@ -159,7 +159,7 @@ function MenuShow() {
     }, [menu]);
 
     const dishTypeLabels = useMemo(() => ({
-        entree: 'Entree',
+        entree: 'Entrée',
         plat_principal: 'Plat principal',
         dessert: 'Dessert'
     }), []);
@@ -285,7 +285,7 @@ function MenuShow() {
                             <p className="menu-show-kicker">Detail du menu</p>
                             <h1 className="menu-show-title">{menu.title || 'Menu'}</h1>
                             <div className="menu-show-regime">
-                                <span className="menu-info-label">Regime : </span>
+                                <span className="menu-info-label">Régime : </span>
                                 <span className="regime-badge">{menu.regime?.label || '—'}</span>
                             </div>
                         </div>
@@ -386,7 +386,7 @@ function MenuShow() {
                                     <h3 className="menu-composition-title">{item.title}</h3>
                                     <p className="menu-composition-name">{item.name}</p>
                                     <div className="menu-composition-allergens">
-                                        <span className="menu-info-label">Allergenes : </span>
+                                        <span className="menu-info-label">Allergènes : </span>
                                         <span>{item.allergens.join(', ')}</span>
                                     </div>
                                 </article>
@@ -413,7 +413,7 @@ function MenuShow() {
                             </div>
                             <div className="menu-pricing-info">
                                 <div className="menu-info">
-                                    <span className="menu-info-label">Delai de demande : </span>
+                                    <span className="menu-info-label">Délai de demande : </span>
                                     <span>{menu.advanceOrderDays ? `${menu.advanceOrderDays} jours` : '—'}</span>
                                 </div>
                                 <div className="menu-info">

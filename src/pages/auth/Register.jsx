@@ -83,7 +83,7 @@ function Register() {
 				<section className="form-page-section" aria-labelledby="register-title">
 					<div className="container">
 						<div className="form-content">
-							<h1 id="register-title" className="form-page-title">Creer un compte</h1>
+							<h1 id="register-title" className="form-page-title">Créer un compte</h1>
 							<p className="form-subtitle">Rejoignez ViteGourmand et profitez de nos menus</p>
 
 							{serverError && (
@@ -95,7 +95,7 @@ function Register() {
 							<form className="form-main" onSubmit={handleSubmit} noValidate>
 								<div className="form-row">
 									<div className="form-group">
-										<label htmlFor="name" className="form-label">Prenom</label>
+										<label htmlFor="name" className="form-label">Prénom</label>
 										<input
 											type="text"
 											id="name"
@@ -147,7 +147,7 @@ function Register() {
 								</div>
 
 								<div className="form-group">
-									<label htmlFor="phone" className="form-label">Telephone mobile</label>
+									<label htmlFor="phone" className="form-label">Téléphone mobile</label>
 									<input
 										type="tel"
 										id="phone"
@@ -300,7 +300,7 @@ function Register() {
 							</form>
 
 							<div className="form-alt-section">
-								<p className="form-alt-text">Vous avez deja un compte ?</p>
+								<p className="form-alt-text">Vous avez déjà un compte ?</p>
 								<a href="/auth/login/" className="form-alt-link">Se connecter</a>
 							</div>
 						</div>

@@ -125,7 +125,7 @@ function Login() {
 					<div className="container">
 						<div className="form-content">
 							<h1 id="login-title" className="form-page-title">Connexion</h1>
-							<p className="form-subtitle">Accedez a votre espace ViteGourmand</p>
+							<p className="form-subtitle">Accédez a votre espace ViteGourmand</p>
 
 							{sessionExpired && (
 							<p className="form-error" role="alert">
@@ -135,13 +135,13 @@ function Login() {
 
 						{justRegistered && (
 								<p className="form-success" role="status" aria-live="polite">
-									Votre compte a bien ete cree. Connectez-vous !
+									Votre compte a bien été créé. Connectez-vous !
 								</p>
 							)}
 
 							{credentialsUpdated && (
 								<p className="form-success" role="status" aria-live="polite">
-									Vos informations ont bien ete mises a jour. Reconnectez-vous avec vos nouveaux identifiants.
+									Vos informations ont bien été mises à jour. Reconnectez-vous avec vos nouveaux identifiants.
 								</p>
 							)}
 
@@ -238,8 +238,8 @@ function Login() {
 								<Link to="/auth/forgot-password/" className="form-alt-link">
 									Mot de passe oublié ?
 								</Link>
-								<p className="form-alt-text">Vous n avez pas encore de compte ?</p>
-								<a href="/auth/register/" className="form-alt-link">Creer un compte</a>
+								<p className="form-alt-text">Vous n'avez pas encore de compte ?</p>
+								<a href="/auth/register/" className="form-alt-link">Créer un compte</a>
 							</div>
 						</div>
 					</div>
