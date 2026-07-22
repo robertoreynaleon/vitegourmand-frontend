@@ -3,6 +3,62 @@ README — Vite & Gourmand
 → L'application est déjà déployée et accessible en ligne : https://vitegourmand-frontend.vercel.app/ ←
 
 
+· INSTALLATION DU FRONTEND AVEC DOCKER SOUS WSL2
+
+Cette configuration lance le serveur de développement React dans un conteneur Node.
+Node.js et les dépendances npm ne doivent pas être installés directement dans WSL.
+
+Prérequis : Docker Engine et le plugin Docker Compose doivent fonctionner dans WSL2.
+
+Depuis le dossier `vitegourmand-frontend`, construire et démarrer le frontend :
+
+```
+docker compose up --build -d
+```
+
+Le frontend est ensuite accessible sur :
+
+```
+http://localhost:3000
+```
+
+Par défaut, l'application appelle le futur backend Docker sur :
+
+```
+http://localhost:8000
+```
+
+Cette URL peut être remplacée sans modifier les fichiers du projet :
+
+```
+VG_BACKEND_URL=http://localhost:8001 docker compose up --build -d
+```
+
+Le port du frontend peut aussi être remplacé si le port 3000 devient indisponible :
+
+```
+VG_FRONTEND_PORT=3001 docker compose up --build -d
+```
+
+Commandes utiles :
+
+```
+# Afficher les logs du serveur React
+docker compose logs -f frontend
+
+# Arrêter et supprimer le conteneur
+docker compose down
+
+# Réinstaller les dépendances après une modification de package-lock.json
+docker compose build --no-cache frontend
+docker compose up -d
+```
+
+Le code source est monté depuis WSL pour conserver le rechargement automatique.
+Le dossier `node_modules` est stocké dans un volume Docker afin de toujours utiliser
+des dépendances compatibles avec Linux.
+
+
 · INSTALLATION EN LOCAL
 
 Ce guide explique comment faire tourner l’application en local sur Windows.
