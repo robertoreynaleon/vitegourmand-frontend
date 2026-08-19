@@ -7,13 +7,23 @@ L'application est accessible en ligne : [vitegourmand-frontend.vercel.app](https
 ## Découvrir l'application !
 
 Vous pouvez d'abord consulter librement le catalogue, puis vous connecter avec l'un des profils de démonstration suivants pour parcourir les différents espaces de l'application.
-Le mot de passe est identique pour tous les comptes : $ViteGourmand$.33!
 
-| Profil | E-mail | Parcours proposé |
-| --- | --- | --- | --- |
-| Client | `emilie.favre@yahoo.com` | Ajouter un menu au panier, créer une commande, suivre son statut et déposer un avis. |
-| Employé | `yael.kalfa@gmail.com` | Gérer les commandes, le catalogue, les avis clients et les messages de contact. |
-| Administrateur | `jose.garcia@gmail.com` | Consulter les statistiques et gérer les comptes employés, en plus des fonctions du personnel. |
+**Mot de passe commun :** <code>&#36;ViteGourmand&#36;.33!</code>
+
+### Client
+
+- **E-mail :** `emilie.favre@yahoo.com`
+- **Parcours :** ajouter un menu au panier, créer une commande, suivre son statut et déposer un avis.
+
+### Employé
+
+- **E-mail :** `yael.kalfa@gmail.com`
+- **Parcours :** gérer les commandes, le catalogue, les avis clients et les messages de contact.
+
+### Administrateur
+
+- **E-mail :** `jose.garcia@gmail.com`
+- **Parcours :** consulter les statistiques et gérer les comptes employés, en plus des fonctions du personnel.
 
 Ces identifiants sont destinés à la démonstration. En local, ils sont fournis par le jeu de données importé dans MySQL au premier démarrage du back-end.
 
