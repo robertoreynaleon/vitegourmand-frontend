@@ -1,15 +1,26 @@
 # Vite & Gourmand — Front-end
 
-Vite & Gourmand est une application web de gestion de menus traiteur. Elle permet de consulter un catalogue de menus, de créer et suivre des commandes, et de proposer des espaces adaptés aux clients, aux employés et aux administrateurs.
+Vite & Gourmand est une application web de commande de menu traiteur à domicile, basée à Bordeaux. Elle permet aux clients de consulter un catalogue de menus, de créer et suivre des commandes. Du côté professionnel, le personnel de l'entreprise dispose d'un espace staff pour gérer les commandes, modérer les avis clients, administrer le catalogue et répondre aux messages de contact. Un administrateur peut en plus gérer les comptes employés et consulter les statistiques de vente.
 
 L'application est accessible en ligne : [vitegourmand-frontend.vercel.app](https://vitegourmand-frontend.vercel.app/)
 
-Ce dépôt contient l'interface React. L'API Symfony, les bases de données et le service d'e-mails sont disponibles dans le dépôt [vitegourmand-back-end](https://github.com/robertoreynaleon/vitegourmand-back-end).
+## Découvrir l'application !
+
+Vous pouvez d'abord consulter librement le catalogue, puis vous connecter avec l'un des profils de démonstration suivants pour parcourir les différents espaces de l'application.
+Le mot de passe est identique pour tous les comptes : $ViteGourmand$.33!
+
+| Profil | E-mail | Parcours proposé |
+| --- | --- | --- | --- |
+| Client | `emilie.favre@yahoo.com` | Ajouter un menu au panier, créer une commande, suivre son statut et déposer un avis. |
+| Employé | `yael.kalfa@gmail.com` | Gérer les commandes, le catalogue, les avis clients et les messages de contact. |
+| Administrateur | `jose.garcia@gmail.com` | Consulter les statistiques et gérer les comptes employés, en plus des fonctions du personnel. |
+
+Ces identifiants sont destinés à la démonstration. En local, ils sont fournis par le jeu de données importé dans MySQL au premier démarrage du back-end.
 
 ## Technologies
 
 - React 19 et React Router pour l'interface et la navigation
-- JavaScript avec des services TypeScript pour certains traitements métier (`delivery.ts`, `cartCalc.ts`)
+- JavaScript avec des services TypeScript pour certains traitements métier comme les frais de livraison et le calcul d'une distance déterminée entre deux adresses
 - Create React App / `react-scripts` pour le serveur de développement et la construction de production
 - SCSS et Sass pour les styles, les variables et les mixins responsives
 - Formik et Yup pour les formulaires et leur validation
@@ -17,18 +28,21 @@ Ce dépôt contient l'interface React. L'API Symfony, les bases de données et l
 - API REST Symfony consommée avec `fetch` et Axios
 - Docker Compose sous WSL2 pour un environnement de développement reproductible
 
+Ce dépôt contient l'interface React.
+L'API Symfony, les bases de données et le service d'e-mails sont disponibles dans le dépôt [vitegourmand-back-end](https://github.com/robertoreynaleon/vitegourmand-back-end).
+La documentation du projet est centralisée dans le dossier `DOCUMENTATION APP/` du dépôt back-end. Elle rassemble les documents de conception, le manuel d'utilisation, la documentation technique, la gestion des tâches, ainsi que le modèle de données et les diagrammes de l'application.
+
 ## Développer en local avec Docker
 
-> Cette procédure correspond à la branche `chore/docker-wsl`, qui contient la configuration Docker du projet. Elle nécessite Docker Engine et le plugin Docker Compose installés dans WSL2. Docker Desktop, Node.js et npm ne sont pas nécessaires sur la machine hôte.
+> Cette procédure est prévue pour la branche `main`. Elle nécessite Docker Engine et le plugin Docker Compose installés dans WSL2. Docker Desktop, Node.js et npm ne sont pas nécessaires sur la machine hôte.
 
 ### 1. Cloner le dépôt
 
-Depuis un terminal WSL, clonez le dépôt puis placez-vous sur la branche Docker :
+Depuis un terminal WSL, clonez le dépôt :
 
 ```bash
 git clone git@github.com:robertoreynaleon/vitegourmand-frontend.git
 cd vitegourmand-frontend
-git switch chore/docker-wsl
 ```
 
 Pour cloner avec HTTPS, remplacez l'URL SSH par :
@@ -45,7 +59,7 @@ Construisez l'image Node et démarrez le serveur de développement :
 docker compose up --build -d
 ```
 
-L'application est disponible sur [http://localhost:3000](http://localhost:3000). Le code source est monté dans le conteneur : les modifications effectuées dans `src/` déclenchent donc le rechargement automatique de React.
+L'application est disponible sur l'adresse locale associée au port choisi pour le front-end, par exemple `http://localhost:<port-front-end>`. Le code source est monté dans le conteneur : les modifications effectuées dans `src/` déclenchent donc le rechargement automatique de React.
 
 Vérifiez l'état du service :
 
@@ -55,38 +69,33 @@ docker compose ps
 
 ### 3. Connecter le front-end à l'API locale
 
-Par défaut, le conteneur React appelle l'API Symfony locale à l'adresse suivante :
+Chaque utilisateur travaille sur sa propre machine : `localhost` désigne donc toujours sa machine locale. Il faut surtout choisir des ports non utilisés par un autre projet. Configurez l'URL de l'API avec la variable `VG_BACKEND_URL`, au format suivant :
 
 ```text
-http://localhost:8000
+http://localhost:<port-back-end>
 ```
 
-Démarrez donc le dépôt [vitegourmand-back-end](https://github.com/robertoreynaleon/vitegourmand-back-end) dans un second terminal WSL, sur la même branche :
+Démarrez le dépôt [vitegourmand-back-end](https://github.com/robertoreynaleon/vitegourmand-back-end) dans un second terminal WSL, en choisissant un port libre pour l'API :
 
 ```bash
 git clone git@github.com:robertoreynaleon/vitegourmand-back-end.git
 cd vitegourmand-back-end
-git switch chore/docker-wsl
-docker compose up --build -d
+VG_BACKEND_PORT=<port-back-end> docker compose up --build -d
 ```
 
 Le back-end lance les services nécessaires à l'application complète : Symfony, MySQL, phpMyAdmin, MongoDB et Mailpit. Consultez son README pour les adresses et les identifiants de développement.
 
-### 4. Modifier les adresses locales si nécessaire
+### 4. Choisir les ports locaux
 
-L'URL de l'API est fournie au conteneur par la variable `VG_BACKEND_URL`. Par exemple, pour appeler une API disponible sur le port `8001` :
-
-```bash
-VG_BACKEND_URL=http://localhost:8001 docker compose up --build -d
-```
-
-Si le port `3000` est déjà utilisé, vous pouvez exposer le front-end sur un autre port :
+L'URL de l'API et le port du front-end sont fournis au conteneur par des variables d'environnement. Remplacez les valeurs entre chevrons par des ports disponibles sur votre machine :
 
 ```bash
-VG_FRONTEND_PORT=3001 docker compose up --build -d
+VG_FRONTEND_PORT=<port-front-end> \
+VG_BACKEND_URL=http://localhost:<port-back-end> \
+docker compose up --build -d
 ```
 
-Dans ce cas, l'application est accessible sur [http://localhost:3001](http://localhost:3001).
+L'application est ensuite accessible à l'adresse `http://localhost:<port-front-end>`. Les ports proposés par défaut dans les fichiers Compose peuvent être conservés s'ils sont libres.
 
 ### Commandes utiles
 
@@ -125,7 +134,3 @@ src/
 ```
 
 Les accès aux pages sont protégés selon le rôle de l'utilisateur grâce aux composants `PrivateRoute`, `StaffRoute` et `AdminRoute`. Le jeton JWT obtenu à la connexion est transmis à l'API pour les opérations nécessitant une authentification.
-
-## Contribution
-
-Créez une branche dédiée pour chaque évolution, puis conservez des commits courts et explicites. Les URL propres à un environnement, les tokens et les autres informations sensibles ne doivent pas être ajoutés à Git.
